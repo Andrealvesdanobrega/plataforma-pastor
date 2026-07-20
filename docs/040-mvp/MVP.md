@@ -1,10 +1,10 @@
 # Produto Mínimo Viável
 
-**Versão:** 0.2
+**Versão:** 0.3
 
-**Fase:** Sprint 3 — UX e Fluxo do Produto
+**Fase:** Sprint 5 — Decisões de Engenharia do MVP
 
-**Atualizado em:** 19 de julho de 2026
+**Atualizado em:** 20 de julho de 2026
 
 ## 1. Objetivo do MVP
 
@@ -19,6 +19,10 @@ Se a plataforma apresentar uma única porta de entrada e um Tutor que explique c
 ## 3. Princípio do escopo
 
 O **Conteúdo é a entidade central do MVP**. A configuração prepara o contexto do Conteúdo; a Biblioteca o organiza; o Canal e a Conta Conectada permitem sua distribuição; a Publicação registra o envio; o Relatório apresenta seu resultado; e o Tutor transforma esse resultado em orientação.
+
+### 3.1 Baseline de engenharia
+
+A primeira versão utilizável será Web responsiva. Usará TypeScript e Node.js 24 LTS, Next.js no Frontend, NestJS na API e no worker, PostgreSQL com Prisma, Amazon Cognito para identidade, outbox e fila no PostgreSQL, e serviços gerenciados da AWS na região de São Paulo. IA generativa e aplicativo Mobile ficam fora dessa versão. As justificativas, riscos e reversibilidade estão em `APPROVED-DECISIONS.md`.
 
 ## 4. Público do piloto
 
@@ -102,11 +106,11 @@ Baixar App
 | Conteúdo | Fonte editorial central | Um tipo prioritário, com versões essenciais |
 | Biblioteca de Conteúdos | Localização e organização | Lista, filtro por estado, retomada e arquivo |
 | Canal | Destino suportado | Um Canal validado |
-| Conta Conectada | Conta real autorizada | Uma ou mais contas do mesmo Canal, conforme viabilidade |
+| Conta Conectada | Conta real autorizada | Uma Conta ativa no caminho principal |
 | Integração | Autorização, publicação e métricas | Um conector operacional |
 | Publicação | Envio e resultado por destino | Publicação imediata e tentativas rastreáveis |
 | Relatório | Resultados essenciais | Uma visão por Conteúdo ou Publicação |
-| Tutor | Orientação do ciclo | Regras, contexto e recomendações simples |
+| Tutor | Orientação do ciclo | Regras, modelos de texto e recomendações simples, sem IA generativa |
 | Agendamento | Evolução condicionada | Fora do caminho crítico; incluir somente se pesquisa exigir |
 | Campanha | Agrupamento opcional | Fora do MVP |
 
@@ -224,31 +228,48 @@ Metas numéricas serão definidas após testes moderados criarem uma linha de ba
 
 ## 13. Dependências e riscos
 
-| Dependência ou risco | Tratamento antes do desenvolvimento |
+| Dependência ou risco | Tratamento antes do piloto |
 |---|---|
-| Plataforma de App não escolhida | Validar hábitos, dispositivos e forma de distribuição do segmento |
+| Web responsivo não atender ao contexto do público | Testar primeiro acesso, retorno de autorização e seleção de mídia nos dispositivos reais |
 | Canal e formato não definidos | Selecionar a partir de pesquisa comportamental |
 | Revisão e limites da API | Fazer prova de autorização, publicação, estado e métricas |
 | Confiança para conectar contas | Testar explicação de permissões e revogação |
-| Escopo do Tutor crescer demais | Limitar a etapas, regras e recomendações simples no MVP |
+| Tutor determinístico não compreender texto livre | Voltar a opções guiadas, medir falhas e não ampliar regras sem evidência |
 | Métricas demorarem ou variarem | Definir expectativa, atualização e estado parcial do Relatório |
 | Publicação duplicada | Implementar idempotência e reconciliação antes do piloto real |
-| Dificuldade com instalação | Testar distribuição e primeiro acesso com dispositivos reais |
+| Dificuldade com acesso ou retorno ao Web | Testar distribuição, favoritos, sessão e primeiro acesso com dispositivos reais |
 
 ## 14. Critérios de entrada em desenvolvimento
 
-- segmento e caso de uso prioritários confirmados;
-- plataforma do App, Canal e formato selecionados;
-- protótipo do fluxo completo testado com usuários;
-- Integração considerada viável por prova técnica;
-- permissões, estados e erros do Canal mapeados;
-- métricas do piloto e eventos de coleta definidos;
-- políticas mínimas de privacidade, retenção e suporte aprovadas;
-- escopo obrigatório separado das evoluções opcionais.
+A implementação do núcleo pode começar com as decisões da Sprint 5. Os primeiros incrementos devem usar adaptadores simulados e dados fictícios enquanto as decisões dependentes de descoberta permanecem abertas.
 
-## 15. Critérios de saída do MVP
+- baseline técnica aceita e refletida no backlog de implementação;
+- monólito modular dividido em Web, API e worker;
+- contratos de identidade, Canal, armazenamento e assistência substituíveis por simuladores;
+- autorização por Projeto, idempotência, auditoria, logs seguros e acessibilidade incluídos nos critérios de cada incremento;
+- desenvolvimento local reproduzível sem credencial ou dado produtivo;
+- estados e erros do domínio usados como fonte única para a experiência.
 
-O MVP será considerado validado quando o grupo piloto completar publicações reais com segurança, a maioria dos participantes compreender o fluxo e o próximo passo sem suporte especializado, as falhas críticas forem recuperáveis e houver evidência de retorno para acompanhar resultados ou criar novo Conteúdo.
+Segmento, Canal, formato, métricas, armazenamento conectado, retenção e metas operacionais não bloqueiam o núcleo. Eles bloqueiam a conexão a serviços reais e a liberação para piloto.
+
+## 15. Critérios para a primeira versão utilizável
+
+“Primeira versão utilizável” significa uma versão liberável para piloto controlado, e não apenas uma demonstração técnica. Todos os critérios são cumulativos:
+
+- segmento, tipo de Conteúdo, Canal, formato e métricas essenciais aprovados;
+- acesso Web por código de e-mail, sessão protegida e encerramento testados;
+- configuração de Usuário e Projeto, Tutor determinístico, criação, retomada e Biblioteca funcionando no ciclo completo;
+- conexão, verificação, revogação e reconexão de uma Conta real controlada comprovadas;
+- prévia mostra Versão, Canal e conta, e somente a confirmação explícita cria a Publicação;
+- Publicação real é assíncrona, idempotente, auditável e reconciliável em sucesso, timeout e falha;
+- Resultado mostra fonte, período, atualização e próximo passo sem promessa de desempenho;
+- arquivos, temporários, tokens, segredos, logs e isolamento por Projeto atendem à baseline de segurança;
+- acessibilidade do caminho principal, migração, restauração, alertas e revogação de token foram verificados em homologação;
+- privacidade, retenção, exclusão, suporte e resposta a incidente estão aprovados;
+- representantes do público concluem o ciclo sem problema crítico de UX;
+- não existe risco crítico de segurança sem tratamento aprovado.
+
+Os detalhes normativos estão em ENG-15 de `APPROVED-DECISIONS.md`. O MVP será considerado validado quando o grupo piloto completar Publicações reais com segurança, a maioria compreender o fluxo e o próximo passo sem suporte especializado, as falhas críticas forem recuperáveis e houver evidência de retorno para acompanhar resultados ou criar novo Conteúdo.
 
 Os limiares quantitativos devem ser aprovados antes do piloto. Caso os sinais não sejam atingidos, a decisão correta pode ser revisar segmento, linguagem, jornada, Canal ou proposta de valor em vez de ampliar funcionalidades.
 

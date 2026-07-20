@@ -1,5 +1,9 @@
 # Roadmap do Produto
 
+**Atualizado em:** 20 de julho de 2026
+
+**Estado de engenharia:** Sprint 5 concluída; baseline técnica aprovada e implementação ainda não iniciada.
+
 ## Propósito
 
 Este roadmap organiza resultados desejados e critérios de passagem. Ele não representa compromisso com datas antes da validação das hipóteses e dependências externas.
@@ -11,6 +15,22 @@ Este roadmap organiza resultados desejados e critérios de passagem. Ele não re
 - Validar um canal antes de expandir para vários.
 - Medir autonomia e confiança, não apenas volume de publicações.
 - Manter o usuário no controle de ações externas.
+
+## Marco de engenharia — iniciar o núcleo do MVP
+
+**Resultado alcançado na Sprint 5:** cliente Web responsivo, linguagem, frameworks, banco, ORM, identidade, fila, armazenamento próprio, Publicação, estratégia de IA e ambientes foram aprovados. O núcleo pode ser implementado com adaptadores simulados e dados fictícios.
+
+**Sequência de entrega:**
+
+1. Identidade, Projeto e autorização.
+2. Tutor determinístico e Orquestrador.
+3. Conteúdo, versões e Biblioteca.
+4. Conta Conectada e contrato do Canal.
+5. Publicação, outbox, worker e reconciliação.
+6. Métricas, Relatório e próximo passo simples.
+7. Armazenamento conectado e mídia do formato escolhido.
+
+**Critério de saída para piloto:** todos os critérios de primeira versão utilizável em ENG-15 de `APPROVED-DECISIONS.md`, incluindo provas reais das Integrações, privacidade, operação, segurança, acessibilidade e teste com o público, estão atendidos.
 
 ## Horizonte 1 — Descobrir
 
@@ -92,6 +112,8 @@ Este roadmap organiza resultados desejados e critérios de passagem. Ele não re
 ## Dependências transversais
 
 Segurança, privacidade, acessibilidade, observabilidade, suporte a erros, políticas dos canais e qualidade da linguagem devem ser tratados em todos os horizontes.
+
+Segmento, Canal, formato, métricas, armazenamento conectado, retenção, metas operacionais e responsáveis permanecem dependências para o Horizonte 2. IA generativa, Mobile, broker dedicado, multicanal e serviços distribuídos não são dependências da primeira versão utilizável.
 
 ## Revisão do roadmap
 

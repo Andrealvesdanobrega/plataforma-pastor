@@ -1,14 +1,14 @@
 # Próximas Ações
 
-**Fase de referência:** após Sprint 4 — Arquitetura Técnica do MVP
+**Fase de referência:** após Sprint 5 — Decisões de Engenharia do MVP
 
-**Atualizado em:** 19 de julho de 2026
+**Atualizado em:** 20 de julho de 2026
 
 ## Objetivo imediato
 
-Transformar a arquitetura de referência em um plano implementável, fechando primeiro as decisões que mudam o produto, os contratos externos, a segurança e o custo do MVP.
+Iniciar a implementação incremental do núcleo sobre a baseline aprovada e, em paralelo, fechar por evidência as decisões de produto, Integração e governança que bloqueiam o piloto.
 
-Nenhuma escolha de tecnologia deve compensar a ausência de validação de segmento, Canal ou fluxo.
+As escolhas técnicas não compensam a ausência de validação de segmento, Canal ou fluxo. Adaptadores simulados liberam o núcleo; nenhum simulador autoriza Publicação real ou piloto.
 
 ## Prioridade 0 — Bloqueios de produto
 
@@ -24,14 +24,14 @@ Nenhuma escolha de tecnologia deve compensar a ausência de validação de segme
 
 **Decisões fechadas:** segmento, formato, Canal e métricas essenciais.
 
-### 2. Escolher o cliente primário
+### 2. Validar Web responsivo como cliente primário
 
 - Levantar dispositivos, conectividade, hábito de instalação e uso de arquivos.
-- Comparar Web, Mobile e entrega combinada limitada.
-- Testar primeiro acesso, retorno de autorização e seleção de mídia no dispositivo real.
-- Definir qual cliente recebe o ciclo completo primeiro e qual profundidade terá o segundo.
+- Testar primeiro acesso Web, código por e-mail, retorno de autorização e seleção de mídia no dispositivo real.
+- Identificar qualquer bloqueio que não possa ser resolvido no navegador.
+- Reabrir a decisão de Mobile somente se a evidência demonstrar dependência de instalação ou recurso nativo.
 
-**Saída esperada:** decisão Web/Mobile, forma de distribuição e requisitos mínimos do dispositivo.
+**Saída esperada:** compatibilidade e requisitos mínimos do Web confirmados, ou evidência explícita para revisar ENG-01 e ENG-04.
 
 ## Prioridade 1 — Provas de viabilidade
 
@@ -60,15 +60,15 @@ Nenhuma escolha de tecnologia deve compensar a ausência de validação de segme
 
 **Saída esperada:** contrato do adaptador, limite de tamanho e política de arquivo temporário.
 
-### 5. Validar identidade e recuperação
+### 5. Provar identidade e recuperação aprovadas
 
 - Testar método de entrada com participantes do segmento.
-- Comparar provedores gerenciados segundo segurança, acessibilidade, custo e operação.
-- Validar Web, Mobile, recuperação, revogação e bloqueio.
+- Validar Amazon Cognito, código por e-mail, fluxo OIDC, sessão Web, recuperação, revogação e bloqueio.
+- Medir entrega de código, abandono, acessibilidade e comportamento em troca de dispositivo ou navegador.
 - Definir autenticação reforçada para administração.
-- Documentar sessão, expiração e encerramento.
+- Fechar duração, renovação e encerramento da sessão.
 
-**Saída esperada:** provedor, fluxo e requisitos de sessão aprovados.
+**Saída esperada:** fluxo aprovado ou evidência registrada para revisar ENG-07 antes do piloto.
 
 ## Prioridade 2 — Segurança e dados
 
@@ -92,27 +92,28 @@ Nenhuma escolha de tecnologia deve compensar a ausência de validação de segme
 
 **Saída esperada:** política operacional de dados pronta para implementação e piloto.
 
-### 8. Decidir o papel de IA no Tutor
+### 8. Validar o Tutor determinístico
 
 - Construir e testar a jornada determinística como referência.
-- Comparar benefício real da compreensão livre e sugestão assistida.
-- Avaliar qualidade, custo, retenção, treinamento, região e subprocessadores.
-- Definir contexto máximo, campos proibidos, validação de saída e degradação.
-- Manter Publicação, consentimento, conexão e exclusão fora das ferramentas autônomas.
+- Medir intenções não compreendidas, retorno às opções guiadas e utilidade das sugestões controladas.
+- Impedir que regras tentem cobrir casos fora do ciclo aprovado.
+- Manter o contrato de assistência desabilitado e sem envio de dados a provedor de IA.
+- Registrar hipótese de experimento futuro somente se a rigidez impedir valor relevante.
 
-**Saída esperada:** decisão de usar ou não IA no MVP e, se usada, contrato de segurança e dados.
+**Saída esperada:** evidência de que o Tutor determinístico sustenta a primeira versão utilizável, ou problema mensurado para decisão posterior ao MVP.
 
 ## Prioridade 3 — Detalhamento para implementação
 
-### 9. Fechar escolhas da plataforma
+### 9. Aplicar a baseline da plataforma
 
-- Selecionar linguagem e frameworks a partir da capacidade da equipe.
-- Selecionar nuvem, região, banco gerenciado, armazenamento privado e cofre.
-- Decidir se o outbox no banco é suficiente ou se haverá fila gerenciada.
-- Definir solução de auditoria, logs, métricas, rastreamento e alertas.
+- Organizar o monorepositório em Web, API, worker e contratos internos sem misturar regras de domínio.
+- Preparar desenvolvimento com Node.js 24 LTS, PostgreSQL local e adaptadores simulados.
+- Materializar a topologia AWS aprovada para homologação antes de usar Integrações reais.
+- Definir esquema físico, migrações, outbox, locks, tentativas e índices com Prisma e SQL revisado.
+- Detalhar auditoria no PostgreSQL e logs, métricas, rastreamento e alertas no CloudWatch.
 - Estimar custo por Usuário, Publicação, transferência, armazenamento e uso de IA.
 
-**Saída esperada:** conjunto tecnológico aprovado com custo inicial e limites.
+**Saída esperada:** baseline reproduzível e verificada, com custo inicial e limites observáveis; custo de IA é zero na primeira versão.
 
 ### 10. Detalhar contratos dos módulos
 
@@ -127,27 +128,27 @@ Nenhuma escolha de tecnologia deve compensar a ausência de validação de segme
 
 ### 11. Planejar ambientes e operação
 
-- Isolar desenvolvimento, homologação e produção.
+- Criar isolamento por conta entre homologação e produção e manter desenvolvimento local sem dados reais.
 - Definir contas de teste, callbacks, chaves e dados permitidos por ambiente.
 - Definir cópias, recuperação, rotação e limpeza temporária.
 - Aprovar metas iniciais de disponibilidade, recuperação e capacidade.
 - Criar alertas com responsável e ação inicial.
-- Preparar procedimentos de desligar Canal, revogar token e desabilitar IA.
+- Preparar procedimentos de desligar Canal, revogar token e manter o adaptador de IA desabilitado.
 
 **Saída esperada:** plano operacional e de continuidade anterior à produção.
 
 ### 12. Converter o MVP em incrementos
 
-Ordem recomendada:
+Ordem aprovada:
 
 1. Identidade, Projeto e autorização.
-2. Tutor determinístico e Orquestrador da jornada.
+2. Tutor determinístico e Orquestrador da jornada, sem IA generativa.
 3. Conteúdo, versões e Biblioteca.
 4. Conta Conectada e adaptador do Canal.
 5. Confirmação, Publicação, outbox, worker e reconciliação.
 6. Métricas, Relatório e recomendação simples.
 7. Armazenamento conectado e mídia do formato escolhido.
-8. Mobile ou Web secundário, se aprovado no recorte.
+8. Endurecimento do Web responsivo nos dispositivos do piloto.
 
 Cada incremento deve terminar com fluxo demonstrável, testes, auditoria, logs seguros e tratamento de falha.
 
@@ -179,17 +180,15 @@ Cada incremento deve terminar com fluxo demonstrável, testes, auditoria, logs s
 
 **Saída esperada:** relatório de verificação, riscos residuais e aprovação formal do piloto.
 
-## Decisões que bloqueiam implementação
+## Decisões que bloqueiam o piloto, não o núcleo
 
-- segmento, tipo de Conteúdo, Canal e métricas;
-- cliente primário e forma de distribuição;
-- provedor de identidade e recuperação;
+- segmento e tipo de Conteúdo;
+- Canal, formato, permissões e métricas;
 - armazenamento conectado e limites de arquivo;
-- uso e provedor de IA;
-- nuvem, região e gestão de segredos;
-- política de dados, retenção e exclusão;
-- metas de recuperação, disponibilidade e custo;
-- responsáveis por segurança, privacidade e operação.
+- política de dados, retenção, exclusão, fundamento e subprocessadores;
+- metas de recuperação, disponibilidade, capacidade e custo;
+- responsáveis por segurança, privacidade, suporte e operação;
+- limiares quantitativos do piloto.
 
 ## Decisões que podem esperar até depois do MVP
 
@@ -201,20 +200,21 @@ Cada incremento deve terminar com fluxo demonstrável, testes, auditoria, logs s
 - armazém analítico;
 - múltiplas regiões ativas;
 - edição e transcodificação profissional;
-- Tutor com personalização avançada.
+- Tutor com personalização avançada;
+- IA generativa e escolha de seu provedor;
+- aplicativo Mobile;
+- broker dedicado, salvo se a fila no banco falhar nos limites medidos.
 
 ## Critérios para iniciar desenvolvimento
 
-- [ ] Recorte do piloto aprovado.
-- [ ] Cliente primário aprovado.
-- [ ] Canal e armazenamento considerados viáveis.
-- [ ] Identidade e recuperação aprovadas.
-- [ ] Uso de IA decidido.
-- [ ] Ameaças e dados revisados.
-- [ ] Plataforma e ambientes definidos.
-- [ ] Contratos e estados fechados.
+- [x] Cliente primário e stack aprovados.
+- [x] Identidade, fila, armazenamento próprio, Publicação e IA inicial decididos.
+- [x] Desenvolvimento, homologação e produção definidos.
+- [ ] Baseline aceita pela equipe executora.
+- [ ] Contratos internos, estados e erros detalhados para o primeiro incremento.
+- [ ] Ambiente local reproduzível com simuladores e dados fictícios.
 - [ ] Backlog técnico priorizado.
-- [ ] Métricas, auditoria e logs definidos.
+- [ ] Auditoria, campos de log e métricas técnicas do primeiro incremento definidos.
 
 ## Critérios para iniciar piloto real
 

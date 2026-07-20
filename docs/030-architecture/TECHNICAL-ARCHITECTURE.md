@@ -1,18 +1,18 @@
 # Arquitetura Técnica do MVP
 
-**Versão:** 0.1
+**Versão:** 0.2
 
-**Fase:** Sprint 4 — Arquitetura Técnica do MVP
+**Fase:** Sprint 5 — Decisões de Engenharia do MVP
 
-**Atualizado em:** 19 de julho de 2026
+**Atualizado em:** 20 de julho de 2026
 
-**Estado:** arquitetura de referência; implementação ainda não iniciada
+**Estado:** baseline tecnológica aprovada; implementação ainda não iniciada
 
 ## 1. Objetivo
 
 Definir a primeira arquitetura técnica completa para entregar e operar o ciclo do MVP: entrar, configurar, conectar uma conta, criar e organizar Conteúdo, confirmar uma Publicação, acompanhar resultados e receber orientação do Tutor.
 
-A arquitetura traduz o domínio e a experiência aprovados nas Sprints anteriores sem ampliar o produto. Decisões de provedor, linguagem e framework permanecem subordinadas a provas de viabilidade e às decisões abertas registradas ao final.
+A arquitetura traduz o domínio e a experiência aprovados nas Sprints anteriores sem ampliar o produto. A Sprint 5 fecha a plataforma necessária para iniciar o núcleo; Canal, formato, armazenamento conectado, governança e metas operacionais permanecem subordinados às evidências registradas em `OPEN-DECISIONS.md`.
 
 ## 2. Princípios obrigatórios
 
@@ -30,20 +30,28 @@ A arquitetura traduz o domínio e a experiência aprovados nas Sprints anteriore
 
 | Tema | Decisão para o MVP | Motivo |
 |---|---|---|
+| Cliente primário | Web responsivo em Next.js; Mobile posterior | Entrega o ciclo em desktop e celular sem manter dois clientes |
+| Linguagem e runtime | TypeScript estrito sobre Node.js 24 LTS | Compartilha contratos e reduz divergência entre Web, API e worker |
 | Estilo de backend | Monólito modular | Menor custo operacional e transações locais, com limites evolutivos claros |
-| Processos | API síncrona e worker assíncrono, usando os mesmos módulos | Separa experiência interativa de Integrações lentas sem criar microserviços prematuros |
+| Framework backend | NestJS para API e worker | Organiza módulos e permite dois processos sobre o mesmo núcleo |
+| Framework frontend | Next.js com React e App Router | Cliente Web responsivo, acessível e implantável em contêiner |
+| Processos | Next.js Web, NestJS API e NestJS worker | Separa experiência interativa de Integrações lentas sem criar microserviços prematuros |
 | Contrato dos clientes | API HTTP versionada; consulta ou fluxo de estado para tarefas longas | Um contrato para Web e Mobile e retomada simples |
-| Dados transacionais | Banco relacional PostgreSQL compatível | Integridade, relacionamentos, auditoria e consultas da Biblioteca |
+| Dados transacionais | Amazon RDS for PostgreSQL; PostgreSQL local | Integridade, relacionamentos, auditoria e consultas da Biblioteca |
+| Acesso a dados | Prisma ORM, Prisma Migrate e SQL explícito revisado quando necessário | Produtividade tipada sem perder recursos essenciais do PostgreSQL |
 | Busca inicial | Índices e busca textual do próprio banco | Evita motor de busca adicional no MVP |
-| Mensageria inicial | Outbox transacional e fila durável simples | Evita perda entre mudança de estado e trabalho assíncrono |
-| Tutor | Orientação determinística como base; geração assistida opcional e isolada | Mantém previsibilidade e permite validar valor antes de depender de IA |
+| Mensageria inicial | Outbox e fila de trabalhos no PostgreSQL | Evita perda entre mudança de estado e trabalho assíncrono sem outro serviço |
+| Identidade | Amazon Cognito por OIDC, código de uso único por e-mail e sessão Web de servidor | Evita senha própria e mantém autorização no domínio |
+| Tutor | Orientação determinística; sem IA generativa na primeira versão utilizável | Mantém previsibilidade e valida valor antes de enviar dados a outro provedor |
 | Integrações | Adaptadores por capacidade, atrás de contratos internos | Impede dependência do domínio em detalhes de um provedor |
 | Arquivos grandes | Referência a armazenamento conectado pelo Usuário | Reduz custo, duplicação e responsabilidade sobre vídeos |
-| Arquivos pequenos | Armazenamento privado da plataforma quando necessário | Suporta avatar, miniatura e mídia pequena do piloto com controle de acesso |
+| Arquivos pequenos | Amazon S3 privado quando necessário | Suporta avatar, miniatura e mídia pequena do piloto com controle de acesso |
 | Publicação | Uma Publicação independente por destino | Permite estado, tentativa e resultado próprios e prepara multicanal |
-| Ambientes | Desenvolvimento, homologação e produção isolados | Evita usar contas e dados reais em testes |
+| Nuvem e região | AWS, região `sa-east-1` | Serviços gerenciados em uma região próxima ao público inicial |
+| Execução | Imagens OCI no ECR e tarefas ECS Fargate | Separa Web, API e worker sem administrar servidores ou Kubernetes |
+| Ambientes | Desenvolvimento local, homologação e produção isolados | Evita usar contas e dados reais em testes |
 
-Tecnologias e provedores concretos deverão atender a essas decisões; não são considerados aprovados apenas por aparecerem como exemplos neste documento.
+Motivo, benefícios, riscos e reversibilidade de cada escolha estão registrados em `APPROVED-DECISIONS.md`.
 
 ## 4. Visão geral do sistema
 
@@ -104,11 +112,11 @@ O cliente nunca recebe segredos de Integração nem escolhe chamadas técnicas. 
 
 ### 5.1 Frontend Web
 
-Aplicação responsiva distribuída por CDN e executada em navegador moderno. Pode ser uma aplicação web progressiva se instalação pelo navegador for útil ao piloto.
+Aplicação Next.js responsiva, executada sobre Node.js e distribuída atrás da borda da AWS. É o único cliente completo da primeira versão utilizável. Recursos de aplicação web progressiva somente serão habilitados se o teste do piloto demonstrar valor; operação offline completa permanece fora.
 
 ### 5.2 Aplicativo Mobile
 
-Cliente instalável para os sistemas móveis escolhidos. Usa o mesmo contrato de experiência e domínio do Web, com recursos próprios apenas onde agregarem valor: armazenamento seguro de sessão, retorno de autorização externa, seleção de arquivo e compartilhamento para o App.
+Cliente instalável permanece como possibilidade arquitetural posterior. Não será implementado na primeira versão utilizável. Se aprovado depois, usará a mesma API e terá recursos próprios apenas onde agregarem valor: armazenamento seguro de sessão, retorno de autorização externa, seleção de arquivo e compartilhamento para o App.
 
 ### 5.3 API
 
@@ -120,9 +128,13 @@ Processo sem interface pública que consome trabalhos duráveis: publicar, recon
 
 ### 5.5 Persistência e serviços gerenciados
 
-Banco relacional, armazenamento privado, cofre de segredos, fila durável quando adotada, monitoramento e entrega dos clientes devem preferir serviços gerenciados para reduzir operação no MVP.
+Produção e homologação usam Amazon RDS for PostgreSQL, Amazon S3, Amazon Cognito, AWS Secrets Manager/KMS, Amazon CloudWatch, Amazon ECR e Amazon ECS com Fargate. A fila inicial permanece no PostgreSQL. Não há Redis, broker dedicado ou Kubernetes no MVP.
 
 ## 6. Backend
+
+### 6.0 Tecnologia
+
+API e worker são escritos em TypeScript estrito sobre Node.js 24 LTS e NestJS. A linha do runtime deve ser atualizada antes do fim de seu suporte, mediante teste automatizado e homologação. O repositório usa `npm workspaces` para manter aplicações e pacotes internos sem publicação independente obrigatória.
 
 ### 6.1 Estilo
 
@@ -168,6 +180,8 @@ Não há necessidade de microserviços no MVP. API e worker podem usar o mesmo a
 - Webhooks ficam em rotas separadas, autenticadas pelo método do provedor e processadas de forma assíncrona.
 
 ## 7. Frontend Web
+
+O framework aprovado é Next.js com React, TypeScript e App Router. Renderização no servidor e cache são usados somente por rota e com política explícita; estado autenticado ou variável não pode ser servido por cache compartilhado. A aplicação é empacotada como imagem OCI e não depende de uma plataforma proprietária do framework.
 
 ### 7.1 Responsabilidades
 
@@ -225,15 +239,19 @@ O Mobile entrega a mesma experiência do Web usando a mesma API. Não implementa
 
 ### 8.4 Estratégia do MVP
 
-Web e Mobile compartilham design, contratos e comportamento, mas não devem duplicar todo o esforço antes do piloto. A decisão de qual será o cliente primário e se o segundo será completo, limitado ou posterior permanece aberta. A arquitetura suporta ambos sem exigir dois backends.
+Web responsivo é o cliente primário e único cliente completo da primeira versão utilizável. Mobile está adiado até que evidência de instalação, recursos do aparelho ou compartilhamento justifique a segunda base. A arquitetura preserva uma API independente para permitir essa evolução sem exigir outro backend.
 
 ## 9. Banco de dados
 
 ### 9.1 Tecnologia e topologia
 
-Banco relacional PostgreSQL compatível, preferencialmente gerenciado, em uma região primária no MVP. Alta disponibilidade, cópias automáticas e recuperação pontual são habilitadas conforme o nível de serviço do piloto.
+PostgreSQL é o motor aprovado. Desenvolvimento usa instância em contêiner; homologação e produção usam Amazon RDS for PostgreSQL na região `sa-east-1`. Cópias automáticas e recuperação pontual são obrigatórias em produção; topologia de alta disponibilidade e prazos de recuperação serão dimensionados pela análise de impacto e orçamento do piloto.
 
-### 9.2 Organização lógica
+### 9.2 Acesso e migrações
+
+Prisma ORM fornece o cliente tipado e Prisma Migrate mantém o histórico de alterações. Migrações SQL são versionadas, revisadas e promovidas junto do artefato. Recursos como locks de fila, busca, índices especializados e restrições não expressas adequadamente pelo ORM usam SQL explícito encapsulado e coberto por testes de integração.
+
+### 9.3 Organização lógica
 
 - Um banco transacional por ambiente.
 - Tabelas agrupadas por módulos ou esquemas lógicos, sem um banco por módulo.
@@ -243,11 +261,11 @@ Banco relacional PostgreSQL compatível, preferencialmente gerenciado, em uma re
 - Estados controlados e transições validadas pelo domínio.
 - Dados específicos de Canal podem usar estrutura flexível controlada, sem transformar todo o modelo em documentos sem regra.
 
-### 9.3 Biblioteca e busca
+### 9.4 Biblioteca e busca
 
 A Biblioteca é uma consulta paginada sobre Conteúdo, versões e estados. O MVP usa índices compostos por Projeto, arquivo, estado e atualização, além de busca textual normalizada em título e campos aprovados. Motor de busca dedicado só é introduzido se medições reais mostrarem necessidade.
 
-### 9.4 Concorrência e consistência
+### 9.5 Concorrência e consistência
 
 - Edição usa controle otimista por versão para evitar sobrescrita silenciosa.
 - Publicação congela uma Versão antes de registrar o trabalho externo.
@@ -255,7 +273,7 @@ A Biblioteca é uma consulta paginada sobre Conteúdo, versões e estados. O MVP
 - Outbox é escrita na mesma transação do fato que precisa gerar trabalho.
 - Coleta e Publicação são eventualmente consistentes com serviços externos.
 
-### 9.5 Proteção e ciclo de vida
+### 9.6 Proteção e ciclo de vida
 
 - Criptografia em trânsito e repouso.
 - Acesso privado por identidade de serviço, sem exposição pública direta.
@@ -297,15 +315,18 @@ Tutor é a fachada de experiência que recebe intenção em linguagem comum, con
 | Classificador de intenção | Mapear o pedido para uma intenção permitida e nível de confiança |
 | Montador de contexto | Selecionar dados mínimos do Usuário, Projeto e etapa |
 | Motor de orientação | Aplicar regras de jornada e gerar opções simples |
-| Gerador assistido opcional | Sugerir texto ou explicação dentro de limites |
+| Catálogo de modelos determinísticos | Sugerir estrutura ou explicação a partir de regras aprovadas |
+| Adaptador de assistência desabilitado | Preservar contrato para experimento futuro sem chamar provedor no MVP |
 | Validador de saída | Conferir formato, escopo, segurança e ação proposta |
 | Registro de interação | Guardar resumo minimizado e resposta à recomendação |
 
 ### 11.3 Base determinística
 
-O MVP consegue executar a jornada principal com intenções e respostas predefinidas. Um serviço de IA pode ajudar na compreensão de texto livre e na sugestão editorial, mas a indisponibilidade dele não deve impedir acesso à Biblioteca, edição, confirmação de Publicação ou consulta de estados.
+A primeira versão utilizável executa toda a jornada com intenções, respostas, estruturas e recomendações predefinidas. Texto livre é mapeado por regras conservadoras; baixa confiança retorna opções guiadas. Nenhum Conteúdo ou interação é enviado a provedor de IA.
 
-### 11.4 Uso seguro de IA
+### 11.4 Evolução segura para IA
+
+IA generativa está adiada. Um experimento futuro somente pode ser habilitado depois de aprovação explícita de valor, qualidade em português, categorias de dados, região, retenção, treinamento, subprocessadores, custo e tratamento de abuso. Mesmo após aprovação, deverá respeitar:
 
 - Conteúdo e instruções do Usuário são dados não confiáveis.
 - Contexto enviado é mínimo, autorizado e separado das instruções do sistema.
@@ -313,11 +334,11 @@ O MVP consegue executar a jornada principal com intenções e respostas predefin
 - Saída é estruturada, validada e convertida em proposta, nunca executada diretamente.
 - Publicar, conectar, consentir, desconectar, excluir e alterar permissão não são ferramentas autônomas.
 - Sugestão editorial precisa de aceitação antes de virar Versão de Conteúdo.
-- Provedor, retenção, uso para treinamento e localização de dados devem ser avaliados antes do piloto.
+- Provedor, retenção, uso para treinamento e localização de dados devem ser avaliados antes de qualquer experimento com Usuários.
 
 ### 11.5 Continuidade e degradação
 
-Se classificação livre falhar, Tutor volta a opções guiadas. Se o gerador estiver indisponível, oferece estrutura simples e edição manual. Se não compreender após nova tentativa, encaminha para etapa ou suporte sem perder o estado.
+Se a regra não compreender o pedido, Tutor volta a opções guiadas. Estruturas simples e edição manual permanecem disponíveis. Depois de nova dificuldade, encaminha para etapa ou suporte sem perder o estado.
 
 ## 12. Orquestrador
 
@@ -355,7 +376,7 @@ Fluxos curtos usam transação síncrona. Fluxos externos usam uma máquina de e
 - **Canal:** autorização, validação, Publicação, consulta de estado e métricas.
 - **Armazenamento do Usuário:** autorização, seleção, leitura temporária, metadados e revogação.
 - **Identidade:** entrada, recuperação, verificação e sessão.
-- **IA opcional:** classificação, sugestão e explicação.
+- **IA futura, desabilitada no MVP:** classificação, sugestão e explicação atrás do contrato de assistência.
 - **Notificação:** entrega de aviso permitido pelo Usuário.
 
 ### 13.2 Contrato interno
@@ -425,11 +446,11 @@ O desenho suporta múltiplos destinos, mas o MVP implementa um Canal e uma Publi
 |---|---|---|
 | Texto, estrutura e versões | Banco transacional | Fonte editorial, versões e histórico |
 | Metadados de arquivo | Banco transacional | Nome, tipo, tamanho, origem, identificador, versão e estado |
-| Vídeo e arquivo grande | Serviço conectado pelo Usuário | Referência protegida e permissão necessária |
-| Imagem ou arquivo pequeno do MVP | Armazenamento privado da plataforma, se necessário | Objeto privado e metadados |
-| Miniatura derivada | Armazenamento privado com expiração ou ciclo definido | Referência e origem |
-| Arquivo temporário para Publicação | Área efêmera criptografada | Referência de trabalho e prazo de exclusão |
-| Segredo | Cofre de segredos | Apenas referência nos dados de negócio |
+| Vídeo e arquivo grande | Serviço conectado pelo Usuário, a escolher após pesquisa | Referência protegida e permissão necessária |
+| Imagem ou arquivo pequeno do MVP | Amazon S3 privado, se necessário | Objeto privado e metadados |
+| Miniatura derivada | Amazon S3 privado com ciclo de vida | Referência e origem |
+| Arquivo temporário para Publicação | Amazon S3 privado com TTL e área lógica por trabalho | Referência de trabalho e prazo de exclusão |
+| Segredo | AWS Secrets Manager, protegido por KMS | Apenas referência nos dados de negócio |
 
 ### 15.2 Arquivos grandes conectados
 
@@ -453,14 +474,15 @@ O MVP não é serviço de backup, edição ou transcodificação de vídeos. Nã
 
 ### 16.1 Identidade
 
-Preferir provedor de identidade gerenciado com protocolos abertos. A plataforma recebe um identificador estável e mantém perfil de produto separado dos dados de autenticação.
+Amazon Cognito User Pools é o provedor de identidade gerenciado e atua como emissor OIDC. O identificador local é vinculado ao `sub` estável do provedor; perfil, consentimentos, participação e autorização permanecem no banco da plataforma.
 
 ### 16.2 Fluxos
 
-- Web: sessão de servidor protegida por cookie seguro.
-- Mobile: autorização pelo navegador do sistema com proteção para cliente público.
-- Recuperação, verificação e bloqueio são responsabilidade do serviço de identidade, com experiência guiada pelo Tutor.
-- Autenticação reforçada para operação administrativa e, quando justificável, para ação de alto risco.
+- Web: Authorization Code com PKCE; backend troca e valida o código e mantém sessão em cookie `Secure`, `HttpOnly` e `SameSite`.
+- Entrada primária: código de uso único enviado por e-mail, sem senha mantida pela plataforma.
+- Mobile futuro: autorização pelo navegador do sistema com proteção para cliente público.
+- Recuperação, verificação, limitação e bloqueio são responsabilidade do Cognito, com experiência guiada pelo Tutor.
+- Autenticação reforçada é obrigatória para operação administrativa e pode ser exigida para ação de alto risco após análise.
 
 ### 16.3 Autorização
 
@@ -565,6 +587,10 @@ Segurança do Tutor não substitui autorização do backend. Uma resposta corret
 
 ## 20. Processamento assíncrono e consistência
 
+### 20.0 Tecnologia inicial
+
+A fila é uma tabela de trabalhos no PostgreSQL, alimentada pelo outbox transacional. Workers concorrentes adquirem lotes pequenos com lock de linha e `SKIP LOCKED`, registram prazo de posse e renovação, e devolvem trabalho abandonado após expiração. Não há broker dedicado no MVP. A idade do trabalho mais antigo, profundidade, tentativas e contenção do banco determinam se a fila deverá migrar para SQS ou equivalente.
+
 ### 20.1 Outbox e trabalhos
 
 1. Caso de uso grava mudança de domínio e evento de outbox na mesma transação.
@@ -597,7 +623,7 @@ Agendamento editorial e lote multicanal não fazem parte do MVP.
 - Worker escalado por fila e limite do provedor.
 - Banco verticalmente dimensionado com índices e consultas medidas.
 - Pool de conexões com limites por processo.
-- CDN para aplicação Web e ativos públicos não sensíveis.
+- Cache longo no navegador para ativos Web imutáveis e não sensíveis; CDN somente se medições justificarem.
 - Cache somente para catálogo e leitura segura; não é fonte de verdade.
 - Paginação na Biblioteca, Publicações, Relatórios e auditoria.
 
@@ -628,15 +654,18 @@ Um módulo só se torna serviço separado quando houver necessidade observada de
 
 ### 23.1 Ambientes
 
-- **Desenvolvimento:** dados fictícios e adaptadores simulados.
-- **Homologação:** integrações em contas de teste e validação de fluxo completo.
-- **Produção:** dados e credenciais reais, acesso operacional restrito.
+- **Desenvolvimento:** Node.js 24 LTS; Web, API e worker locais; PostgreSQL e emuladores necessários em contêineres; dados fictícios e adaptadores simulados. Nenhum segredo ou dado produtivo é permitido.
+- **Homologação:** conta AWS exclusiva em `sa-east-1`, mesma topologia lógica de produção em capacidade mínima, Integrações e contas oficiais de teste, dados sintéticos e telemetria própria.
+- **Produção:** conta AWS exclusiva em `sa-east-1`, dados e credenciais reais, entrada pela borda aprovada e acesso operacional restrito.
 
 Cada ambiente possui banco, armazenamento, chaves, clientes externos, callbacks e telemetria separados.
 
+Produção executa Next.js, API e worker como tarefas separadas no ECS Fargate, a partir de imagens OCI no ECR. RDS, S3, Cognito, Secrets Manager/KMS e CloudWatch são privados ou restritos conforme sua função. Infraestrutura é declarada em AWS CDK com TypeScript.
+
 ### 23.2 Caminho de entrega
 
-- mudança revisada e verificada automaticamente;
+- mudança revisada e verificada automaticamente pelo GitHub Actions;
+- autenticação da entrega na AWS por OIDC, sem chave de acesso duradoura no repositório;
 - migração de dados testada antes da promoção;
 - artefatos imutáveis promovidos entre ambientes;
 - segredos injetados pelo ambiente;
@@ -667,8 +696,8 @@ Cada ambiente possui banco, armazenamento, chaves, clientes externos, callbacks 
 - uma Conta Conectada ativa por fluxo principal;
 - Publicação imediata e processamento assíncrono confiável;
 - coleta de métricas essenciais e um Relatório simples;
-- Tutor guiado por regras, com IA opcional e limitada;
-- Web e Mobile suportados por uma API comum, com cliente primário ainda a decidir;
+- Tutor guiado por regras, sem IA generativa habilitada;
+- Web responsivo como cliente primário sobre API independente;
 - arquivos grandes referenciados em armazenamento conectado;
 - auditoria e observabilidade dos eventos críticos.
 
@@ -685,36 +714,31 @@ Cada ambiente possui banco, armazenamento, chaves, clientes externos, callbacks 
 - treinamento de modelo com dados do Usuário;
 - relatório comparativo multicanal;
 - operação offline completa;
-- desenvolvimento de um provedor próprio de identidade, IA ou armazenamento.
+- desenvolvimento de um provedor próprio de identidade, IA ou armazenamento;
+- aplicativo Mobile;
+- Redis, broker dedicado e Kubernetes.
 
-## 25. Critérios para avançar à implementação
+## 25. Critérios para avançar
 
-- segmento, Canal, formato e cliente primário do piloto escolhidos;
-- prova técnica do Canal cobre autorização, Publicação, estado, métricas e revogação;
-- prova de armazenamento cobre seleção, leitura temporária, expiração e arquivo removido;
-- arquitetura de identidade e recuperação aprovada;
-- ameaça, retenção e base legal revisadas;
-- protótipo da UX validado com Usuários;
-- contratos dos módulos, adaptadores, estados e erros definidos;
-- metas iniciais de disponibilidade, recuperação e custo aprovadas;
-- plano de ambientes, auditoria, logs e resposta a incidente pronto.
+### 25.1 Início da implementação do núcleo
+
+- baseline de `APPROVED-DECISIONS.md` aceita pela equipe;
+- repositório, módulos e contratos organizados de acordo com o monólito modular;
+- ambientes locais reproduzíveis sem dados ou segredos reais;
+- estados, regras de autorização, idempotência, auditoria e campos proibidos de log tratados como critérios de cada incremento;
+- adaptadores externos definidos por contrato e substituíveis por simuladores.
+
+Segmento, Canal e armazenamento conectado não impedem o início de Identidade, Projeto, Tutor determinístico, Conteúdo, Biblioteca, outbox, Publicação e observabilidade. Impedem ligar o caminho a uma conta real e liberar o piloto.
+
+### 25.2 Primeira versão utilizável para piloto
+
+A versão somente é liberável quando satisfizer cumulativamente ENG-15 em `APPROVED-DECISIONS.md`, incluindo recorte de produto aprovado, provas reais de Canal e armazenamento, ciclo completo, acessibilidade, segurança, privacidade, restauração, alertas e teste com representantes do público.
 
 ## 26. Decisões abertas
 
-| ID | Decisão | Por que está aberta | Evidência necessária |
-|---|---|---|---|
-| TA-01 | Cliente primário: Web, aplicativo Mobile ou entrega combinada | Dois clientes completos ampliam custo antes de validar uso | Pesquisa de dispositivos, instalação e tarefas do segmento |
-| TA-02 | Linguagem, framework e organização do repositório | Devem refletir capacidade da equipe e operação escolhida | Equipe, prova curta e critérios de manutenção |
-| TA-03 | Provedor de nuvem e região | Impacta custo, residência de dados e serviços gerenciados | Requisitos legais, orçamento e localização do piloto |
-| TA-04 | Provedor de identidade e método de entrada | Público pode preferir código, senha ou identidade social | Teste de UX, segurança e recuperação |
-| TA-05 | Primeiro Canal e formato | Define contrato, mídia, permissões e métricas | Descoberta e prova oficial da Integração |
-| TA-06 | Primeiro armazenamento conectado | Nem todo público usa o mesmo serviço | Pesquisa e prova de seleção/leitura |
-| TA-07 | Limite entre arquivo pequeno e grande | Afeta custo, UX e Publicação | Formato do piloto, medição de tamanho e orçamento |
-| TA-08 | Uso de IA no Tutor do MVP | Jornada pode ser validada com regras; IA adiciona custo e risco | Teste comparativo de valor, qualidade e privacidade |
-| TA-09 | Provedor de IA e política de dados | Termos, retenção e região variam | Avaliação de segurança, privacidade, qualidade e custo |
-| TA-10 | Transporte da fila | Banco pode bastar no piloto; serviço dedicado melhora isolamento | Volume, latência, operação e limites medidos |
-| TA-11 | Metas de disponibilidade, recuperação e retenção | Dependem de impacto, obrigação e custo | Análise do piloto e política aprovada |
-| TA-12 | Canal de notificações do MVP | Pode não ser necessário para publicação imediata | Testes de retomada e expectativa do Usuário |
+As decisões técnicas que impediam iniciar o núcleo foram fechadas na Sprint 5. Permanecem abertas, com evidência e trabalho permitido definidos em `OPEN-DECISIONS.md`: segmento e tipo de Conteúdo; Canal, formato e métricas; armazenamento conectado e limites de arquivo; retenção e fundamento; metas operacionais e orçamento; responsáveis; e limiares do piloto.
+
+Depois da primeira versão utilizável serão reavaliados IA generativa, Mobile, broker dedicado, multicanal, Agendamento, Campanha, colaboração, busca externa, armazém analítico, microserviços e múltiplas regiões.
 
 ## 27. Riscos técnicos
 
@@ -726,16 +750,16 @@ Cada ambiente possui banco, armazenamento, chaves, clientes externos, callbacks 
 | RT-04 | Publicação duplicada após timeout | Dano público e perda de confiança | Idempotência, estado persistido e reconciliação antes de repetir |
 | RT-05 | Arquivo grande indisponível ou removido | Publicação falha sem perda do texto | Verificação antes de confirmar, referência de versão e erro recuperável |
 | RT-06 | Cópia temporária permanecer além do necessário | Aumenta exposição e custo | TTL obrigatório, limpeza automática, monitoramento e auditoria |
-| RT-07 | Tutor ou IA induzir ação incorreta | Conteúdo ou destino errado | Saída validada, lista de ações, confirmação humana e autorização no backend |
-| RT-08 | Instrução maliciosa no Conteúdo influenciar o Tutor | Exfiltração ou comando indevido | Separar instruções e dados, minimizar ferramentas e validar saída |
+| RT-07 | Tutor ou futura IA induzir ação incorreta | Conteúdo ou destino errado | Regras controladas, confirmação humana e autorização no backend |
+| RT-08 | Instrução maliciosa no Conteúdo influenciar o Tutor ou futura IA | Exfiltração ou comando indevido | Tratar Conteúdo como dado; antes de IA, separar instruções, restringir ferramentas e validar saída |
 | RT-09 | Falha de isolamento entre Projetos | Exposição de dados | Autorização em cada caso de uso, testes negativos e defesa no banco quando viável |
 | RT-10 | Logs capturarem Conteúdo ou segredos | Incidente de privacidade | Campos permitidos, redação central e testes de telemetria |
-| RT-11 | Web e Mobile duplicarem regras | Comportamentos divergentes e defeitos | Backend autoritativo, contrato comum e cliente primário definido |
+| RT-11 | Mobile ser introduzido antes de evidência e duplicar regras | Comportamentos divergentes e defeitos | Manter Web como único cliente do MVP e backend autoritativo |
 | RT-12 | Monólito acumular acoplamento | Evolução e escala difíceis | Limites de módulo, testes de arquitetura e eventos internos |
 | RT-13 | Banco ou fila perder trabalho | Publicação ausente ou estado incoerente | Outbox transacional, cópias e reconciliação periódica |
 | RT-14 | Métricas externas atrasadas ou incompatíveis | Recomendação enganosa | Fonte e período explícitos, estado parcial e sem agregação indevida |
-| RT-15 | Custos de IA, mídia ou chamadas crescerem | Piloto financeiramente inviável | Orçamento, limites por Projeto, medição e degradação para regras |
+| RT-15 | Custos de mídia, chamadas externas ou infraestrutura crescerem | Piloto financeiramente inviável | Orçamento, limites por Projeto e medição; IA permanece desabilitada |
 
 ## 28. Critérios de revisão
 
-Esta arquitetura deve ser revisada quando cliente primário, Canal, formato, provedor de identidade, armazenamento ou IA forem escolhidos; quando uma prova contrariar um contrato; quando risco de segurança alterar fluxo; ou quando métricas reais justificarem separar componente ou adicionar infraestrutura.
+Esta arquitetura deve ser revisada quando Canal, formato, armazenamento conectado ou metas operacionais forem escolhidos; quando uma prova contrariar o cliente Web, Cognito ou outra decisão aprovada; quando um risco de segurança alterar o fluxo; antes de habilitar IA; ou quando métricas reais justificarem separar componente ou adicionar infraestrutura.
