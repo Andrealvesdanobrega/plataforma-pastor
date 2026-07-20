@@ -1,10 +1,10 @@
 # Arquitetura Funcional
 
-**Versão:** 0.3
+**Versão:** 0.4
 
-**Fase:** Sprint 3 — UX e Fluxo do Produto
+**Fase:** Sprint 6 — Primeiro Fluxo Vertical do MVP
 
-**Atualizado em:** 19 de julho de 2026
+**Atualizado em:** 20 de julho de 2026
 
 ## 1. Objetivo
 
@@ -486,22 +486,20 @@ Cada evento precisa de finalidade, propriedades mínimas e retenção definidas 
 
 ## 14. Recorte funcional do MVP
 
-O MVP percorre o fluxo completo com profundidade controlada: um Usuário proprietário, um Projeto principal, uma Biblioteca simples, um tipo de Conteúdo, um Canal, uma Conta Conectada, publicação imediata, um Relatório essencial e tutoria baseada em etapas e regras.
+O primeiro fluxo percorre o ciclo com profundidade mínima: um pastor convidado e proprietário, um Projeto de igreja, uma Biblioteca simples, um aviso textual, uma Página do Facebook como Conta Conectada, Publicação imediata, confirmação e resultado mínimo, com tutoria baseada em etapas e regras.
 
-Agendamento, Campanha, colaboração, múltiplos Canais e recomendações avançadas permanecem modelados como evolução, sem ampliar a entrega inicial.
+Mídia, armazenamento conectado, Agendamento, Campanha, colaboração, múltiplos Canais, IA generativa, notificações e recomendações avançadas permanecem modelados ou contratados como evolução, sem participar do primeiro fluxo.
 
 ## 15. Decisões pendentes
 
-- plataforma e distribuição inicial do App;
-- segmento, Canal e formato do piloto;
-- autenticação e recuperação de acesso;
-- estrutura final de versões e mídias do Conteúdo;
-- uso ou não de Agendamento no MVP;
-- estratégia de idempotência da primeira Integração;
-- métricas e frequência dos Relatórios;
-- origem, explicabilidade e limites das sugestões do Tutor;
+- validar pastor responsável pela comunicação como primeiro segmento;
+- provar Facebook Pages para autorização, texto, estado, revogação, link e resultado;
+- confirmar permissões mínimas, revisão externa, limites e custo da Integração;
+- definir a única métrica externa, ou registrar que confirmação e link são o único resultado disponível;
+- validar o convite, código por e-mail e sessão com o público;
+- aprovar retenção, consentimento, exclusão e suporte;
 - regras de colaboração futuras em Projetos;
-- consentimento, retenção, exclusão e suporte aplicáveis.
+- gatilhos futuros para mídia, segundo tipo de Conteúdo ou segundo Canal.
 
 ## 16. Critérios de validação
 
@@ -572,8 +570,8 @@ O Usuário pode escolher outra ação; prioridade é orientação, não bloqueio
 | Onboarding | Usuário | acesso, consentimentos e etapa | criar acesso, entrar, recuperar e continuar depois |
 | Configuração | Usuário, Projeto, Canal e Conta Conectada | objetivo, público, progresso e saúde da conta | atualizar contexto, iniciar conexão e confirmar conta |
 | Início | Coordenador da Jornada | próxima ação, Conteúdos e Publicações recentes | navegar para tarefa escolhida |
-| Criar e editar | Conteúdo e Versão | Rascunho, mídia e pendências | criar, editar, aceitar sugestão, salvar e marcar Pronto |
-| Biblioteca | Conteúdo | lista, filtros e estado editorial | abrir, filtrar, renomear, duplicar, arquivar e restaurar |
+| Criar e editar | Conteúdo e Versão | Título, texto e pendências | criar, editar, salvar e marcar Pronto |
+| Biblioteca | Conteúdo | lista por atualização e estado editorial | abrir e arquivar |
 | Publicar | Conteúdo, Conta Conectada e Publicação | versão, destino e andamento | corrigir, confirmar, cancelar antes do envio e tentar novamente com segurança |
 | Resultados | Relatório e Métrica de Publicação | fonte, período, atualização e leitura | selecionar Conteúdo, atualizar e responder à recomendação |
 | Tutor | Contexto autorizado da jornada | objetivo atual, pendências e recomendações | explicar, perguntar, encaminhar e registrar resposta |
@@ -625,12 +623,10 @@ A conexão externa é uma interrupção controlada: antes de sair, a etapa é sa
 
 ```text
 Iniciar
-→ Informar ideia
-→ Definir objetivo e público
-→ Receber ou dispensar sugestão
+→ Informar título interno e texto
+→ Salvar Rascunho
 → Editar
-→ Adicionar mídia quando necessário
-→ Revisar pendências
+→ Revisar limite e pendências
 → Marcar Pronto
 → Publicar ou guardar na Biblioteca
 ```
@@ -639,9 +635,8 @@ Regras de coordenação:
 
 - Criar Conteúdo assim que a primeira informação útil for confirmada, evitando perda.
 - Criar nova Versão quando uma edição aceita alterar a fonte.
-- Manter sugestões fora do Conteúdo até que o Usuário escolha usá-las.
 - Salvar a cada avanço e informar somente depois da confirmação.
-- Consultar regras do Canal para separar correção obrigatória de melhoria opcional.
+- Consultar limite textual do Canal para indicar correção obrigatória.
 - Ao marcar Pronto, validar requisitos sem iniciar Publicação.
 - Retomar pela última etapa consistente, nunca por uma tela intermediária sem dados.
 
@@ -649,13 +644,11 @@ Regras de coordenação:
 
 1. Consultar Conteúdos não arquivados do Projeto, ordenados pela atualização mais recente.
 2. Traduzir estados internos para: “Para continuar”, “Pronto”, “Publicado” e “Precisa de atenção”.
-3. Aplicar busca e um filtro por vez no MVP.
-4. Apresentar ação principal conforme o estado real.
-5. Arquivar por comando explícito e retirar da lista principal após confirmação.
-6. Restaurar sem criar novo Conteúdo.
-7. Manter Publicações e Relatórios ligados ao Conteúdo arquivado.
+3. Apresentar ação principal conforme o estado real.
+4. Arquivar por comando explícito e retirar da lista principal após confirmação.
+5. Manter Publicações e Relatórios ligados ao Conteúdo arquivado.
 
-Estado vazio e filtro sem resultado são distintos: o primeiro convida a Criar; o segundo oferece limpar o filtro.
+Estado vazio convida a Criar. Busca, filtros, renomeação, duplicação, restauração e ações em massa ficam fora do primeiro fluxo.
 
 ### 19.6 Publicação
 
@@ -787,8 +780,8 @@ Além dos eventos de domínio, a experiência mede:
 - etapa de onboarding vista, concluída, abandonada e retomada;
 - etapa de configuração concluída e ponto de interrupção;
 - ação sugerida na tela principal e ação escolhida;
-- etapa de criação concluída, ajuda solicitada e sugestão aceita ou rejeitada;
-- busca, filtro e estado vazio da Biblioteca;
+- etapa de criação concluída e ajuda solicitada;
+- Biblioteca aberta, Rascunho retomado, arquivo confirmado e estado vazio;
 - prévia aberta, pendência encontrada e confirmação de Publicação;
 - explicação de resultado vista e compreendida em teste;
 - Tutor aberto, intenção escolhida, pergunta não compreendida e encaminhamento concluído.
@@ -806,3 +799,52 @@ Eventos não registram corpo do Conteúdo, texto livre do Tutor ou credenciais p
 - Entende pelo menos um resultado e sua data.
 - Responde à pergunta do Tutor e chega à ação pretendida.
 - Sabe que o Tutor sugere, mas não publica sozinho.
+
+## 26. Contrato do primeiro fluxo vertical
+
+### 26.1 Ator e resultado funcional
+
+O ator é um pastor convidado, proprietário do único Projeto, que já administra uma Página do Facebook. O comando inicial permitido é **Publicar um aviso**. O resultado de valor é uma Publicação textual confirmada na Página escolhida, com link externo e próximo passo compreendido.
+
+Facebook Pages é hipótese operacional, não capacidade comprovada. O adaptador real permanece bloqueado até demonstrar autorização, permissões mínimas, Publicação textual, consulta ou reconciliação de estado, revogação e obtenção de link.
+
+### 26.2 Sequência e donos do estado
+
+| Passo | Comando ou consulta | Entidade dona | Saída mínima |
+|---|---|---|---|
+| Entrar | Validar convite e sessão | Usuário | Usuário autenticado |
+| Configurar | Confirmar nome e igreja | Usuário e Projeto | Projeto principal ativo |
+| Escolher intenção | Selecionar **Publicar um aviso** | Tutor e Orquestrador | Próxima etapa autorizada |
+| Conectar | Autorizar e confirmar Página | Conta Conectada | Página ativa e reconhecida |
+| Criar | Salvar título e texto | Conteúdo e Versão | Rascunho recuperável |
+| Retomar | Listar e abrir Rascunho | Biblioteca / Conteúdo | Mesma Versão editável |
+| Revisar | Validar texto e Página | Conteúdo e Conta Conectada | Prévia pronta |
+| Confirmar | Congelar Versão e registrar intenção | Publicação | Publicação na fila e auditada |
+| Enviar | Executar adaptador com idempotência | Publicação e Tentativa | Publicada, falhou ou incerta |
+| Consultar | Ler estado, link e resultado | Publicação e Relatório | Fato, atualização e próximo passo |
+
+### 26.3 Estados usados
+
+- Conteúdo: `rascunho`, `pronto`, `em_publicacao`, `publicado`, `com_falha` e `arquivado`.
+- Conta Conectada: `autorizando`, `ativa`, `requer_reconexao`, `falhou` e `desconectada`.
+- Publicação: `na_fila`, `processando`, `publicada`, `falhou`; resultado incerto é representado de forma explícita pela tentativa e pela necessidade de reconciliação.
+
+Criar e salvar nunca produz Publicação. Qualquer alteração de texto ou Página depois da prévia invalida a confirmação anterior.
+
+### 26.4 Dados mínimos
+
+- Usuário: referência de identidade, nome, estado, consentimentos e marcos da jornada.
+- Projeto: nome da igreja, proprietário, objetivo e público iniciais, fuso e estado.
+- Conta Conectada: Canal, identificador e nome da Página, permissões, estado, expiração e referência protegida da credencial.
+- Conteúdo e Versão: título interno, texto, número, estado, autor e horários.
+- Publicação e Tentativa: Versão, destino, solicitante, confirmação, idempotência, estados, tentativas, erro sanitizado, identificador, link e horários externos.
+- Resultado: fonte, período e coleta de no máximo uma métrica comprovada; ausência de dado permanece ausência.
+- Tutor e auditoria: etapa, próximo passo, resposta do Usuário e fatos sensíveis minimizados.
+
+### 26.5 Fora do contrato vertical
+
+Não existem comandos para mídia, armazenamento conectado, geração de texto, Agendamento, Campanha, segundo Canal, colaboração, notificação, publicação em lote, comparação de métricas, busca avançada, duplicação ou ação em massa.
+
+### 26.6 Critério funcional de conclusão
+
+O fluxo está funcionalmente concluído quando o pastor entra, reconhece a Página, salva e retoma o aviso, confirma conscientemente a Publicação, recebe um estado reconciliável e abre o link correto sem ajuda durante a tarefa, perda de texto, envio duplicado ou ação externa não confirmada.

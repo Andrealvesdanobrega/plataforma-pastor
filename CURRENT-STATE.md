@@ -1,18 +1,18 @@
 # Estado Atual
 
-**Fase:** Sprint 5 — Decisões de Engenharia do MVP
+**Fase:** Sprint 6 — Primeiro Fluxo Vertical do MVP
 
 **Atualizado em:** 20 de julho de 2026
 
-**Natureza deste registro:** baseline de engenharia aprovada; implementação ainda não iniciada
+**Natureza deste registro:** primeiro fluxo vertical definido; implementação ainda não iniciada
 
 ## Resumo executivo
 
 O produto possui uma definição integrada de descoberta, domínio, experiência, MVP, arquitetura técnica e segurança. A direção permanece: oferecer a pessoas com pouca familiaridade tecnológica uma única porta de entrada guiada pelo Tutor para configurar contas, criar e organizar Conteúdos, Publicar e compreender resultados.
 
-A Sprint 5 fechou a baseline necessária para iniciar a implementação do núcleo: Web responsivo; TypeScript sobre Node.js 24 LTS; Next.js; NestJS; PostgreSQL com Prisma; Amazon Cognito; outbox e fila no PostgreSQL; AWS em `sa-east-1`; imagens OCI no ECS Fargate; S3, Secrets Manager/KMS e CloudWatch; e Tutor determinístico sem IA generativa. Mobile e IA foram adiados.
+A Sprint 5 fechou a baseline necessária para iniciar a implementação do núcleo. A Sprint 6 definiu o primeiro fluxo vertical: um pastor convidado, responsável pela comunicação de uma pequena igreja, publica um aviso textual curto em uma única Página do Facebook que já administra, recebe confirmação e consegue abrir o link da Publicação.
 
-Ainda não há software funcional, prova técnica documentada, protótipo validado, Canal escolhido ou controles de segurança implementados. As escolhas de engenharia liberam a implementação com adaptadores simulados; não provam viabilidade do Canal, adequação ao público, segurança operacional ou prontidão para piloto.
+O recorte elimina mídia, armazenamento conectado, IA generativa, Agendamento, colaboração, notificações e múltiplos Canais do primeiro fluxo. Facebook Pages e o segmento pastoral são hipóteses operacionais: ainda não há pesquisa sintetizada, prova técnica, software funcional, protótipo validado ou controles de segurança implementados. A definição libera implementação com simulador, não Publicação real nem piloto.
 
 ## Entregas acumuladas
 
@@ -57,6 +57,16 @@ Ainda não há software funcional, prova técnica documentada, protótipo valida
 - critérios cumulativos da primeira versão utilizável definidos;
 - decisões dependentes de descoberta, prova externa e governança mantidas abertas com gatilhos explícitos.
 
+### Sprint 6 — Primeiro Fluxo Vertical do MVP
+
+- primeiro Usuário definido como pastor responsável direto pela comunicação de pequena igreja;
+- dor delimitada à insegurança e dependência para publicar um aviso na conta correta;
+- objetivo delimitado a uma Publicação textual imediata e confirmada;
+- hipótese de Facebook Pages como único Canal do fluxo;
+- telas, entidades, dados, Integrações e métricas mínimas definidos;
+- mídia, armazenamento conectado e demais capacidades não essenciais removidos do primeiro fluxo;
+- primeira versão utilizável especializada sem alterar ENG-01 a ENG-15.
+
 ## Princípios estabelecidos
 
 - Conteúdo é a entidade central e fonte editorial do ciclo.
@@ -69,7 +79,24 @@ Ainda não há software funcional, prova técnica documentada, protótipo valida
 - A plataforma guarda principalmente metadados, relacionamentos, histórico, configurações, permissões e conhecimento.
 - MVP usa arquitetura modular simples e não adota microserviços sem necessidade observada.
 - Falhas externas usam estado persistente, idempotência e reconciliação.
-- IA é opcional no MVP e nunca recebe autorização autônoma para ação externa.
+- IA generativa não entra na primeira versão e nunca recebe autorização autônoma para ação externa.
+
+## Primeiro fluxo vertical
+
+```text
+Convite e código por e-mail
+→ configuração mínima da igreja
+→ “Publicar um aviso” no Tutor
+→ conectar e confirmar uma Página do Facebook
+→ escrever e salvar texto
+→ retomar pela Biblioteca
+→ revisar texto e Página
+→ confirmar explicitamente
+→ acompanhar Publicação
+→ abrir link e entender o próximo passo
+```
+
+**Valor entregue:** o aviso aparece na Página correta sem o Usuário precisar dominar a configuração técnica e sem risco de envio implícito ou duplicado.
 
 ## Arquitetura de referência atual
 
@@ -82,10 +109,10 @@ Ainda não há software funcional, prova técnica documentada, protótipo valida
 | Biblioteca | Projeção paginada e pesquisável do Conteúdo no banco | Definido conceitualmente |
 | Tutor | Fachada guiada e determinística; IA generativa desabilitada | Aprovado; não implementado |
 | Orquestrador | Coordena jornada e operações duráveis sem contornar domínio | Definido conceitualmente |
-| Integrações | Adaptadores por capacidade, com credenciais protegidas | Contrato definido; provedores não escolhidos |
+| Integrações | Cognito aprovado; Facebook Pages como hipótese do primeiro Canal | Identidade aprovada; Canal não provado |
 | Publicação | Versão congelada, idempotência, worker e reconciliação | Fluxo definido; não provado |
 | Fila | Outbox e trabalhos no PostgreSQL, consumidos pelo worker | Aprovado; não implementado |
-| Armazenamento | S3 privado para pequenos/temporários; referência externa para grandes | Estratégia aprovada; provedor conectado e limites abertos |
+| Armazenamento | Estratégia aprovada; nenhum arquivo participa do primeiro fluxo | Implementação adiada para mídia futura |
 | Identidade | Amazon Cognito OIDC, código por e-mail e sessão Web de servidor | Aprovado; não testado |
 | Nuvem e entrega | AWS `sa-east-1`, ECR, ECS Fargate e GitHub Actions por OIDC | Aprovado; não provisionado |
 | Auditoria | Trilha separada de logs e analytics | Eventos mínimos definidos |
@@ -97,19 +124,19 @@ Ainda não há software funcional, prova técnica documentada, protótipo valida
 
 ### Incluído
 
-- um Usuário proprietário e um Projeto principal;
-- um tipo principal de Conteúdo;
-- Biblioteca simples;
-- um Canal e uma Conta Conectada no caminho principal;
+- um pastor convidado, proprietário de um Projeto de igreja;
+- um tipo de Conteúdo: aviso textual;
+- Biblioteca simples para listar, abrir e arquivar;
+- hipótese de Facebook Pages e uma Página conectada;
 - Publicação imediata;
-- métricas essenciais e Relatório simples;
+- confirmação, link e no máximo uma métrica comprovada;
 - Tutor baseado em regras, sem IA generativa habilitada;
-- armazenamento conectado para arquivo grande;
 - auditoria e observabilidade dos eventos críticos.
 
 ### Excluído
 
 - múltiplos Canais ativos e lote multicanal;
+- mídia, upload e armazenamento conectado;
 - Agendamento, Campanha e colaboração;
 - microserviços e operação multirregional ativa;
 - transcodificação e edição profissional de vídeo;
@@ -117,15 +144,16 @@ Ainda não há software funcional, prova técnica documentada, protótipo valida
 - Tutor com ferramentas autônomas;
 - relatório comparativo avançado;
 - operação offline completa.
+- cadastro público irrestrito, notificações externas e Biblioteca avançada.
 
 ## Evidências que ainda não existem
 
-- entrevistas e síntese que selecionem segmento prioritário;
+- entrevistas e síntese que validem o pastor responsável pela comunicação;
 - teste de usabilidade do fluxo completo;
 - validação do Web responsivo e de sua forma de distribuição nos dispositivos reais;
-- Canal, formato e métricas do piloto;
+- prova de Facebook Pages, permissões, texto, estado, link e possível métrica;
 - prova de autorização, Publicação, consulta de estado, webhook e revogação;
-- prova do armazenamento conectado e do tratamento de arquivo removido;
+- necessidade real de mídia ou armazenamento conectado, adiados neste fluxo;
 - prova de usabilidade, recuperação, sessão e bloqueio no Amazon Cognito;
 - evidência de que o Tutor determinístico atende ao piloto; provedor de IA não é necessário para a primeira versão;
 - política aprovada de privacidade, retenção, exclusão e incidentes;
@@ -134,28 +162,28 @@ Ainda não há software funcional, prova técnica documentada, protótipo valida
 
 ## Decisões abertas prioritárias
 
-1. Segmento, caso de uso e tipo de Conteúdo inicial.
-2. Canal, formato, permissões e métricas essenciais.
-3. Primeiro armazenamento conectado.
-4. Limites de arquivos próprios, grandes e temporários.
-5. Retenção, exclusão, fundamento e subprocessadores.
-6. Objetivos de disponibilidade, recuperação, capacidade e orçamento.
-7. Responsáveis por segurança, privacidade, suporte e incidentes.
-8. Limiares quantitativos de validação do piloto.
+1. Validar o segmento pastoral, a frequência da dor e a disposição para Publicação real.
+2. Provar Facebook Pages, permissões mínimas, publicação textual, estado, revogação, link e resultado.
+3. Confirmar se uma métrica externa simples é necessária e disponível.
+4. Retenção, exclusão, fundamento e subprocessadores.
+5. Objetivos de disponibilidade, recuperação, capacidade e orçamento.
+6. Responsáveis por segurança, privacidade, suporte e incidentes.
+7. Limiares quantitativos do piloto depois do primeiro teste real.
 
-IA generativa, Mobile, broker dedicado, multicanal, Agendamento, Campanha, colaboração, busca externa, microserviços e múltiplas regiões estão adiados para depois da primeira versão utilizável.
+Mídia, armazenamento conectado, IA generativa, Mobile, broker dedicado, multicanal, Agendamento, Campanha, colaboração, notificações, Biblioteca avançada, busca externa, microserviços e múltiplas regiões estão adiados.
 
 ## Riscos atuais
 
 | Risco | Impacto | Tratamento imediato |
 |---|---|---|
-| Implementação avançar além do núcleo antes de validar problema e Canal | Construção correta do produto errado | Usar simuladores e impedir compromisso com formato ou Integração real antes da evidência |
-| API do Canal não suportar a promessa | Ciclo do MVP inviável | Provar autorização, envio, estado, métricas e revogação |
-| Web responsivo não atender ao contexto do público | Bloqueio de instalação, mídia ou retorno de autorização | Testar em dispositivos reais; Mobile só será reconsiderado com evidência |
+| Pastor e aviso textual não representarem dor frequente | Primeiro fluxo não gerar uso recorrente | Entrevistar e observar comportamento antes do piloto |
+| Facebook Pages não permitir o contrato mínimo | Ciclo vertical inviável | Provar autorização, texto, estado, link, revogação e revisão externa |
+| Pastor não administrar Página elegível | Usuário escolhido não consegue iniciar | Recrutar participante com acesso legítimo e validar elegibilidade antes do convite |
+| Conteúdo religioso revelar dado sensível | Exposição de crença, pessoa ou comunidade | Minimização, texto controlado no piloto e proibição em logs/analytics |
+| Web responsivo não atender ao contexto do público | Bloqueio de entrada ou retorno de autorização | Testar em dispositivos reais; Mobile só será reconsiderado com evidência |
 | Token externo ser exposto | Ação indevida na conta do Usuário | Cofre, menor escopo, rotação, redação e exercício de incidente |
 | Timeout causar Publicação duplicada | Dano público e perda de confiança | Idempotência e reconciliação antes de repetir |
-| Arquivo grande externo ficar indisponível | Publicação bloqueada | Verificação prévia, referência de versão e erro recuperável |
-| Cópia temporária persistir | Exposição e custo | TTL, limpeza automática e monitoramento |
+| Texto sem mídia ter pouco valor no Canal | Fluxo funciona tecnicamente, mas não resolve a tarefa real | Validar avisos textuais passados; adicionar mídia somente em novo recorte aprovado |
 | Tutor ou futura IA contornar confirmação | Ação não autorizada | Tutor inicial sem ferramentas autônomas e autorização sempre no backend |
 | Falha de isolamento entre Projetos | Vazamento de dados | Escopo obrigatório, testes negativos e acesso mínimo |
 | Logs capturarem Conteúdo ou segredo | Incidente de privacidade | Campos permitidos, redação e teste de telemetria |
@@ -169,10 +197,10 @@ IA generativa, Mobile, broker dedicado, multicanal, Agendamento, Campanha, colab
 
 | Área | Estado | Condição para avançar |
 |---|---|---|
-| Problema e público | Hipóteses documentadas | Evidência de pesquisa e segmento escolhido |
+| Problema e público | Hipótese vertical definida | Validar pastor, aviso e Página com comportamento real |
 | Domínio | Modelo completo inicial | Validar conceitos e ajustar ao Canal real |
 | UX | Fluxos completos documentados | Protótipo testado com Usuários iniciantes |
-| MVP | Recorte e critérios da primeira versão utilizável definidos | Fechar recorte de produto, métricas e provas externas |
+| MVP | Primeiro fluxo vertical e critérios definidos | Provar Canal, protótipo e valor com primeiro Usuário |
 | Arquitetura técnica | Baseline tecnológica aprovada | Implementar núcleo e validar contratos com provas |
 | Segurança | Baseline e ameaças iniciais | Implementar, testar e revisar controles |
 | Operação | Ambientes definidos conceitualmente | Provisionar, definir metas, alertas e responsáveis |
@@ -180,6 +208,6 @@ IA generativa, Mobile, broker dedicado, multicanal, Agendamento, Campanha, colab
 
 ## Critério para iniciar implementação do MVP
 
-A implementação do núcleo pode começar a partir desta baseline, usando dados fictícios e adaptadores simulados. Cada incremento deve incluir autorização por Projeto, testes proporcionais ao risco, auditoria, logs seguros, acessibilidade e tratamento de falha.
+A implementação do fluxo vertical pode começar a partir desta baseline, usando pastor, igreja, Página e avisos fictícios e um adaptador simulado. Cada incremento deve incluir autorização por Projeto, testes proporcionais ao risco, auditoria, logs seguros, acessibilidade e tratamento de falha.
 
-A versão não pode ser liberada para piloto até que segmento, Canal, formato, métricas e armazenamento conectado estejam aprovados por evidência; privacidade e metas operacionais estejam definidas; Integrações críticas tenham prova; e todos os critérios de ENG-15 em `APPROVED-DECISIONS.md` sejam atendidos.
+A versão não pode ser liberada para piloto até que o segmento pastoral e o aviso textual estejam validados; Facebook Pages tenha prova oficial; privacidade e metas operacionais estejam definidas; e todos os critérios especializados do MVP e ENG-15 em `APPROVED-DECISIONS.md` sejam atendidos.

@@ -1,10 +1,10 @@
 # Blueprint do Produto
 
-**Versão:** 0.2
+**Versão:** 0.3
 
-**Fase:** Sprint 3 — UX e Fluxo do Produto
+**Fase:** Sprint 6 — Primeiro Fluxo Vertical do MVP
 
-**Atualizado em:** 19 de julho de 2026
+**Atualizado em:** 20 de julho de 2026
 
 ## 1. Propósito deste documento
 
@@ -51,7 +51,7 @@ Uma plataforma única que conduz o usuário como um tutor e transforma a publica
 - receio de cometer erros públicos;
 - dificuldade para interpretar resultados.
 
-Essas características devem ser verificadas. A escolha de um segmento prioritário é condição para fechar o MVP.
+Essas características devem ser verificadas. Para a Sprint 6, o primeiro recorte de validação é um pastor ou líder que cuida pessoalmente da comunicação de uma pequena igreja, administra uma Página do Facebook e precisa publicar avisos textuais. Essa hipótese não substitui pesquisa nem prova da Integração.
 
 ## 5. Jobs to be done
 
@@ -179,26 +179,33 @@ O estado editorial resume a situação do conteúdo; cada destino possui também
 
 ### Incluído
 
-- um segmento prioritário;
-- um canal conectado;
-- um tipo principal de conteúdo;
-- onboarding e conexão guiados;
-- criação assistida e edição de rascunho;
-- biblioteca simples com estado;
-- validação, prévia e publicação imediata;
-- confirmação de sucesso ou falha recuperável;
-- métricas essenciais disponíveis no canal;
-- uma explicação ou próximo passo simples;
+- um pastor convidado e proprietário de um espaço de igreja;
+- uma Página do Facebook conectada, condicionada à prova técnica;
+- um tipo de Conteúdo: aviso textual curto;
+- entrada por código de e-mail e configuração mínima;
+- Tutor determinístico com a intenção **Publicar um aviso**;
+- criação, edição, salvamento e retomada do Rascunho;
+- Biblioteca simples para listar, abrir e arquivar;
+- prévia, confirmação explícita e Publicação imediata;
+- sucesso, falha recuperável e resultado incerto;
+- confirmação, link e no máximo uma métrica externa comprovada;
+- um próximo passo simples;
 - instrumentação do ciclo principal.
 
 ### Fora do MVP
 
+- cadastro público irrestrito;
+- tipos de Conteúdo além de aviso textual;
+- mídia, upload e armazenamento conectado;
+- geração ou adaptação de texto por IA;
 - publicação simultânea em vários canais;
 - calendário editorial e agendamento avançados;
 - colaboração em equipe e aprovações multinível;
+- busca, filtros avançados, etiquetas, duplicação e ações em massa;
+- notificações externas;
 - edição profissional de mídia;
 - automações autônomas de publicação;
-- análise preditiva ou garantia de desempenho;
+- métricas avançadas, comparação, análise preditiva ou garantia de desempenho;
 - mídia paga, comércio eletrônico ou CRM completo.
 
 ## 11. Regras de negócio iniciais
@@ -506,25 +513,24 @@ O fluxo pode começar pela tela principal, pelo botão Criar ou por uma recomend
 
 ### 21.2 Sequência completa
 
-#### Passo 1 — Ideia
+#### Passo 1 — Título e aviso
 
-- Perguntar: “Sobre o que você quer falar?”
-- Aceitar uma frase curta, texto colado ou, futuramente, outra forma prevista.
-- Oferecer exemplos adequados ao público sem inserir conteúdo automaticamente.
+- Pedir um título interno para localização.
+- Perguntar: “Qual aviso você quer publicar?”
+- Aceitar texto simples, sem formatação rica ou arquivo.
 - Ação principal: **Continuar**.
 
-#### Passo 2 — Objetivo deste Conteúdo
+#### Passo 2 — Contexto predefinido
 
-- Perguntar: “O que você quer que as pessoas entendam ou façam?”
-- Sugerir poucas opções baseadas no objetivo do Projeto.
-- Pré-preencher o público configurado e permitir alteração para este Conteúdo.
+- Usar **Publicar avisos da igreja** como objetivo e **comunidade da igreja** como público.
+- Não pedir essas informações novamente no primeiro fluxo.
+- Permitir correção posterior nas Configurações, sem bloquear o aviso.
 
-#### Passo 3 — Estrutura sugerida
+#### Passo 3 — Salvamento
 
-- Tutor apresenta uma proposta curta com início, mensagem principal e encerramento.
-- Explicar: “Esta é uma sugestão. Você pode mudar tudo”.
-- Ações: **Usar esta sugestão**, **Fazer mudanças** e **Tentar outra**.
-- Nada é incorporado ao Rascunho sem escolha do Usuário.
+- Criar o Rascunho quando o primeiro texto não vazio for confirmado.
+- Mostrar “Salvo” somente depois da persistência.
+- Não gerar, reescrever ou sugerir texto.
 
 #### Passo 4 — Editar
 
@@ -532,18 +538,17 @@ O fluxo pode começar pela tela principal, pelo botão Criar ou por uma recomend
 - Evitar barras com muitas ferramentas.
 - Salvar continuamente e mostrar “Salvo” após confirmação.
 - Destacar uma pendência por vez.
-- Tutor responde a pedidos como “Deixar mais curto”, “Explicar melhor” ou “Voltar para minha versão”.
+- Tutor explica a etapa e permite voltar à última versão confirmada; não reescreve o aviso.
 
-#### Passo 5 — Adicionar imagem ou mídia
+#### Passo 5 — Validar texto
 
-- Explicar se a mídia é obrigatória ou opcional para o Canal escolhido.
-- Oferecer **Escolher do aparelho** e **Continuar sem imagem**, quando permitido.
-- Mostrar uma prévia e ação **Trocar** ou **Remover**.
-- Em incompatibilidade, dizer exatamente o que fazer sem apresentar códigos ou medidas desnecessárias.
+- Verificar texto obrigatório e limite comprovado do Canal.
+- Mostrar como corrigir texto vazio ou excessivo.
+- Mídia, upload e armazenamento não aparecem no primeiro fluxo.
 
 #### Passo 6 — Revisão do Conteúdo
 
-- Exibir como o público verá a mensagem, sem simular detalhes que o Canal não garante.
+- Exibir o texto e a Página escolhida sem simular detalhes que o Canal não garante.
 - Organizar pendências em: “Precisa corrigir” e “Você pode melhorar”.
 - Correções obrigatórias bloqueiam o avanço e levam ao ponto correto.
 - Melhorias opcionais nunca impedem salvar ou publicar.
@@ -568,8 +573,6 @@ Permitir encontrar e entender Conteúdos sem exigir conhecimento sobre pastas, a
 
 - Título: “Seus conteúdos”.
 - Ação principal: **Criar novo**.
-- Busca com texto de apoio: “Buscar pelo nome ou assunto”.
-- Filtros iniciais: **Todos**, **Para continuar**, **Prontos**, **Publicados** e **Precisam de atenção**.
 - Ordenação padrão: atualização mais recente.
 - Cada cartão mostra título, pequena prévia, última atualização, estado em linguagem simples e uma única ação sugerida.
 
@@ -577,21 +580,20 @@ Permitir encontrar e entender Conteúdos sem exigir conhecimento sobre pastas, a
 
 | Situação | Ação principal | Ações secundárias |
 |---|---|---|
-| Ideia ou Rascunho | Continuar | Renomear, duplicar ou arquivar |
+| Ideia ou Rascunho | Continuar | Arquivar |
 | Precisa de revisão | Corrigir | Ver pendências ou arquivar |
 | Pronto | Revisar e publicar | Editar ou arquivar |
 | Em publicação | Ver andamento | Voltar à Biblioteca |
-| Publicado | Ver resultados | Criar parecido ou arquivar |
+| Publicado | Ver publicação | Arquivar |
 | Com falha | Resolver | Ver o que aconteceu ou arquivar |
-| Arquivado | Restaurar | Excluir quando a política permitir |
+| Arquivado | Ver histórico | Nenhuma no primeiro fluxo |
 
 ### 22.4 Organização segura
 
 - Arquivar exige confirmação simples e explica: “O conteúdo sairá da lista principal, mas não será apagado”.
 - Excluir, quando disponível, explica o impacto sobre histórico antes de confirmar.
-- Filtros vazios oferecem **Limpar filtro**.
 - Biblioteca vazia explica o valor e oferece **Criar meu primeiro conteúdo**.
-- A seleção de vários itens e ações em massa ficam fora do MVP para reduzir risco.
+- Busca, filtros, renomeação, duplicação, restauração, exclusão e ações em massa ficam fora do primeiro fluxo.
 
 ## 23. Fluxo para Publicação
 
@@ -654,18 +656,17 @@ O fluxo começa em um Conteúdo Pronto, na Biblioteca ou pela ação recomendada
 
 Resultados pode ser aberto pela navegação, pelo Conteúdo Publicado, pela tela de sucesso ou por aviso de novos dados.
 
-### 24.2 Tela geral
+### 24.2 Entrada no resultado
 
-- Título: “Resultados dos seus conteúdos”.
-- Começar com uma explicação curta, não com uma grade de números.
-- Mostrar Conteúdos recentes com data, Canal e estado dos dados.
-- Oferecer um período simples e predefinido, evitando filtros avançados no MVP.
+- Abrir o detalhe pelo sucesso, Início ou Conteúdo.
+- Mostrar primeiro Página, horário, estado confirmado e link externo.
+- Não implementar lista geral, período selecionável ou filtros no primeiro fluxo.
 
 ### 24.3 Detalhe de um Conteúdo
 
 1. Mostrar a Publicação escolhida e onde ela ocorreu.
 2. Explicar quando os dados foram atualizados.
-3. Apresentar poucas métricas disponíveis, cada uma com nome cotidiano e explicação.
+3. Apresentar no máximo uma métrica externa comprovada, com nome cotidiano e explicação.
 4. Mostrar ausência de dados como “Ainda não há informações suficientes”, não como zero quando isso não for verdade.
 5. Separar fatos de recomendações.
 
@@ -681,11 +682,11 @@ Exemplos de tradução:
 
 Depois dos fatos, o Tutor apresenta uma leitura curta:
 
-- “O que aconteceu”: resumo sustentado pelos dados.
+- “O que aconteceu”: Publicação confirmada, falhou ou ainda está sendo verificada.
 - “O que ainda não sabemos”: atraso, ausência ou limite da informação.
-- “Próximo passo sugerido”: uma ação simples, como repetir um tema, testar uma abertura ou aguardar mais dados.
+- “Próximo passo”: abrir a Publicação, corrigir a falha ou voltar ao Início.
 
-O Usuário pode escolher **Usar esta ideia**, **Adaptar** ou **Agora não**.
+Recomendação editorial baseada em desempenho não entra no primeiro fluxo.
 
 ### 24.5 Estados especiais
 
@@ -787,3 +788,87 @@ Explicar por que a área está vazia e oferecer uma ação útil. Nunca apresent
 ## 27. Critério de experiência completa
 
 A experiência está completa quando um Usuário iniciante consegue entrar, configurar seu contexto, conectar uma conta, criar e encontrar um Conteúdo, revisar e confirmar uma Publicação, entender o resultado e escolher um próximo passo sugerido pelo Tutor, sempre sabendo o que foi salvo, o que aconteceu e como voltar ou pedir ajuda.
+
+## 28. Primeiro fluxo vertical da Sprint 6
+
+Esta seção especializa o caminho do MVP. Capacidades mais amplas descritas nas seções anteriores são evolução e não entram no primeiro fluxo quando não estiverem listadas abaixo.
+
+### 28.1 Usuário, dor e objetivo
+
+- **Primeiro Usuário:** pastor ou líder de pequena igreja, responsável direto pela comunicação, com baixa ou média confiança digital e acesso administrativo legítimo a uma Página do Facebook.
+- **Dor:** ele já possui o aviso, mas teme perder o texto, escolher a conta errada, publicar sem perceber ou repetir o envio quando a ferramenta não confirma o resultado.
+- **Primeiro objetivo:** publicar imediatamente um aviso textual curto na Página correta e saber com confiança se e onde ele foi publicado.
+
+O segmento, o comportamento e o uso do Facebook Pages permanecem hipóteses até entrevista, teste com representante e prova oficial da Integração.
+
+### 28.2 Menor fluxo de valor
+
+1. Receber convite e entrar no Web com código por e-mail.
+2. Confirmar nome, nome da igreja e consentimentos essenciais.
+3. Abrir o Tutor, que pergunta “O que você quer fazer hoje?”, e escolher **Publicar um aviso**.
+4. Ler permissões, autorizar o Canal e confirmar uma Página elegível.
+5. Informar título interno e texto do aviso; receber confirmação de salvamento.
+6. Reabrir o Rascunho pela Biblioteca simples quando houver interrupção.
+7. Revisar texto e Página e escolher **Sim, publicar agora**.
+8. Acompanhar o envio assíncrono sem precisar permanecer na tela.
+9. Ver sucesso, falha recuperável ou resultado incerto; em sucesso, abrir o link externo.
+10. Ver o próximo passo do Tutor e, se a API comprovar disponibilidade, uma única métrica simples com fonte e atualização.
+
+### 28.3 Telas participantes
+
+- Acesso por convite e código.
+- Configuração mínima e conexão da Página.
+- Início / Tutor.
+- Criar aviso.
+- Biblioteca simples.
+- Revisão e confirmação.
+- Andamento da Publicação.
+- Resultado da Publicação.
+
+### 28.4 Entidades participantes
+
+- Usuário e participação de proprietário.
+- Projeto.
+- Biblioteca de Conteúdos como projeção.
+- Conteúdo e Versão de Conteúdo.
+- Canal, Conta Conectada e Integração.
+- Publicação e Tentativa de Publicação.
+- Métrica de Publicação e Relatório simples, somente na profundidade disponível.
+- Interação e recomendação determinística do Tutor.
+- Eventos de auditoria e trabalho durável relacionados ao fluxo.
+
+Mídia, Agendamento e Campanha não participam.
+
+### 28.5 Integrações necessárias
+
+- **Amazon Cognito:** entrada e sessão, conforme decisão já aprovada.
+- **Facebook Pages:** autorização da Página, Publicação textual, consulta/reconciliação de estado, revogação e obtenção de link; leitura de uma métrica somente se a prova oficial confirmar necessidade, permissão e disponibilidade.
+
+Webhook não é obrigatório se consulta de estado for suficiente. Armazenamento conectado, IA, notificações, analytics externo e qualquer segundo Canal não são necessários.
+
+### 28.6 Informações armazenadas
+
+- referência de identidade, nome, e-mail normalizado quando necessário, consentimentos e estado do acesso;
+- nome, objetivo padrão, público padrão e fuso do Projeto;
+- Canal, identificador e nome público da Página, permissões, saúde, vencimento e referência protegida da credencial;
+- título interno, texto, estado, versão atual e instantes do Conteúdo;
+- Versão congelada, confirmação, chave de idempotência, estado, tentativas, erro sanitizado, identificador, link e horários da Publicação;
+- fonte, período, valor e coleta de uma métrica externa, se adotada;
+- etapa da jornada, próximo passo e resposta à recomendação do Tutor;
+- eventos mínimos de auditoria, correlação e funil, sem corpo do aviso, código, token ou texto livre em logs.
+
+### 28.7 Métricas de sucesso
+
+- primeira Publicação real confirmada na Página correta: sim ou não;
+- conclusão do fluxo sem intervenção humana durante a tarefa;
+- tempo da primeira entrada até a confirmação da Publicação;
+- conclusão, abandono e erro em entrada, conexão, salvamento, confirmação e envio;
+- Rascunho recuperado sem perda depois de interrupção;
+- compreensão correta das permissões e da Página antes de confirmar;
+- compreensão correta do estado, link e próximo passo depois de publicar;
+- intenção declarada de usar o fluxo no próximo aviso;
+- Publicações sem intenção, duplicadas ou destinadas à Página errada: meta obrigatória zero.
+
+### 28.8 Primeira versão utilizável
+
+A primeira versão é utilizável quando um pastor convidado completa esse fluxo real sem intervenção durante a tarefa, encontra a Publicação na Página correta e explica o que aconteceu e o próximo passo. Também precisa atender integralmente ENG-15: prova oficial do Canal, acessibilidade, proteção de sessão e token, idempotência, reconciliação, auditoria, privacidade, restauração, alertas, suporte e ausência de risco crítico sem tratamento.

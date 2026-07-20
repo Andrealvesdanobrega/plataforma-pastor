@@ -2,7 +2,7 @@
 
 **Atualizado em:** 20 de julho de 2026
 
-**Estado de engenharia:** Sprint 5 concluída; baseline técnica aprovada e implementação ainda não iniciada.
+**Estado de produto:** Sprint 6 concluída; primeiro fluxo vertical definido como hipótese e implementação ainda não iniciada.
 
 ## Propósito
 
@@ -28,9 +28,21 @@ Este roadmap organiza resultados desejados e critérios de passagem. Ele não re
 4. Conta Conectada e contrato do Canal.
 5. Publicação, outbox, worker e reconciliação.
 6. Métricas, Relatório e próximo passo simples.
-7. Armazenamento conectado e mídia do formato escolhido.
+7. Resultado mínimo e endurecimento do Web nos dispositivos do público.
 
 **Critério de saída para piloto:** todos os critérios de primeira versão utilizável em ENG-15 de `APPROVED-DECISIONS.md`, incluindo provas reais das Integrações, privacidade, operação, segurança, acessibilidade e teste com o público, estão atendidos.
+
+## Marco de produto — primeiro fluxo vertical
+
+**Hipótese definida na Sprint 6:** um pastor convidado, responsável pela comunicação de uma pequena igreja, publica um aviso textual curto em uma Página do Facebook que já administra e recebe confirmação e link confiáveis.
+
+**Fluxo:** entrar por código → confirmar igreja → escolher **Publicar um aviso** → conectar Página → escrever e salvar → retomar → revisar → confirmar → acompanhar → abrir a Publicação.
+
+**Capacidades comprometidas:** convite e acesso, Projeto único, Tutor determinístico, aviso textual, Biblioteca simples, uma Página conectada, Publicação imediata assíncrona, resultado mínimo, auditoria e observabilidade.
+
+**Capacidades adiadas:** mídia e armazenamento conectado, IA generativa, segundo Canal, Agendamento, Campanha, colaboração, notificações, Biblioteca avançada e métricas comparativas.
+
+**Critério de saída:** um pastor realiza uma Publicação real na Página correta sem intervenção durante a tarefa, sem perda ou duplicidade, entende o estado e o próximo passo, e todos os critérios de ENG-15 permanecem atendidos.
 
 ## Horizonte 1 — Descobrir
 
@@ -38,29 +50,29 @@ Este roadmap organiza resultados desejados e critérios de passagem. Ele não re
 
 **Resultados esperados:**
 
-- segmento inicial selecionado com base em evidência;
+- hipótese de pastor responsável pela comunicação testada com evidência;
 - jornada e principais barreiras compreendidas;
 - proposta de valor testada;
-- canal e tipo de conteúdo candidatos definidos;
+- Facebook Pages e aviso textual confirmados ou rejeitados por evidência;
 - riscos de integração conhecidos;
 - protótipo do ciclo completo validado.
 
-**Critério de saída:** usuários do segmento prioritário compreendem a proposta, concluem o protótipo com ajuda mínima e a integração escolhida é considerada viável.
+**Critério de saída:** pastores do recorte compreendem a proposta, concluem o protótipo com ajuda mínima e a Integração Facebook Pages é considerada viável; se a hipótese for rejeitada, o recorte é revisto antes da implementação real.
 
 ## Horizonte 2 — Validar o primeiro ciclo completo
 
-**Objetivo:** permitir que um grupo piloto vá da configuração ao acompanhamento em um canal.
+**Objetivo:** permitir que um grupo piloto publique e confirme avisos textuais em uma Página do Facebook.
 
 **Capacidades:**
 
 - acesso e perfil básico;
 - onboarding guiado;
 - conexão segura de um canal;
-- criação assistida de um tipo de conteúdo;
-- biblioteca e estados do conteúdo;
+- criação manual e guiada de aviso textual;
+- biblioteca simples e estados do aviso;
 - revisão e publicação com confirmação;
 - status e tratamento de falha;
-- consulta de métricas essenciais;
+- confirmação, link e no máximo uma métrica externa comprovada;
 - recomendação simples de próximo passo.
 
 **Critério de saída:** o piloto completa o ciclo com segurança, a primeira publicação acontece sem suporte especializado e existe sinal de retorno para criar ou acompanhar novo conteúdo.
@@ -113,7 +125,7 @@ Este roadmap organiza resultados desejados e critérios de passagem. Ele não re
 
 Segurança, privacidade, acessibilidade, observabilidade, suporte a erros, políticas dos canais e qualidade da linguagem devem ser tratados em todos os horizontes.
 
-Segmento, Canal, formato, métricas, armazenamento conectado, retenção, metas operacionais e responsáveis permanecem dependências para o Horizonte 2. IA generativa, Mobile, broker dedicado, multicanal e serviços distribuídos não são dependências da primeira versão utilizável.
+Validação do pastor, prova de Facebook Pages, resultado mínimo, retenção, metas operacionais e responsáveis permanecem dependências para o Horizonte 2. Armazenamento conectado, IA generativa, Mobile, broker dedicado, multicanal e serviços distribuídos não são dependências do primeiro fluxo.
 
 ## Revisão do roadmap
 

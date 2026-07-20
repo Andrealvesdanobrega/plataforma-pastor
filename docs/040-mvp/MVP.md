@@ -1,20 +1,20 @@
 # Produto Mínimo Viável
 
-**Versão:** 0.3
+**Versão:** 0.4
 
-**Fase:** Sprint 5 — Decisões de Engenharia do MVP
+**Fase:** Sprint 6 — Primeiro Fluxo Vertical do MVP
 
 **Atualizado em:** 20 de julho de 2026
 
 ## 1. Objetivo do MVP
 
-Validar se uma pessoa com pouca familiaridade tecnológica consegue completar, em uma única experiência guiada, o ciclo entre configurar a plataforma, conectar uma conta, criar e organizar um Conteúdo, publicá-lo e compreender os primeiros resultados.
+Validar se um pastor responsável pela comunicação de uma pequena igreja, com pouca familiaridade tecnológica e sem apoio especializado, consegue publicar com segurança um aviso textual em uma Página do Facebook que já administra e confirmar o que aconteceu.
 
-O MVP não busca validar todas as automações ou todos os Canais. Ele valida a proposta central do produto com um ciclo pequeno, real e mensurável.
+Esse é o menor fluxo que realiza uma ação externa útil, preserva o controle do Usuário e testa a proposta central. Facebook Pages é a hipótese operacional da Sprint 6; a liberação para piloto depende da prova oficial da Integração e não fecha por si só OD-01 ou OD-02.
 
 ## 2. Hipótese principal
 
-Se a plataforma apresentar uma única porta de entrada e um Tutor que explique cada etapa, então usuários iniciantes conseguirão publicar Conteúdo com maior autonomia e confiança e saberão qual próximo passo realizar depois de consultar os resultados.
+Se o Tutor conduzir esse pastor desde a entrada até a confirmação de uma única Publicação, mostrando o texto e a Página de destino antes da ação, então ele conseguirá publicar um aviso real sem ajuda durante a tarefa, sem duplicidade e sabendo onde verificar o resultado.
 
 ## 3. Princípio do escopo
 
@@ -24,121 +24,124 @@ O **Conteúdo é a entidade central do MVP**. A configuração prepara o context
 
 A primeira versão utilizável será Web responsiva. Usará TypeScript e Node.js 24 LTS, Next.js no Frontend, NestJS na API e no worker, PostgreSQL com Prisma, Amazon Cognito para identidade, outbox e fila no PostgreSQL, e serviços gerenciados da AWS na região de São Paulo. IA generativa e aplicativo Mobile ficam fora dessa versão. As justificativas, riscos e reversibilidade estão em `APPROVED-DECISIONS.md`.
 
-## 4. Público do piloto
+## 4. Primeiro Usuário
 
-O piloto deverá escolher um único segmento entre pastores, pequenos empreendedores, influenciadores iniciantes e criadores de conteúdo. A escolha depende da pesquisa de descoberta e deve registrar:
+O primeiro Usuário é um **pastor ou líder de uma pequena igreja que cuida pessoalmente da comunicação**, possui baixa ou média confiança digital, já administra uma Página do Facebook da igreja e precisa publicar avisos recorrentes sem depender de um profissional ou voluntário técnico.
 
-- problema frequente e relevante;
-- acesso viável a participantes;
-- tipo de Conteúdo prioritário;
-- Canal utilizado no comportamento atual;
-- disposição para testar uma publicação real.
+Esse recorte é uma hipótese de produto a validar com entrevistas e teste real. O primeiro participante deve ter autorização legítima sobre a Página e aceitar publicar um aviso controlado.
 
-Enquanto essa escolha não for validada, o documento define estrutura e critérios, não um compromisso com segmento ou Canal específico.
+### 4.1 Dor exata
 
-## 5. Fluxo mínimo de ponta a ponta
+Ele já sabe o que precisa comunicar, mas precisa alternar entre ferramentas e configurações que não domina. Isso gera medo de publicar o texto errado, usar a conta errada, perder o rascunho ou repetir a Publicação ao não receber retorno claro.
+
+### 4.2 Primeiro objetivo
+
+Publicar agora um aviso textual curto na Página correta da igreja e receber confirmação confiável, sem precisar conhecer permissões, API, token, formato técnico ou estado interno.
+
+## 5. Primeiro fluxo vertical
 
 ```text
-Baixar App
-→ Configurar
-→ Conectar Contas
-→ Criar Conteúdo
-→ Organizar Biblioteca
-→ Publicar
-→ Acompanhar Resultados
-→ Aprender com o Tutor
+Acessar por convite e entrar com código por e-mail
+→ Confirmar nome e espaço da igreja
+→ Escolher “Publicar um aviso” no Tutor
+→ Conectar e confirmar uma Página do Facebook
+→ Escrever título interno e texto do aviso
+→ Salvar e revisar a prévia
+→ Confirmar “Sim, publicar agora”
+→ Acompanhar o envio
+→ Ver confirmação, link e resultado disponível
 ```
 
-### 5.1 Baixar App
+### 5.1 Acessar e configurar o mínimo
 
-**Entrega mínima:** disponibilizar uma forma oficial de instalar ou acessar a experiência escolhida para o piloto, informar compatibilidade e apresentar a proposta no primeiro acesso.
+**Entrega mínima:** acesso Web por convite e código de uso único enviado por e-mail; confirmação do nome; criação automática de um Projeto com o nome da igreja; consentimentos essenciais.
 
-**Resultado esperado:** Usuário abre o App e entende o benefício antes de criar o acesso.
+**Resultado esperado:** Usuário entra, entende que nada será publicado sem confirmação e chega ao Tutor.
 
-### 5.2 Configurar
+### 5.2 Escolher a intenção
 
-**Entrega mínima:** criação e recuperação básica de acesso, perfil simples, objetivo, público, fuso horário, consentimentos e um Projeto principal criado automaticamente ou confirmado.
+**Entrega mínima:** Tutor abre com “O que você quer fazer hoje?” e oferece **Publicar um aviso** como ação principal.
 
-**Resultado esperado:** Usuário conclui o onboarding, entende as etapas e pode retomar se interromper.
+**Resultado esperado:** a jornada registra uma intenção permitida e mostra as etapas restantes.
 
-### 5.3 Conectar Contas
+### 5.3 Conectar a Página
 
-**Entrega mínima:** catálogo com um Canal, explicação de permissões, autorização externa por uma Integração, identificação da conta e estados de sucesso, falha e reconexão.
+**Entrega mínima:** explicar o benefício e as permissões; conduzir a autorização oficial; listar somente Páginas administradas elegíveis; pedir confirmação da Página escolhida; tratar cancelamento, falha, revogação e reconexão.
 
-**Resultado esperado:** existe uma Conta Conectada ativa e o Usuário sabe qual conta será usada.
+**Resultado esperado:** existe uma Conta Conectada ativa e o Usuário reconhece a Página que receberá o aviso.
 
-### 5.4 Criar Conteúdo
+### 5.4 Criar e salvar o aviso
 
-**Entrega mínima:** criação de um tipo de Conteúdo a partir de ideia, objetivo, público e mensagem; edição, salvamento automático ou explícito confiável e assistência simples do Tutor.
+**Entrega mínima:** pedir apenas um título interno e o texto do aviso; salvar um Rascunho textual; permitir editar, sair e retomar; validar somente campos e limite do Canal.
 
-**Resultado esperado:** existe um Rascunho persistido e editável, sem publicação implícita.
+**Resultado esperado:** existe uma Versão editável e recuperável, sem mídia, sugestão gerada ou Publicação implícita.
 
-### 5.5 Organizar Biblioteca
+### 5.5 Revisar e confirmar
 
-**Entrega mínima:** lista dos Conteúdos do Projeto com título, data e estado; abertura, filtro por estado, retomada e arquivamento.
+**Entrega mínima:** mostrar o texto exato, o nome da Página e que a Publicação será imediata; permitir voltar à edição; exigir **Sim, publicar agora**.
 
-**Resultado esperado:** Usuário localiza o Conteúdo e entende sua situação e próximo passo.
+**Resultado esperado:** a confirmação vincula Usuário, Projeto, Conteúdo, Versão e Conta Conectada; fechar ou voltar não publica.
 
-### 5.6 Publicar
+### 5.6 Publicar e acompanhar
 
-**Entrega mínima:** validação das regras do Canal, prévia, identificação da Conta Conectada, confirmação explícita, publicação imediata, estado do envio e recuperação de falha.
+**Entrega mínima:** congelar a Versão, criar Publicação e outbox na mesma transação, processar pelo worker e apresentar aguardando, publicando, publicada, falhou ou resultado incerto.
 
 **Resultado esperado:** Publicação real confirmada ou falha compreensível e recuperável, sem duplicidade nem perda do Conteúdo.
 
-### 5.7 Acompanhar Resultados
+### 5.7 Ver o resultado
 
-**Entrega mínima:** consulta de um conjunto essencial de métricas oferecidas pelo Canal, relacionadas à Publicação, com fonte, período e última atualização.
+**Entrega mínima:** mostrar Página, horário, estado confirmado e link externo. Quando a prova do Canal confirmar uma métrica simples disponível, mostrar somente essa métrica com fonte, período e última atualização; ausência ou atraso nunca aparece como zero.
 
-**Resultado esperado:** Usuário confirma que o Conteúdo foi publicado e entende pelo menos um resultado disponível.
+**Resultado esperado:** Usuário sabe se o aviso foi publicado, onde encontrá-lo e qual é o próximo passo seguro.
 
-### 5.8 Aprender com o Tutor
+### 5.8 Retomar
 
-**Entrega mínima:** explicação baseada em regras sobre o estado do ciclo e os resultados, seguida de uma recomendação simples e opcional.
+**Entrega mínima:** Início e Biblioteca simples mostram o aviso e sua única ação válida: continuar, revisar, ver andamento, resolver ou ver publicação.
 
-**Resultado esperado:** Usuário explica o próximo passo e pode iniciar um novo ciclo sem que o Tutor aja em seu nome.
+**Resultado esperado:** interrupção não perde o texto nem provoca nova Publicação.
 
 ## 6. Entidades no MVP
 
 | Entidade | Uso no MVP | Profundidade inicial |
 |---|---|---|
-| Usuário | Identidade, preferências e onboarding | Um papel: proprietário |
-| Projeto | Contexto editorial e isolamento | Um Projeto principal por Usuário |
-| Conteúdo | Fonte editorial central | Um tipo prioritário, com versões essenciais |
-| Biblioteca de Conteúdos | Localização e organização | Lista, filtro por estado, retomada e arquivo |
-| Canal | Destino suportado | Um Canal validado |
-| Conta Conectada | Conta real autorizada | Uma Conta ativa no caminho principal |
-| Integração | Autorização, publicação e métricas | Um conector operacional |
+| Usuário | Identidade e entrada por convite | Um papel: proprietário |
+| Projeto e participação | Espaço da igreja e isolamento | Um Projeto criado automaticamente |
+| Conteúdo | Aviso textual central | Título interno, texto e estado |
+| Versão de Conteúdo | Rascunho e texto congelado | Uma versão editável e versões congeladas por Publicação |
+| Biblioteca de Conteúdos | Retomada e localização | Lista simples, abertura e arquivo |
+| Canal | Hipótese Facebook Pages | Um Canal sujeito à prova técnica |
+| Conta Conectada | Página autorizada | Uma Página ativa no caminho principal |
+| Integração | Autorização, publicação, estado e resultado | Cognito e um adaptador Facebook Pages |
 | Publicação | Envio e resultado por destino | Publicação imediata e tentativas rastreáveis |
-| Relatório | Resultados essenciais | Uma visão por Conteúdo ou Publicação |
-| Tutor | Orientação do ciclo | Regras, modelos de texto e recomendações simples, sem IA generativa |
-| Agendamento | Evolução condicionada | Fora do caminho crítico; incluir somente se pesquisa exigir |
-| Campanha | Agrupamento opcional | Fora do MVP |
+| Métrica e Relatório | Confirmação e resultado mínimo | Uma visão por Publicação; uma métrica somente se provada |
+| Tutor | Orientação do ciclo | Intenções e mensagens determinísticas, sem IA generativa |
+
+Mídia, Agendamento e Campanha não participam do fluxo vertical.
 
 ## 7. Capacidades obrigatórias
 
 ### Experiência e tutoria
 
-- indicador de progresso e próximo passo;
+- entrada por convite, progresso e próximo passo;
 - linguagem simples e ajuda contextual;
 - salvamento e retomada;
-- sugestões identificadas como opcionais;
 - estados vazios, carregamento, sucesso e erro compreensíveis;
 - acessibilidade do caminho principal.
 
 ### Conteúdo e Biblioteca
 
-- criar, editar, salvar, revisar e arquivar Conteúdo;
+- criar, editar, salvar, reabrir, revisar e arquivar aviso textual;
 - preservar versão usada em Publicação;
-- validar requisitos do tipo e do Canal;
-- listar e filtrar Conteúdos por estado;
-- impedir que salvar ou receber sugestão publique algo.
+- validar texto obrigatório e limite confirmado pelo Canal;
+- listar Conteúdos por atualização, sem busca ou filtros avançados;
+- impedir que salvar ou marcar Pronto publique algo.
 
 ### Canal, Conta e Integração
 
 - explicar permissões antes da autorização;
 - conectar, verificar, reconectar e desconectar;
 - proteger tokens e demais segredos;
-- conhecer formatos, limites e métricas suportadas;
+- conhecer texto, limites, estados e resultado suportados;
 - traduzir falhas técnicas em ações possíveis.
 
 ### Publicação e resultado
@@ -147,20 +150,20 @@ Baixar App
 - exigir confirmação explícita;
 - usar chave de idempotência e consultar envios incertos;
 - guardar tentativas e referência externa;
-- coletar métricas sem misturar definições;
+- coletar no máximo uma métrica essencial comprovada;
 - informar período, fonte e atualização;
 - recomendar sem prometer causalidade ou desempenho.
 
 ## 8. Cenário de sucesso do piloto
 
-1. Uma pessoa elegível instala ou acessa o App sem assistência da equipe.
-2. Conclui sua configuração e identifica o próximo passo.
-3. Conecta conscientemente uma conta externa.
-4. Cria um Conteúdo alinhado ao formato escolhido.
-5. Encontra e retoma esse Conteúdo na Biblioteca.
-6. Revisa o destino e confirma uma Publicação real.
-7. Consulta os resultados disponíveis.
-8. Compreende a orientação do Tutor e decide o que fazer depois.
+1. Um pastor convidado acessa o Web e entra com código por e-mail sem ajuda durante a tarefa.
+2. Confirma seu nome e o espaço da igreja e escolhe **Publicar um aviso**.
+3. Compreende as permissões, conecta e reconhece a Página correta.
+4. Escreve e salva um aviso textual curto.
+5. Sai ou navega à Biblioteca e reabre o mesmo Rascunho sem perda.
+6. Revisa texto e destino e confirma conscientemente uma Publicação real.
+7. Recebe estado confirmado e abre o link da Publicação, sem duplicidade.
+8. Entende o próximo passo apresentado pelo Tutor.
 
 ## 9. Critérios de aceite do ciclo
 
@@ -179,26 +182,26 @@ Baixar App
 
 ### Ativação
 
-- percentual que conclui a configuração;
-- percentual que conecta a primeira conta;
-- percentual que cria o primeiro Rascunho;
-- percentual que chega à primeira Publicação confirmada;
-- tempo mediano entre primeiro acesso e cada marco.
+- primeiro Usuário entra, conecta a Página, salva o Rascunho e conclui uma Publicação real: sim ou não;
+- taxa de convidados que concluem cada marco sem intervenção durante a tarefa;
+- tempo entre a primeira entrada e a Publicação confirmada;
+- abandono e erro em entrada, conexão, salvamento, confirmação e envio.
 
 ### Autonomia e confiança
 
 - conclusão de cada etapa sem ajuda externa;
-- pedidos de ajuda e erros por etapa;
+- intervenção humana necessária durante a tarefa e erros por etapa;
 - compreensão de permissões e destino antes da confirmação;
 - percepção de confiança para publicar;
-- compreensão correta do estado e do próximo passo.
+- compreensão correta do estado, link publicado e próximo passo;
+- número de Publicações duplicadas ou realizadas sem intenção, cuja meta obrigatória é zero.
 
 ### Valor contínuo
 
-- retorno para consultar Relatório;
-- retorno para criar um segundo Conteúdo;
-- recomendação do Tutor aceita, adaptada ou rejeitada;
-- redução percebida de esforço ou número de ferramentas.
+- retorno para abrir a confirmação ou o resultado;
+- intenção de usar o fluxo para o próximo aviso;
+- redução percebida de insegurança e dependência de terceiros;
+- recomendação simples do Tutor compreendida e aceita ou recusada conscientemente.
 
 Metas numéricas serão definidas após testes moderados criarem uma linha de base. Volume bruto de publicações não comprova, sozinho, autonomia ou valor.
 
@@ -215,23 +218,29 @@ Metas numéricas serão definidas após testes moderados criarem uma linha de ba
 
 ## 12. Fora do MVP
 
+- cadastro público irrestrito;
+- tipos de Conteúdo além de aviso textual;
+- imagem, áudio, vídeo, documento, upload e armazenamento conectado;
+- geração, reescrita ou adaptação de texto por IA;
 - Campanhas;
 - colaboração e múltiplos papéis;
 - múltiplos Projetos por Usuário na interface;
 - múltiplos Canais e distribuição simultânea;
 - calendário editorial completo e recorrência;
-- Agendamento, salvo se a descoberta o tornar indispensável;
+- Agendamento;
+- busca, filtros avançados, etiquetas, duplicação e ações em massa na Biblioteca;
+- notificações externas;
 - edição profissional de imagem, áudio ou vídeo;
 - geração ou publicação totalmente autônoma;
-- relatórios comparativos avançados;
+- métricas avançadas, comparação e relatório multicanal;
 - mídia paga, CRM, comércio eletrônico ou garantia de desempenho.
 
 ## 13. Dependências e riscos
 
 | Dependência ou risco | Tratamento antes do piloto |
 |---|---|
-| Web responsivo não atender ao contexto do público | Testar primeiro acesso, retorno de autorização e seleção de mídia nos dispositivos reais |
-| Canal e formato não definidos | Selecionar a partir de pesquisa comportamental |
+| Web responsivo não atender ao contexto do público | Testar primeiro acesso, código por e-mail e retorno de autorização nos dispositivos reais |
+| Hipótese de Facebook Pages ou texto sem mídia ser inválida | Entrevistar o público e provar a Integração antes do piloto |
 | Revisão e limites da API | Fazer prova de autorização, publicação, estado e métricas |
 | Confiança para conectar contas | Testar explicação de permissões e revogação |
 | Tutor determinístico não compreender texto livre | Voltar a opções guiadas, medir falhas e não ampliar regras sem evidência |
@@ -250,26 +259,27 @@ A implementação do núcleo pode começar com as decisões da Sprint 5. Os prim
 - desenvolvimento local reproduzível sem credencial ou dado produtivo;
 - estados e erros do domínio usados como fonte única para a experiência.
 
-Segmento, Canal, formato, métricas, armazenamento conectado, retenção e metas operacionais não bloqueiam o núcleo. Eles bloqueiam a conexão a serviços reais e a liberação para piloto.
+Validação do pastor e do aviso textual, prova de Facebook Pages, resultado mínimo, retenção e metas operacionais não bloqueiam o fluxo simulado. Eles bloqueiam a conexão real e a liberação para piloto.
 
 ## 15. Critérios para a primeira versão utilizável
 
 “Primeira versão utilizável” significa uma versão liberável para piloto controlado, e não apenas uma demonstração técnica. Todos os critérios são cumulativos:
 
-- segmento, tipo de Conteúdo, Canal, formato e métricas essenciais aprovados;
+- a hipótese de pastor, aviso textual e Facebook Pages foi validada com representante real e prova oficial do Canal;
 - acesso Web por código de e-mail, sessão protegida e encerramento testados;
-- configuração de Usuário e Projeto, Tutor determinístico, criação, retomada e Biblioteca funcionando no ciclo completo;
-- conexão, verificação, revogação e reconexão de uma Conta real controlada comprovadas;
+- convite, configuração mínima, Tutor determinístico, criação textual, retomada e Biblioteca simples funcionam no ciclo completo;
+- conexão, verificação, revogação e reconexão de uma Página real controlada foram comprovadas;
 - prévia mostra Versão, Canal e conta, e somente a confirmação explícita cria a Publicação;
 - Publicação real é assíncrona, idempotente, auditável e reconciliável em sucesso, timeout e falha;
-- Resultado mostra fonte, período, atualização e próximo passo sem promessa de desempenho;
-- arquivos, temporários, tokens, segredos, logs e isolamento por Projeto atendem à baseline de segurança;
+- Resultado mostra Página, link, estado, fonte, horário, atualização e próximo passo; métrica externa só aparece se comprovada;
+- tokens, segredos, logs e isolamento por Projeto atendem à baseline de segurança;
 - acessibilidade do caminho principal, migração, restauração, alertas e revogação de token foram verificados em homologação;
 - privacidade, retenção, exclusão, suporte e resposta a incidente estão aprovados;
-- representantes do público concluem o ciclo sem problema crítico de UX;
+- pelo menos um pastor conclui o fluxo real sem intervenção durante a tarefa e explica corretamente destino, resultado e próximo passo;
+- não ocorre perda silenciosa, Publicação duplicada ou Publicação sem intenção;
 - não existe risco crítico de segurança sem tratamento aprovado.
 
-Os detalhes normativos estão em ENG-15 de `APPROVED-DECISIONS.md`. O MVP será considerado validado quando o grupo piloto completar Publicações reais com segurança, a maioria compreender o fluxo e o próximo passo sem suporte especializado, as falhas críticas forem recuperáveis e houver evidência de retorno para acompanhar resultados ou criar novo Conteúdo.
+Esses critérios especializam, sem substituir ou reduzir, ENG-15 de `APPROVED-DECISIONS.md`. O fluxo não está utilizável para piloto enquanto a prova do Facebook Pages, a governança e os controles exigidos por ENG-15 permanecerem incompletos.
 
 Os limiares quantitativos devem ser aprovados antes do piloto. Caso os sinais não sejam atingidos, a decisão correta pode ser revisar segmento, linguagem, jornada, Canal ou proposta de valor em vez de ampliar funcionalidades.
 
@@ -280,11 +290,11 @@ O MVP deve parecer uma única jornada, mesmo que diferentes partes do sistema re
 ### 16.1 Navegação mínima
 
 - **Início:** situação atual e próximo passo.
-- **Criar:** início de um Conteúdo.
-- **Biblioteca:** lista e organização dos Conteúdos.
-- **Resultados:** acompanhamento das Publicações.
+- **Criar:** edição do aviso textual.
+- **Biblioteca:** lista, retomada e arquivo dos avisos.
+- **Resultados:** confirmação e detalhe da Publicação escolhida.
 - **Ajuda:** acesso permanente ao Tutor.
-- **Configurações:** perfil e Conta Conectada, acessível sem competir com as tarefas principais.
+- **Configurações:** perfil e Página conectada, acessível sem competir com a tarefa principal.
 
 ### 16.2 Regra do Tutor
 
@@ -298,42 +308,51 @@ Depois da pergunta, o Tutor apresenta no máximo quatro opções coerentes com o
 
 Cada etapa do MVP inclui título, motivo curto, progresso quando aplicável, uma ação principal, alternativa segura, ajuda e retorno visível de salvamento ou resultado. Opções avançadas não aparecem no caminho principal.
 
+### 16.4 Telas do fluxo vertical
+
+| Tela | Responsabilidade mínima |
+|---|---|
+| Acesso | Receber convite, e-mail e código de uso único |
+| Configuração mínima | Confirmar nome, igreja, consentimentos e Página |
+| Início / Tutor | Mostrar “O que você quer fazer hoje?” e **Publicar um aviso** |
+| Criar aviso | Editar título interno e texto, salvar e retomar |
+| Biblioteca | Listar, abrir e arquivar avisos |
+| Revisão e confirmação | Mostrar texto, Página e ação **Sim, publicar agora** |
+| Andamento da Publicação | Mostrar espera, sucesso, falha ou resultado incerto |
+| Resultado da Publicação | Mostrar Página, horário, link, atualização e próximo passo |
+
 ## 17. Escopo detalhado dos fluxos
 
 ### 17.1 Onboarding
 
 **Telas mínimas:**
 
-1. Boas-vindas e promessa.
-2. Explicação de como funciona e garantia de confirmação antes de Publicar.
-3. Criar acesso ou entrar.
-4. Consentimentos essenciais em linguagem simples.
-5. Confirmação e entrada na configuração.
+1. Acesso por convite, com promessa curta e garantia de confirmação antes de Publicar.
+2. Entrada por código de e-mail e consentimentos essenciais em linguagem simples.
 
 **Critérios de aceite:**
 
-- A primeira tela possui “Começar” e “Já tenho uma conta”.
+- A primeira tela identifica o convite e permite entrar ou sair.
 - O Usuário entende que nada será publicado sozinho.
+- Código inválido ou vencido pode ser solicitado novamente sem revelar indevidamente a existência de conta.
 - Campos mostram requisitos antes do envio e erros junto ao campo.
-- É possível recuperar o acesso por um caminho visível.
-- Fechar e reabrir retoma a primeira etapa incompleta.
 - Consentimento opcional não começa selecionado.
 - Conclusão leva diretamente à configuração assistida.
 
 ### 17.2 Configuração assistida
 
-**Passos mínimos:** sobre o Usuário, objetivo, público, Canal, conexão de conta e resumo.
+**Passos mínimos:** nome, nome da igreja, consentimentos pendentes, explicação do Canal, conexão e confirmação da Página.
 
 **Critérios de aceite:**
 
 - O progresso informa o passo atual e o total.
-- Objetivo e público usam exemplos, mas aceitam resposta própria ou incerteza.
-- Um Projeto principal é criado sem exigir que o Usuário conheça esse conceito.
+- O objetivo inicial é **Publicar avisos da igreja** e o público inicial é **comunidade da igreja**; ambos podem ser corrigidos nas Configurações sem criar nova etapa no fluxo.
+- Um Projeto com o nome da igreja é criado sem exigir que o Usuário conheça esse conceito.
 - Antes da autorização externa, a interface explica o que acontecerá e informa que não verá a senha do Canal.
 - Ao retornar, nome e imagem pública da conta são mostrados para confirmação quando disponíveis.
 - Cancelar a autorização não registra sucesso nem perde respostas anteriores.
 - A conexão pode ser pulada para Criar, mas Publicar explica a pendência.
-- O resumo final permite corrigir objetivo, público ou conta.
+- O resumo final permite corrigir nome da igreja ou Página.
 
 ### 17.3 Tela principal
 
@@ -352,34 +371,31 @@ Cada etapa do MVP inclui título, motivo curto, progresso quando aplicável, uma
 
 ### 17.4 Criação de Conteúdo
 
-**Passos mínimos:** ideia, objetivo, público, sugestão opcional, edição, mídia quando necessária, revisão e decisão de Publicar ou guardar.
+**Passos mínimos:** título interno, texto do aviso, salvamento, revisão e decisão de Publicar ou guardar.
 
 **Critérios de aceite:**
 
 - O fluxo informa que haverá revisão antes da Publicação.
-- A primeira ideia confirmada cria um Rascunho recuperável.
-- Público configurado é sugerido, mas pode ser alterado para o Conteúdo.
-- Sugestão do Tutor só entra no Conteúdo depois de escolha explícita.
+- O primeiro texto não vazio cria um Rascunho recuperável.
 - Editor mostra confirmação real de salvamento.
 - Usuário consegue voltar à versão anterior suportada pelo MVP.
-- Mídia obrigatória e opcional são diferenciadas.
-- Pendência obrigatória e melhoria opcional são apresentadas separadamente.
+- Não existe entrada de mídia, sugestão gerada ou formatação rica.
+- Texto vazio ou acima do limite comprovado bloqueia a revisão com correção simples.
 - Marcar como Pronto não Publica.
 - No fim, as ações são “Publicar agora” e “Guardar na Biblioteca”.
 
 ### 17.5 Organização da Biblioteca
 
-**Recursos mínimos:** lista, busca simples, filtro por estado, abertura, retomada, renomeação e arquivamento.
+**Recursos mínimos:** lista ordenada pela atualização mais recente, abertura, retomada e arquivamento.
 
 **Critérios de aceite:**
 
 - Título da área é “Seus conteúdos”.
 - Cartão mostra título, pequena prévia, atualização, estado simples e uma ação principal.
-- Filtros são “Todos”, “Para continuar”, “Prontos”, “Publicados” e “Precisam de atenção”.
 - Estado vazio oferece “Criar meu primeiro conteúdo”.
-- Filtro sem resultado oferece “Limpar filtro”.
 - Arquivar explica que o Conteúdo não será apagado.
-- Restaurar mantém versões, Publicações e Resultados.
+- Arquivar preserva versões, Publicações e Resultados.
+- Busca, filtros, renomeação, duplicação, restauração e ações em massa não fazem parte do primeiro fluxo.
 - Ações em massa não fazem parte do MVP.
 
 ### 17.6 Publicação
@@ -402,18 +418,17 @@ Cada etapa do MVP inclui título, motivo curto, progresso quando aplicável, uma
 
 ### 17.7 Acompanhamento dos resultados
 
-**Telas mínimas:** lista de Conteúdos Publicados com dados e detalhe de uma Publicação.
+**Tela mínima:** detalhe da Publicação acessível pelo sucesso, Início ou Conteúdo.
 
 **Critérios de aceite:**
 
-- A área começa com uma explicação, não com uma grade de números.
 - Cada resultado identifica Conteúdo, Canal, período e última atualização.
-- No máximo as métricas essenciais validadas aparecem no primeiro nível.
-- Cada métrica possui nome simples e uma frase de explicação.
+- Página, horário, estado confirmado e link externo aparecem primeiro.
+- No máximo uma métrica externa comprovada aparece com nome simples e explicação.
 - Ausência de dados não é mostrada como zero.
 - Dado antigo permanece com data quando a atualização falhar.
-- Fato, limitação e recomendação aparecem em blocos separados.
-- Tutor oferece uma ação que pode ser aceita, adaptada ou recusada.
+- Fato, limitação e próximo passo aparecem separados.
+- Não há comparação, consolidação ou recomendação baseada em desempenho.
 
 ### 17.8 Ajuda do Tutor
 
@@ -422,11 +437,11 @@ Cada etapa do MVP inclui título, motivo curto, progresso quando aplicável, uma
 - Abre em qualquer área sem descartar dados da tela.
 - Inicia sempre com “O que você quer fazer hoje?”.
 - Opções sugeridas refletem a tela e o estado atuais.
-- Aceita pedido com palavras do Usuário.
+- Aceita somente intenções previstas e texto livre curto; baixa confiança volta às opções guiadas.
 - Faz somente uma pergunta por mensagem quando precisa esclarecer.
 - Encaminha ao campo ou etapa correta com explicação prévia.
 - Não mostra termos internos nem dados de outra conta ou Projeto.
-- Não altera Conteúdo sem aceitação nem realiza ação externa.
+- Não gera texto, não altera Conteúdo e não realiza ação externa.
 - Quando não entende, reformula com opções e oferece suporte após nova dificuldade.
 - Ao fechar, o Usuário retorna ao mesmo ponto com dados preservados.
 
