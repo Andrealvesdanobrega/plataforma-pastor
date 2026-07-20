@@ -2,131 +2,120 @@
 
 **Atualizado em:** 20 de julho de 2026
 
-**Estado de produto:** Sprint 6 concluída; primeiro fluxo vertical definido como hipótese e implementação ainda não iniciada.
+**Estado:** filosofia de Comunicação Assistida consolidada; núcleo pode avançar com Destino simulado; primeiro Destino real permanece aberto.
 
 ## Propósito
 
-Este roadmap organiza resultados desejados e critérios de passagem. Ele não representa compromisso com datas antes da validação das hipóteses e dependências externas.
+Organizar a evolução do Sistema Operacional de Comunicação Assistida sem transformar integrações em produto, ampliar prematuramente o MVP ou alterar a baseline ENG-01 a ENG-15.
 
 ## Princípios de planejamento
 
-- Aprender antes de ampliar o escopo.
-- Entregar ciclos completos antes de aprofundar funções isoladas.
-- Validar um canal antes de expandir para vários.
-- Medir autonomia e confiança, não apenas volume de publicações.
-- Manter o usuário no controle de ações externas.
+- Intenção humana precede Conteúdo e distribuição.
+- Tutor é o núcleo da experiência.
+- Presença Digital organiza Destinos, não o contrário.
+- Complexidade tecnológica pertence ao sistema.
+- Cada incremento entrega aprendizado verificável.
+- Integração real depende de evidência de uso e prova técnica.
+- IA, Mobile e múltiplos Destinos não antecipam a validação do núcleo.
 
-## Marco de engenharia — iniciar o núcleo do MVP
+## Transição descoberta → implementação
 
-**Resultado alcançado na Sprint 5:** cliente Web responsivo, linguagem, frameworks, banco, ORM, identidade, fila, armazenamento próprio, Publicação, estratégia de IA e ambientes foram aprovados. O núcleo pode ser implementado com adaptadores simulados e dados fictícios.
+| Trilha | Próxima evidência | Portão de saída |
+|---|---|---|
+| Descoberta com Usuários | Dor, linguagem, modelo do Tutor, conhecimento reutilizável e compreensão de Presença Digital | Público reconhece valor e conclui protótipo sem tratar produto como mero publicador |
+| Validação funcional | Intenção → Conteúdo → recomendação explicada → versão para Destino simulado | Intenção preservada, perguntas necessárias e controle final compreendidos |
+| Implementação do núcleo | Identidade, Projeto, Tutor determinístico, Intenção, Conteúdo, Biblioteca, Presença, adaptação e simulador | Ciclo assistido íntegro, acessível, seguro e observável em homologação |
+| Descoberta de Destino | Hábitos reais e capacidades mínimas dos candidatos | Um único Destino aprovado por evidência de usuário, documentação e POC |
+| Piloto real | Integração, Publicação e resultado sob ENG-15 | Um representante conclui ciclo real sem ajuda, perda, duplicidade ou ação não confirmada |
 
-**Sequência de entrega:**
+O núcleo não depende da escolha de um Destino real. O adaptador e o piloto dependem.
 
-1. Identidade, Projeto e autorização.
-2. Tutor determinístico e Orquestrador.
-3. Conteúdo, versões e Biblioteca.
-4. Conta Conectada e contrato do Canal.
-5. Publicação, outbox, worker e reconciliação.
-6. Métricas, Relatório e próximo passo simples.
-7. Resultado mínimo e endurecimento do Web nos dispositivos do público.
+## Marco 1 — Consolidar e validar o modelo assistido
 
-**Critério de saída para piloto:** todos os critérios de primeira versão utilizável em ENG-15 de `APPROVED-DECISIONS.md`, incluindo provas reais das Integrações, privacidade, operação, segurança, acessibilidade e teste com o público, estão atendidos.
+**Objetivo:** provar que a categoria e o fluxo resolvem uma dor compreensível.
 
-## Marco de produto — primeiro fluxo vertical
+- entrevistar o primeiro recorte e segmentos comparáveis;
+- testar linguagem de Intenção, Presença Digital e Destino;
+- validar quando o Tutor deve perguntar, sugerir e explicar;
+- verificar aceitação, correção e exclusão de conhecimento reutilizado;
+- medir preservação da Intenção e aprendizado dentro da tarefa.
 
-**Hipótese definida na Sprint 6:** um pastor convidado, responsável pela comunicação de uma pequena igreja, publica um aviso textual curto em uma Página do Facebook que já administra e recebe confirmação e link confiáveis.
+**Critério de saída:** representantes explicam a proposta, concluem o protótipo, reconhecem sua Intenção na versão e relatam redução de esforço sem perder controle.
 
-**Fluxo:** entrar por código → confirmar igreja → escolher **Publicar um aviso** → conectar Página → escrever e salvar → retomar → revisar → confirmar → acompanhar → abrir a Publicação.
+## Marco 2 — Implementar o primeiro ciclo com simulador
 
-**Capacidades comprometidas:** convite e acesso, Projeto único, Tutor determinístico, aviso textual, Biblioteca simples, uma Página conectada, Publicação imediata assíncrona, resultado mínimo, auditoria e observabilidade.
+**Objetivo:** entregar o menor fluxo vertical sem dependência externa de publicação.
 
-**Capacidades adiadas:** mídia e armazenamento conectado, IA generativa, segundo Canal, Agendamento, Campanha, colaboração, notificações, Biblioteca avançada e métricas comparativas.
+1. convite, identidade e Projeto;
+2. Tutor determinístico e captura de Intenção;
+3. conhecimento contextual mínimo e controlado;
+4. Conteúdo textual, versões, Biblioteca e retomada;
+5. Presença Digital mínima e Destino simulado;
+6. adaptação determinística explicada;
+7. revisão, decisão final, auditoria e métricas de experiência.
 
-**Critério de saída:** um pastor realiza uma Publicação real na Página correta sem intervenção durante a tarefa, sem perda ou duplicidade, entende o estado e o próximo passo, e todos os critérios de ENG-15 permanecem atendidos.
+**Critério de saída:** incremento utilizável para validação assistida atende ao MVP, segurança aplicável, acessibilidade e ausência de perda de estado.
 
-## Horizonte 1 — Descobrir
+## Marco 3 — Escolher e provar o primeiro Destino real
 
-**Objetivo:** confirmar para quem o produto deve começar e qual problema merece prioridade.
+**Objetivo:** selecionar somente um Destino que complete o ciclo sem redefinir o produto.
 
-**Resultados esperados:**
+Critérios mínimos:
 
-- hipótese de pastor responsável pela comunicação testada com evidência;
-- jornada e principais barreiras compreendidas;
-- proposta de valor testada;
-- Facebook Pages e aviso textual confirmados ou rejeitados por evidência;
-- riscos de integração conhecidos;
-- protótipo do ciclo completo validado.
+- uso real pelo segmento e tarefa compatível;
+- autorização legítima e menor permissão;
+- formato compatível com o Conteúdo aprovado;
+- criação, estado, referência externa, revogação e falhas documentáveis;
+- idempotência ou reconciliação compatível com ENG-10;
+- custo, revisão, política, privacidade e suporte aceitáveis.
 
-**Critério de saída:** pastores do recorte compreendem a proposta, concluem o protótipo com ajuda mínima e a Integração Facebook Pages é considerada viável; se a hipótese for rejeitada, o recorte é revisto antes da implementação real.
+**Critério de saída:** decisão registrada e POC aprovada. Nenhum candidato é preferido nesta Sprint.
 
-## Horizonte 2 — Validar o primeiro ciclo completo
+## Marco 4 — Primeiro piloto real
 
-**Objetivo:** permitir que um grupo piloto publique e confirme avisos textuais em uma Página do Facebook.
+**Objetivo:** estender o ciclo validado para uma ação externa controlada.
 
-**Capacidades:**
+- conectar um Destino aprovado à Presença Digital;
+- gerar uma Versão para Destino;
+- mostrar adaptação, conta e consequência;
+- confirmar explicitamente;
+- publicar de forma assíncrona e reconciliável;
+- mostrar resultado factual e próximo passo.
 
-- acesso e perfil básico;
-- onboarding guiado;
-- conexão segura de um canal;
-- criação manual e guiada de aviso textual;
-- biblioteca simples e estados do aviso;
-- revisão e publicação com confirmação;
-- status e tratamento de falha;
-- confirmação, link e no máximo uma métrica externa comprovada;
-- recomendação simples de próximo passo.
+**Critério de saída:** todos os critérios cumulativos de ENG-15 e do MVP para piloto real estão atendidos.
 
-**Critério de saída:** o piloto completa o ciclo com segurança, a primeira publicação acontece sem suporte especializado e existe sinal de retorno para criar ou acompanhar novo conteúdo.
+## Horizonte posterior — Ampliar a Presença Digital
 
-## Horizonte 3 — Consolidar organização e recorrência
+Somente após o primeiro ciclo real validado:
 
-**Objetivo:** tornar o produto útil de forma repetida, não apenas na primeira publicação.
+- adicionar outro Destino por evidência;
+- evoluir adaptação entre formatos;
+- consolidar resultados semanticamente compatíveis;
+- avaliar Agendamento, Campanha, colaboração e mídia;
+- avaliar IA generativa sob aprovação de valor, segurança e privacidade;
+- avaliar Mobile ou infraestrutura adicional por medição.
 
-**Capacidades candidatas:**
+Distribuição simultânea, autonomia do Tutor e expansão indiscriminada de canais não são consequência automática.
 
-- calendário editorial;
-- rascunhos, duplicação e histórico de versões;
-- modelos por objetivo;
-- lembretes e retomada de tarefas;
-- comparação simples de resultados;
-- recomendações baseadas no histórico.
+## Capacidades adiadas
 
-**Critério de saída:** usuários retornam, mantêm conteúdos organizados e realizam novos ciclos com menor esforço.
-
-## Horizonte 4 — Expandir para multicanal
-
-**Objetivo:** reutilizar uma fonte de conteúdo com versões adequadas a mais de um canal.
-
-**Capacidades candidatas:**
-
-- novos conectores;
-- adaptação por regras de cada canal;
-- pré-visualização e aprovação por destino;
-- publicação coordenada e status independente por canal;
-- resultados consolidados e comparáveis.
-
-**Critério de saída:** a expansão reduz trabalho repetitivo sem aumentar erros, dúvidas ou perda de controle.
-
-## Horizonte 5 — Evoluir a tutoria
-
-**Objetivo:** oferecer orientação contextual e personalizada ao longo de toda a jornada.
-
-**Capacidades candidatas:**
-
-- planejamento guiado por objetivo e público;
-- sugestões de temas, formatos e frequência;
-- assistência multimodal;
-- explicação das causas prováveis dos resultados;
-- colaboração simples e papéis adicionais;
-- integrações com ferramentas complementares.
-
-**Critério de saída:** recomendações são compreendidas, aceitas quando úteis e melhoram resultados definidos pelo usuário sem comprometer confiança.
+- escolha imediata de Instagram, Facebook, YouTube, WhatsApp, Telegram ou outro provedor;
+- múltiplos Destinos e lote;
+- mídia e armazenamento conectado;
+- IA generativa;
+- Agendamento, Campanha e colaboração;
+- Mobile, broker dedicado, microserviços e múltiplas regiões;
+- métricas avançadas, anúncios, CRM e comércio eletrônico.
 
 ## Dependências transversais
 
-Segurança, privacidade, acessibilidade, observabilidade, suporte a erros, políticas dos canais e qualidade da linguagem devem ser tratados em todos os horizontes.
+- entrevistas e testes de usabilidade;
+- atualização autorizada do modelo de dados e da segurança para Intenção, Conhecimento, Presença Digital e Destino;
+- retenção, exclusão, fundamento e controle do conhecimento absorvido;
+- metas operacionais, orçamento, responsáveis e suporte;
+- prova técnica específica antes de qualquer Integração real;
+- atendimento integral a ENG-15 antes do piloto.
 
-Validação do pastor, prova de Facebook Pages, resultado mínimo, retenção, metas operacionais e responsáveis permanecem dependências para o Horizonte 2. Armazenamento conectado, IA generativa, Mobile, broker dedicado, multicanal e serviços distribuídos não são dependências do primeiro fluxo.
+## Regra de revisão
 
-## Revisão do roadmap
-
-O roadmap deve ser revisto ao fim de cada ciclo de descoberta ou entrega. Uma capacidade candidata somente entra em compromisso depois de apresentar evidência de valor, viabilidade e prioridade.
+O roadmap é revisto por evidência de usuário, prova técnica, risco, custo ou obrigação aplicável. Pedido de canal ou tecnologia isolado não amplia o escopo automaticamente.

@@ -2,57 +2,66 @@
 
 ## Declaração de futuro
 
-Ser a forma mais simples e confiável de uma pessoa transformar uma ideia em conteúdo publicado, organizado e mensurável em todos os seus canais digitais.
+Ser o Sistema Operacional de Comunicação Assistida que permite a qualquer pessoa transformar intenção em presença digital organizada, com aprendizado contínuo e sem carregar a complexidade tecnológica do processo.
 
 ## Experiência desejada
 
-No futuro, o usuário entra em um único ambiente e encontra uma orientação clara: o que precisa configurar, o que pode criar, o que está pendente, onde cada conteúdo será publicado e o que os resultados significam. A plataforma conhece o contexto do usuário, reaproveita seu trabalho e reduz decisões técnicas sem retirar seu controle.
+O Usuário conversa com o Tutor sobre o que quer alcançar. A plataforma reconhece contexto já conhecido, pergunta apenas o indispensável, propõe um caminho e explica por que ele faz sentido. A Intenção torna-se Conteúdo; o Conteúdo recebe versões apropriadas aos Destinos conectados à Presença Digital; e o Usuário revisa e mantém a decisão final.
 
-## Transformação esperada
+Para iniciantes, a experiência mostra um próximo passo claro. Para Usuários avançados, oferece profundidade e controle progressivos sem criar outro produto ou expor detalhes técnicos desnecessários.
 
-| Antes | Depois |
-|---|---|
-| Várias ferramentas desconectadas | Uma jornada centralizada |
-| Dúvida sobre como começar | Próximo passo claro |
-| Repetição manual por canal | Conteúdo adaptado e reutilizável |
-| Arquivos e ideias dispersos | Biblioteca organizada por conteúdo |
-| Medo de publicar errado | Revisão, confirmação e retorno visível |
-| Métricas difíceis de interpretar | Resultados explicados com recomendações práticas |
+## Papel do Tutor
 
-## Pilares da visão
+O Tutor é o núcleo da plataforma. Ele deve:
 
-1. **Entrada única:** identidade, configurações, criação, calendário, publicação e resultados no mesmo produto.
-2. **Tutoria contínua:** orientação contextual do primeiro acesso ao aprendizado após a publicação.
-3. **Conteúdo central:** uma fonte de conteúdo, com versões, mídias, destinos e resultados relacionados.
-4. **Distribuição multicanal:** diferenças técnicas entre canais tratadas pela plataforma.
-5. **Aprendizado acessível:** resultados apresentados como respostas e próximos passos.
-6. **Confiança por padrão:** consentimento, segurança, acessibilidade e recuperação de erros desde o início.
+- compreender a Intenção e o contexto;
+- absorver e reutilizar conhecimento autorizado do Usuário;
+- perguntar somente quando uma resposta mudar materialmente o resultado;
+- conduzir a jornada e sugerir boas práticas;
+- explicar o motivo de cada recomendação relevante;
+- ensinar comunicação e marketing no momento da tarefa;
+- esconder a mecânica técnica sem esconder consequências;
+- devolver ao Usuário a palavra final.
 
-## Horizonte de evolução
+## Modelo de futuro
 
-- **Fundação:** validar o problema, a linguagem, a jornada e o canal inicial.
-- **Primeiro ciclo completo:** permitir configuração, criação, organização, publicação e acompanhamento de ponta a ponta.
-- **Multicanal:** adaptar e distribuir o mesmo conteúdo em mais canais.
-- **Tutoria inteligente:** recomendar formatos, calendário e melhorias com base no contexto e nos resultados.
-- **Ecossistema:** permitir colaboração e integrações adicionais sem perder simplicidade.
+```text
+Intenção humana
+→ Tutor e contexto
+→ Conteúdo organizado
+→ versões adaptadas
+→ Presença Digital
+→ Destinos de Publicação
+→ resultado e aprendizado
+→ novo contexto para o Tutor
+```
 
-## Como reconheceremos o avanço
+Instagram, Facebook, YouTube, WhatsApp, Telegram e futuros serviços são Destinos de Publicação possíveis. Nenhum deles define a identidade, a arquitetura de experiência ou a proposta de valor do produto.
 
-A visão estará se materializando quando usuários iniciantes:
+## Princípios permanentes
 
-- concluírem a configuração sem assistência externa;
-- chegarem à primeira publicação com baixa taxa de abandono;
-- compreenderem o estado de cada conteúdo;
-- reutilizarem conteúdos em mais de um canal;
-- entenderem os resultados e executarem um próximo passo recomendado;
-- relatarem maior autonomia e confiança para manter presença digital.
-
-As metas numéricas serão definidas após a linha de base obtida nos testes de descoberta e no piloto do MVP.
+- A tecnologia se adapta à pessoa, não o contrário.
+- A Intenção original permanece identificável em todas as versões.
+- Recomendações são explicáveis e recusáveis.
+- Adaptações respeitam o contexto e as capacidades de cada Destino.
+- Ação externa exige confirmação consciente.
+- Aprendizado acontece dentro do trabalho, não como curso obrigatório.
+- Simplicidade inicial e poder progressivo convivem na mesma experiência.
+- Conhecimento do Usuário é um ativo sob seu controle, não matéria-prima irrestrita.
 
 ## O que não queremos ser
 
-- apenas um agendador de posts;
-- apenas um gerador automático de textos;
-- uma ferramenta profissional complexa disfarçada de produto simples;
-- uma plataforma que publica sem consentimento ou torna permissões opacas;
-- um painel de métricas sem explicação e sem ação recomendada.
+- um publicador ou agendador de redes sociais;
+- um painel organizado por logotipos de canais;
+- uma coleção de integrações técnicas;
+- um curso de marketing separado do trabalho real;
+- uma camada de IA que toma decisões pelo Usuário;
+- uma caixa-preta que adapta ou publica sem explicar e confirmar.
+
+## Como reconheceremos o avanço
+
+Avançamos quando o Usuário consegue expressar o que pretende, reconhece sua mensagem nas versões propostas, compreende as recomendações, aprende durante a tarefa e mantém sua Presença Digital com menos esforço e dependência técnica. Volume de publicações, sozinho, não comprova essa visão.
+
+## Regra inegociável
+
+**A complexidade tecnológica pertence ao sistema, nunca ao Usuário.**

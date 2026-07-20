@@ -1,10 +1,10 @@
 # Decisões Aprovadas
 
-**Fase:** Sprint 5 — Decisões de Engenharia do MVP
+**Fase:** Sprint 7 — Modelo de Comunicação Assistida
 
 **Atualizado em:** 20 de julho de 2026
 
-**Escopo:** decisões técnicas suficientes para iniciar a implementação, sem substituir as validações de produto, Integração, privacidade e operação exigidas antes do piloto.
+**Escopo:** baseline técnica suficiente para iniciar o núcleo e decisões de filosofia e modelo funcional do Sistema Operacional de Comunicação Assistida. Nenhum primeiro Destino de Publicação é escolhido nesta Sprint.
 
 ## Resumo da baseline
 
@@ -209,6 +209,112 @@ O Tutor da primeira versão utilizável será determinístico. IA generativa e a
 - homologação comprova migração, restauração, alertas críticos e exercício de revogação de token;
 - política mínima de privacidade, retenção, exclusão, suporte e incidente está aprovada;
 - teste com representantes do público não apresenta problema crítico de UX ou risco crítico de segurança sem tratamento aprovado.
+
+## Decisões de produto da Sprint 7
+
+As decisões abaixo consolidam a filosofia do produto e não alteram ENG-01 a ENG-15.
+
+### COM-01 — Identidade e missão do produto
+
+**Decisão:** a plataforma é um **Sistema Operacional de Comunicação Assistida** cuja missão é transformar uma intenção humana em comunicação digital organizada. Não é um publicador de redes sociais.
+
+**Motivo:** publicação é somente uma etapa de uma jornada maior que inclui compreensão, organização, adaptação, distribuição e aprendizado.
+
+**Benefícios:** proposta de valor independente de provedor; experiência orientada ao problema humano; evolução multicanal sem reorganizar o produto ao redor de logotipos.
+
+**Riscos:** a categoria pode parecer abstrata e ampliar expectativas se não houver limites claros; a proposta precisa ser validada em linguagem do público.
+
+**Reversibilidade:** média. O nome da categoria e a linguagem são ajustáveis; voltar a centrar o produto em canais contrariaria a missão e exigiria revisão ampla.
+
+### COM-02 — Tutor como núcleo da plataforma
+
+**Decisão:** o Tutor é a principal interface do produto. Deve compreender contexto, absorver conhecimento autorizado, perguntar somente quando necessário, conduzir, sugerir boas práticas, explicar motivos, ensinar comunicação naturalmente e esconder a complexidade técnica. A decisão final permanece sempre com o Usuário.
+
+**Motivo:** o valor está em reduzir carga cognitiva e dependência técnica durante uma tarefa real, não apenas em oferecer funções.
+
+**Benefícios:** jornada contínua; aprendizado contextual; menos perguntas repetidas; recomendações compreensíveis; experiência adaptável à familiaridade do Usuário.
+
+**Riscos:** perguntas excessivas tornam o Tutor um formulário; conhecimento incorreto pode contaminar recomendações; orientação pode parecer controle; privacidade e retenção precisam ser definidas.
+
+**Reversibilidade:** média. Regras, textos e profundidade são altamente reversíveis; retirar o Tutor do núcleo mudaria a proposta e a arquitetura de experiência.
+
+### COM-03 — Comunicação Assistida e propriedade da complexidade
+
+**Decisão:** o Usuário não precisa conhecer APIs, algoritmos, formatos, redes sociais, marketing digital ou inteligência artificial para realizar a jornada. A plataforma traduz essas camadas automaticamente, explica recomendações e consequências e oferece controle progressivo. **A complexidade tecnológica pertence ao sistema, nunca ao Usuário.**
+
+**Motivo:** transferir a mecânica técnica ao Usuário reproduziria o problema que o produto existe para resolver.
+
+**Benefícios:** menor barreira de entrada; linguagem consistente; acessibilidade cognitiva; possibilidade de atender iniciantes e avançados na mesma base.
+
+**Riscos:** simplificação pode esconder limitação material ou criar confiança indevida; detalhes necessários de permissão, destino e consequência não podem ser omitidos.
+
+**Reversibilidade:** baixa como princípio; alta na forma de apresentar explicações e controles avançados.
+
+### COM-04 — Intenção como origem e Conteúdo como fonte editorial
+
+**Decisão:** todo Conteúdo nasce de uma Intenção humana rastreável. O Conteúdo organiza e preserva a fonte editorial; adaptações não substituem nem alteram silenciosamente a Intenção original.
+
+**Motivo:** o sistema precisa otimizar formato sem perder propósito, autoria ou mensagem.
+
+**Benefícios:** rastreabilidade; revisão comparável; confiança; aprendizagem baseada no objetivo real; independência de Destino.
+
+**Riscos:** Intenção pode ser vaga, mudar durante a edição ou exigir dados sensíveis; o modelo de dados ainda precisa materializar o conceito.
+
+**Reversibilidade:** média na representação física; baixa na obrigação de preservar propósito e autoria.
+
+### COM-05 — Presença Digital e Destinos de Publicação
+
+**Decisão:** Presença Digital representa todos os ambientes digitais conectados ao Projeto. Instagram, Facebook, YouTube, WhatsApp, Telegram e futuros serviços são somente provedores de **Destinos de Publicação** ligados a essa Presença. Nenhum provedor é escolhido nesta Sprint.
+
+**Motivo:** canais mudam e possuem capacidades diferentes, enquanto a necessidade do Usuário é manter comunicação coerente entre os ambientes que controla.
+
+**Benefícios:** modelo estável; visão unificada; adaptadores substituíveis; canais deixam de ditar navegação e domínio.
+
+**Riscos:** conceito precisa ser compreendido pelo público; diferenças de identidade, autorização e capacidades exigem contrato rigoroso; documentos não autorizados nesta Sprint ainda usam Canal e Conta como centro.
+
+**Reversibilidade:** alta nos provedores e nomes de Destinos; média no agregado Presença Digital; nenhuma migração técnica é iniciada por esta decisão documental.
+
+### COM-06 — Versões adequadas por Destino
+
+**Decisão:** a plataforma cria uma versão rastreável do Conteúdo para cada Destino selecionado, de acordo com suas capacidades. Adaptações devem ser explicadas, preservar a Intenção e permanecer sob revisão e confirmação do Usuário. No MVP, a adaptação é determinística e ocorre primeiro com Destino simulado.
+
+**Motivo:** formatos externos são detalhes variáveis e não devem contaminar a fonte editorial nem exigir conhecimento técnico do Usuário.
+
+**Benefícios:** fonte única; adaptação isolada; comparação; reversibilidade; preparação para múltiplos Destinos sem publicação em lote no MVP.
+
+**Riscos:** regras determinísticas podem produzir qualidade insuficiente; adaptações materiais podem alterar sentido; simulador não comprova uma Integração real.
+
+**Reversibilidade:** alta no motor de adaptação e nos adaptadores; baixa na rastreabilidade e confirmação por Destino.
+
+### COM-07 — Princípios permanentes de experiência
+
+**Decisão:** a plataforma sempre reduz decisões técnicas, explica recomendações, preserva a Intenção, adapta automaticamente quando seguro, mantém controle final, ensina sem parecer curso e combina simplicidade para iniciantes com poder progressivo para Usuários avançados.
+
+**Motivo:** esses princípios tornam a missão verificável em produto e impedem que conveniência técnica domine a experiência.
+
+**Benefícios:** critérios claros de aceite; coerência entre Tutor, Conteúdo e distribuição; proteção contra automação opaca.
+
+**Riscos:** tensão entre simplicidade, transparência e poder; cada fluxo precisará provar que não omite informação material nem sobrecarrega o iniciante.
+
+**Reversibilidade:** baixa como conjunto de princípios; alta em padrões específicos de interface.
+
+## Decisões de produto revistas
+
+### MVP-01 — Primeiro Usuário e dor
+
+Permanece como hipótese prioritária um pastor ou líder de pequena igreja responsável diretamente pela comunicação. A dor passa a ser formulada como transformar intenção em comunicação organizada com menos insegurança, esforço e dependência técnica. Frequência e intensidade ainda exigem entrevistas.
+
+### MVP-02 — Aviso textual
+
+Permanece como primeiro tipo de Conteúdo por reduzir a superfície e permitir validar compreensão, organização e adaptação. Sua adequação ao trabalho real ainda exige entrevistas; não está vinculada a um canal.
+
+### MVP-03 — Escolha antecipada de Telegram superada
+
+**Estado:** superada por COM-01, COM-05 e COM-06.
+
+**Justificativa:** a decisão anterior respondia à antiga ideia de escolher um canal. Esta Sprint redefine explicitamente o produto como comunicação assistida e determina que nenhum canal seja o centro ou seja escolhido agora. A pesquisa anterior continua sendo evidência histórica, mas não autoriza contrato, POC ou adaptador Telegram neste recorte.
+
+**Impacto técnico:** nenhum em ENG-01 a ENG-15. Os contratos de adaptadores, a confirmação, a Publicação por destino, a idempotência e a reconciliação permanecem válidos.
 
 ## Regra de mudança
 

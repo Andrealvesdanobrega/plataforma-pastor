@@ -8,17 +8,46 @@
 - Itens marcados como **Descoberta** reduzem incerteza; itens de **Produto** entregam capacidade ao usuário; itens **Habilitadores** sustentam segurança, operação ou integração.
 - A ordem dentro de cada prioridade é indicativa e deve ser revista após a pesquisa.
 
+## Recorte vigente da Sprint 7
+
+O backlog P0 é interpretado pelo primeiro fluxo **pastor convidado → aviso textual → Canal do Telegram → confirmação e link**. Itens amplos que não participam desse caminho não entram na implementação do MVP, mesmo que permaneçam registrados para evolução. Em especial, CNT-02, MED-01, métrica externa de RES-02, múltiplos Canais, armazenamento conectado, Agendamento, IA e colaboração estão adiados.
+
 ## P0 — Descoberta e definição do MVP
 
 | ID | Tipo | Item | Critério de aceite |
 |---|---|---|---|
-| DISC-01 | Descoberta | Validar problemas dos segmentos candidatos | Entrevistas sintetizadas mostram tarefas, dores, frequência, alternativas atuais e diferenças entre segmentos |
-| DISC-02 | Descoberta | Escolher o segmento prioritário | Escolha registrada com critérios de intensidade da dor, frequência, acesso e potencial de adoção |
-| DISC-03 | Descoberta | Escolher caso de uso, formato e canal iniciais | Recorte definido e coerente com a pesquisa, com exclusões explícitas |
+| DISC-01 | Descoberta | Validar problemas dos segmentos candidatos | Entrevistas sintetizadas mostram tarefas, dores, frequência, alternativas atuais e diferenças entre segmentos; coerência documental não conta como validação |
+| DISC-02 | Descoberta | Confirmar ou rejeitar pastor responsável pela comunicação | Escolha registrada com critérios de intensidade da dor, frequência, responsabilidade real, acesso e potencial de adoção |
+| DISC-03 | Descoberta | Validar aviso textual e Telegram como recorte inicial | Entrevistas confirmam valor e adoção; POC-01 a POC-05 confirmam o contrato técnico; exclusões permanecem explícitas |
 | DISC-04 | Descoberta | Testar proposta de valor e linguagem | Usuários-alvo explicam corretamente o benefício e o próximo passo sem instrução externa |
 | DISC-05 | Descoberta | Testar protótipo de ponta a ponta | Caminho principal e erros críticos observados; problemas priorizados por severidade |
-| DISC-06 | Habilitador | Avaliar integração do canal inicial | Autenticação, permissões, publicação, métricas, limites, revisão e custos documentados |
-| DISC-07 | Descoberta | Definir métricas do piloto | Cada métrica possui definição, evento de coleta, fonte e interpretação |
+| DISC-06 | Habilitador | Avaliar Integração Telegram | Vínculo, permissão mínima, publicação, timeout, webhook, revogação, link, limites e ausência de métrica obrigatória documentados e provados |
+| DISC-07 | Descoberta | Definir métricas do piloto | Cada métrica de produto possui definição, evento minimizado, fonte e interpretação; não depende de engajamento externo |
+
+## P0 — Portões de validação antes da Integração real
+
+### Entrevistas com Usuários
+
+| ID | Hipótese | Critério de aceite |
+|---|---|---|
+| INT-01 | Pastor ou líder é o responsável real pela Publicação | Evidência de comportamento passado identifica quem publicou os últimos avisos e com qual ajuda |
+| INT-02 | Insegurança, dependência ou dúvida de resultado é dor relevante | Episódios recentes, frequência, consequência e alternativa atual estão sintetizados, sem pergunta hipotética como única evidência |
+| INT-03 | Aviso textual é suficiente para o primeiro valor | Avisos reais demonstram tarefa útil sem mídia, ou a hipótese é rejeitada sem ampliar o MVP automaticamente |
+| INT-04 | Telegram é adotável pelo recorte | Uso atual ou disposição concreta para Canal e bot administrador é observado; audiência e responsável são identificados |
+| INT-05 | O fluxo mínimo é compreensível | Protótipo é concluído sem intervenção na tarefa e destino, confirmação, estado e link são explicados corretamente |
+| INT-06 | Confirmação e link resolvem o primeiro objetivo | Participante demonstra menor insegurança, verifica a mensagem e explica se uma métrica seria ou não necessária |
+
+### Provas de conceito técnicas
+
+| ID | Prova | Critério de aceite |
+|---|---|---|
+| POC-01 | Vincular Canal e Projeto | Adição do bot com `post_messages`, evento `my_chat_member`, identidade do Canal e correlação da sessão são inequívocos e revogáveis |
+| POC-02 | Publicar texto e persistir resultado | `sendMessage` devolve `message_id`, Canal e horário; limite e erros são normalizados |
+| POC-03 | Tratar timeout sem duplicar | Estado incerto bloqueia repetição e existe reconciliação ou decisão operacional comprovadamente segura |
+| POC-04 | Proteger e deduplicar webhook | Segredo do webhook, `update_id`, repetição, remoção do bot e perda de direito são verificados |
+| POC-05 | Abrir o resultado mínimo | Link da mensagem e comportamento de Canal público/privado são comprovados; nenhuma métrica externa bloqueia o fluxo |
+
+**Regra de passagem:** implementação do núcleo com simulador pode iniciar; o adaptador Telegram real só entra no caminho do MVP após POC-01 a POC-05. O piloto só inicia depois de INT-01 a INT-06, ENG-15, privacidade e operação.
 
 ## P0 — Primeiro ciclo completo
 
@@ -46,11 +75,11 @@
 | ID | História | Critérios de aceite essenciais |
 |---|---|---|
 | CNT-01 | Como usuário, quero criar um conteúdo a partir de uma ideia | É possível informar objetivo, público e mensagem; o rascunho é salvo sem publicar |
-| CNT-02 | Como usuário, quero receber assistência na elaboração | Sugestões são identificadas como sugestões e só alteram o conteúdo após ação do usuário |
+| CNT-02 | Como usuário, quero receber assistência na elaboração | **Adiado:** o primeiro aviso é escrito manualmente; nenhuma sugestão altera o Conteúdo |
 | CNT-03 | Como usuário, quero editar e revisar o conteúdo | Alterações podem ser salvas; campos pendentes e requisitos do canal são indicados |
 | CNT-04 | Como usuário, quero encontrar meus conteúdos | Biblioteca lista conteúdos com título, atualização, tipo e estado; permite abrir e filtrar por estado |
 | CNT-05 | Como usuário, quero entender o estado de um conteúdo | Estados usam linguagem consistente e indicam a ação seguinte possível |
-| MED-01 | Como usuário, quero adicionar a mídia necessária | Tipo, tamanho e formato são validados antes da publicação; erro informa como corrigir |
+| MED-01 | Como usuário, quero adicionar a mídia necessária | **Adiado:** mídia não participa do primeiro fluxo e só retorna com evidência e novo recorte aprovado |
 
 ### Publicação
 
@@ -67,7 +96,7 @@
 | ID | História | Critérios de aceite essenciais |
 |---|---|---|
 | RES-01 | Como usuário, quero confirmar onde e quando o conteúdo foi publicado | Link ou identificador externo, canal, conta e horário ficam associados ao conteúdo |
-| RES-02 | Como usuário, quero consultar resultados essenciais | Métricas disponíveis exibem nome simples, período e data da última atualização |
+| RES-02 | Como usuário, quero consultar resultados essenciais | O primeiro resultado mostra Canal, mensagem, link, horário e atualização; métrica de engajamento fica adiada |
 | RES-03 | Como usuário, quero entender o que fazer depois | O sistema explica limitações dos dados e apresenta um próximo passo acionável sem prometer resultado |
 
 ### Qualidade transversal
