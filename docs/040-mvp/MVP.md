@@ -1,8 +1,8 @@
 # Produto Mínimo Viável
 
-**Versão:** 0.1
+**Versão:** 0.2
 
-**Fase:** Sprint 2 — Domain Model
+**Fase:** Sprint 3 — UX e Fluxo do Produto
 
 **Atualizado em:** 19 de julho de 2026
 
@@ -251,3 +251,240 @@ Metas numéricas serão definidas após testes moderados criarem uma linha de ba
 O MVP será considerado validado quando o grupo piloto completar publicações reais com segurança, a maioria dos participantes compreender o fluxo e o próximo passo sem suporte especializado, as falhas críticas forem recuperáveis e houver evidência de retorno para acompanhar resultados ou criar novo Conteúdo.
 
 Os limiares quantitativos devem ser aprovados antes do piloto. Caso os sinais não sejam atingidos, a decisão correta pode ser revisar segmento, linguagem, jornada, Canal ou proposta de valor em vez de ampliar funcionalidades.
+
+## 16. Experiência mínima entregável
+
+O MVP deve parecer uma única jornada, mesmo que diferentes partes do sistema realizem as tarefas. O Usuário não precisa conhecer as entidades internas nem decidir configurações que a plataforma pode recomendar com segurança.
+
+### 16.1 Navegação mínima
+
+- **Início:** situação atual e próximo passo.
+- **Criar:** início de um Conteúdo.
+- **Biblioteca:** lista e organização dos Conteúdos.
+- **Resultados:** acompanhamento das Publicações.
+- **Ajuda:** acesso permanente ao Tutor.
+- **Configurações:** perfil e Conta Conectada, acessível sem competir com as tarefas principais.
+
+### 16.2 Regra do Tutor
+
+Toda vez que o Tutor for aberto, inclusive no primeiro acesso e na tela principal, sua primeira pergunta será exatamente:
+
+> O que você quer fazer hoje?
+
+Depois da pergunta, o Tutor apresenta no máximo quatro opções coerentes com o contexto e aceita uma resposta escrita. Ele faz uma pergunta por vez, não repete dados já conhecidos sem necessidade e nunca executa Publicação, conexão ou consentimento pelo Usuário.
+
+### 16.3 Padrão de etapa
+
+Cada etapa do MVP inclui título, motivo curto, progresso quando aplicável, uma ação principal, alternativa segura, ajuda e retorno visível de salvamento ou resultado. Opções avançadas não aparecem no caminho principal.
+
+## 17. Escopo detalhado dos fluxos
+
+### 17.1 Onboarding
+
+**Telas mínimas:**
+
+1. Boas-vindas e promessa.
+2. Explicação de como funciona e garantia de confirmação antes de Publicar.
+3. Criar acesso ou entrar.
+4. Consentimentos essenciais em linguagem simples.
+5. Confirmação e entrada na configuração.
+
+**Critérios de aceite:**
+
+- A primeira tela possui “Começar” e “Já tenho uma conta”.
+- O Usuário entende que nada será publicado sozinho.
+- Campos mostram requisitos antes do envio e erros junto ao campo.
+- É possível recuperar o acesso por um caminho visível.
+- Fechar e reabrir retoma a primeira etapa incompleta.
+- Consentimento opcional não começa selecionado.
+- Conclusão leva diretamente à configuração assistida.
+
+### 17.2 Configuração assistida
+
+**Passos mínimos:** sobre o Usuário, objetivo, público, Canal, conexão de conta e resumo.
+
+**Critérios de aceite:**
+
+- O progresso informa o passo atual e o total.
+- Objetivo e público usam exemplos, mas aceitam resposta própria ou incerteza.
+- Um Projeto principal é criado sem exigir que o Usuário conheça esse conceito.
+- Antes da autorização externa, a interface explica o que acontecerá e informa que não verá a senha do Canal.
+- Ao retornar, nome e imagem pública da conta são mostrados para confirmação quando disponíveis.
+- Cancelar a autorização não registra sucesso nem perde respostas anteriores.
+- A conexão pode ser pulada para Criar, mas Publicar explica a pendência.
+- O resumo final permite corrigir objetivo, público ou conta.
+
+### 17.3 Tela principal
+
+**Componentes mínimos:** pergunta do Tutor, próximo passo recomendado, Conteúdos recentes, estado de Publicações e acesso à navegação.
+
+**Critérios de aceite:**
+
+- O Tutor começa com “O que você quer fazer hoje?”.
+- A tela oferece apenas ações possíveis para o estado atual.
+- Novo Usuário recebe “Criar meu primeiro conteúdo”.
+- Rascunho recente recebe “Continuar de onde parei”.
+- Conteúdo Pronto recebe “Revisar e publicar”.
+- Falha de Publicação aparece como prioridade e informa que o Conteúdo está salvo.
+- Resultado disponível leva ao Conteúdo e ao período corretos.
+- Voltar de outra área atualiza a recomendação sem exigir recarregamento manual.
+
+### 17.4 Criação de Conteúdo
+
+**Passos mínimos:** ideia, objetivo, público, sugestão opcional, edição, mídia quando necessária, revisão e decisão de Publicar ou guardar.
+
+**Critérios de aceite:**
+
+- O fluxo informa que haverá revisão antes da Publicação.
+- A primeira ideia confirmada cria um Rascunho recuperável.
+- Público configurado é sugerido, mas pode ser alterado para o Conteúdo.
+- Sugestão do Tutor só entra no Conteúdo depois de escolha explícita.
+- Editor mostra confirmação real de salvamento.
+- Usuário consegue voltar à versão anterior suportada pelo MVP.
+- Mídia obrigatória e opcional são diferenciadas.
+- Pendência obrigatória e melhoria opcional são apresentadas separadamente.
+- Marcar como Pronto não Publica.
+- No fim, as ações são “Publicar agora” e “Guardar na Biblioteca”.
+
+### 17.5 Organização da Biblioteca
+
+**Recursos mínimos:** lista, busca simples, filtro por estado, abertura, retomada, renomeação e arquivamento.
+
+**Critérios de aceite:**
+
+- Título da área é “Seus conteúdos”.
+- Cartão mostra título, pequena prévia, atualização, estado simples e uma ação principal.
+- Filtros são “Todos”, “Para continuar”, “Prontos”, “Publicados” e “Precisam de atenção”.
+- Estado vazio oferece “Criar meu primeiro conteúdo”.
+- Filtro sem resultado oferece “Limpar filtro”.
+- Arquivar explica que o Conteúdo não será apagado.
+- Restaurar mantém versões, Publicações e Resultados.
+- Ações em massa não fazem parte do MVP.
+
+### 17.6 Publicação
+
+**Passos mínimos:** validar, escolher ou confirmar destino, visualizar prévia, confirmar, acompanhar envio e receber resultado.
+
+**Critérios de aceite:**
+
+- Pendências aparecem uma por vez com “Corrigir agora”.
+- Conta Conectada é mostrada por nome e Canal antes da confirmação.
+- Prévia representa a versão que será congelada.
+- Alteração feita para adequação ao Canal é informada.
+- A pergunta final é “Você quer publicar este conteúdo agora?”.
+- O botão de confirmação é “Sim, publicar agora”.
+- Voltar, fechar ou tocar fora não confirma.
+- Toques repetidos não criam Publicações duplicadas.
+- Sair durante o envio não perde o andamento.
+- Sucesso, espera, falha conhecida e resultado incerto possuem mensagens distintas.
+- Falha preserva Conteúdo e indica “Corrigir” ou “Tentar novamente” apenas quando seguro.
+
+### 17.7 Acompanhamento dos resultados
+
+**Telas mínimas:** lista de Conteúdos Publicados com dados e detalhe de uma Publicação.
+
+**Critérios de aceite:**
+
+- A área começa com uma explicação, não com uma grade de números.
+- Cada resultado identifica Conteúdo, Canal, período e última atualização.
+- No máximo as métricas essenciais validadas aparecem no primeiro nível.
+- Cada métrica possui nome simples e uma frase de explicação.
+- Ausência de dados não é mostrada como zero.
+- Dado antigo permanece com data quando a atualização falhar.
+- Fato, limitação e recomendação aparecem em blocos separados.
+- Tutor oferece uma ação que pode ser aceita, adaptada ou recusada.
+
+### 17.8 Ajuda do Tutor
+
+**Critérios de aceite:**
+
+- Abre em qualquer área sem descartar dados da tela.
+- Inicia sempre com “O que você quer fazer hoje?”.
+- Opções sugeridas refletem a tela e o estado atuais.
+- Aceita pedido com palavras do Usuário.
+- Faz somente uma pergunta por mensagem quando precisa esclarecer.
+- Encaminha ao campo ou etapa correta com explicação prévia.
+- Não mostra termos internos nem dados de outra conta ou Projeto.
+- Não altera Conteúdo sem aceitação nem realiza ação externa.
+- Quando não entende, reformula com opções e oferece suporte após nova dificuldade.
+- Ao fechar, o Usuário retorna ao mesmo ponto com dados preservados.
+
+## 18. Conteúdo textual mínimo da interface
+
+| Situação | Texto principal esperado | Ação principal |
+|---|---|---|
+| Abertura do Tutor | “O que você quer fazer hoje?” | Opção escolhida pelo Usuário |
+| Primeiro Conteúdo | “Sobre o que você quer falar?” | Continuar |
+| Rascunho salvo | “Salvo” | Continuar |
+| Conta não conectada | “Conecte sua conta para publicar” | Conectar minha conta |
+| Conta expirada | “Sua conta precisa ser conectada novamente” | Conectar novamente |
+| Revisão concluída | “Seu conteúdo está pronto para publicar” | Publicar agora |
+| Confirmação | “Você quer publicar este conteúdo agora?” | Sim, publicar agora |
+| Em andamento | “Estamos publicando seu conteúdo” | Ver andamento |
+| Sucesso | “Seu conteúdo foi publicado” | Ver publicação |
+| Falha | “Não conseguimos publicar. Seu conteúdo está salvo” | Corrigir ou tentar novamente |
+| Sem resultado | “Ainda não há informações suficientes” | Voltar depois |
+| Biblioteca vazia | “Seus conteúdos aparecerão aqui” | Criar meu primeiro conteúdo |
+
+Os textos podem receber ajustes após testes, exceto a pergunta obrigatória de abertura do Tutor, que deve permanecer exata enquanto esta decisão estiver vigente.
+
+## 19. Cenários de retomada e recuperação
+
+| Interrupção | Retomada esperada |
+|---|---|
+| App fechado no onboarding | Primeiro passo obrigatório incompleto |
+| Saída durante configuração | Resumo do progresso e botão Continuar |
+| Saída durante edição | Última versão confirmada e etapa correspondente |
+| Perda de conexão ao salvar | Conteúdo mantido na tela e nova tentativa informada |
+| Saída durante Publicação | Estado reconciliado antes de oferecer nova ação |
+| Conta perdeu permissão | Conteúdo preservado e fluxo de nova conexão |
+| Atualização de Resultados falhou | Últimos dados com data e aviso de atualização |
+| Tutor fechado | Retorno à mesma tela e aos mesmos dados |
+
+## 20. Plano de teste da experiência
+
+### 20.1 Participantes
+
+Recrutar representantes do segmento prioritário com baixa familiaridade tecnológica declarada e uso real do Canal escolhido. Incluir variação de idade, dispositivo, necessidade de acessibilidade e experiência anterior quando possível.
+
+### 20.2 Tarefas moderadas
+
+1. Entrar pela primeira vez e explicar o que a plataforma faz.
+2. Configurar objetivo e público e conectar uma conta de teste.
+3. Criar um Conteúdo a partir de uma ideia curta.
+4. Guardar, localizar na Biblioteca e retomar.
+5. Preparar e confirmar uma Publicação controlada.
+6. Recuperar uma falha simulada de conexão ou envio.
+7. Encontrar e explicar um resultado.
+8. Pedir ao Tutor ajuda para decidir o próximo passo.
+
+O moderador não deve ensinar o caminho. Pode perguntar o que a pessoa espera que aconteça antes de uma ação importante.
+
+### 20.3 Evidências observadas
+
+- conclusão sem ajuda;
+- tempo e hesitação por etapa;
+- retornos desnecessários;
+- termos não compreendidos;
+- percepção de salvamento;
+- compreensão de conta, destino e consequência antes de Publicar;
+- capacidade de recuperar erro;
+- interpretação correta de resultados;
+- confiança no Tutor e compreensão de seus limites.
+
+### 20.4 Problemas críticos
+
+Impedem o piloto real:
+
+- Usuário publica sem perceber;
+- não distingue salvar de Publicar;
+- não reconhece a conta de destino;
+- perde Conteúdo ou acredita ter perdido;
+- envia duas vezes após espera ou erro;
+- interpreta ausência de dados como resultado zero;
+- acredita que o Tutor executará uma ação sem confirmação;
+- não consegue sair, voltar ou pedir ajuda.
+
+## 21. Critério de pronto da UX do MVP
+
+A UX está pronta para piloto quando todos os oito fluxos possuem caminho principal, estados vazios, espera, erro e retomada definidos; os textos essenciais foram testados; os problemas críticos foram resolvidos; e representantes do público completam o ciclo entendendo o próximo passo, o que foi salvo e quando uma ação externa realmente aconteceu.

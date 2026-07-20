@@ -1,8 +1,8 @@
 # Arquitetura Funcional
 
-**Versão:** 0.2
+**Versão:** 0.3
 
-**Fase:** Sprint 2 — Domain Model
+**Fase:** Sprint 3 — UX e Fluxo do Produto
 
 **Atualizado em:** 19 de julho de 2026
 
@@ -219,6 +219,8 @@ Reagendar ou cancelar deve ser possível enquanto o envio não tiver começado. 
 - nunca publica, conecta contas ou altera Conteúdos sem ação autorizada do Usuário.
 
 Funcionalmente, o Tutor combina um serviço de orientação com registros persistentes de interação e recomendação. Ele não é proprietário dos objetos orientados.
+
+Toda nova abertura funcional do Tutor começa com a mensagem exata: “O que você quer fazer hoje?”.
 
 ### 5.10 Campanha — opcional
 
@@ -513,3 +515,294 @@ A arquitetura funcional estará pronta para orientar a implementação quando:
 - entidades e eventos necessários às métricas do piloto estiverem confirmados.
 
 Mudanças neste documento exigem revisão do modelo de dados e do MVP.
+
+## 17. Arquitetura da experiência
+
+A camada de experiência reúne os contextos do domínio em uma única jornada. Ela não cria cópias de Conteúdo nem mantém estados paralelos: consulta as entidades de origem e apresenta nomes compreensíveis ao Usuário.
+
+```text
+App
+ ├── Onboarding
+ ├── Configuração assistida
+ └── Área principal
+      ├── Início
+      ├── Criar
+      ├── Biblioteca
+      ├── Resultados
+      └── Ajuda / Tutor
+             │
+             ▼
+   Coordenador da Jornada
+      ├── Identidade e Projeto
+      ├── Conteúdo e Biblioteca
+      ├── Canais e Integrações
+      ├── Publicação
+      ├── Resultados
+      └── Tutoria
+```
+
+### 17.1 Responsabilidades do Coordenador da Jornada
+
+- identificar o Projeto ativo;
+- ler a etapa do onboarding e as pendências reais;
+- recomendar uma única próxima ação principal;
+- direcionar para o ponto correto sem executar a ação final;
+- salvar marcos de progresso e permitir retomada;
+- transformar estados internos em mensagens simples;
+- atualizar a tela principal quando Conteúdo, conexão, Publicação ou Relatório mudar;
+- fornecer contexto autorizado ao Tutor.
+
+### 17.2 Ordem de prioridade do próximo passo
+
+Quando mais de uma ação estiver disponível, a tela principal aplica esta ordem:
+
+1. Resolver uma falha que bloqueia uma ação já solicitada.
+2. Concluir uma configuração obrigatória incompleta.
+3. Retomar a tarefa explícita mais recente.
+4. Revisar um Conteúdo Pronto.
+5. Ver o resultado de uma Publicação recente.
+6. Criar um novo Conteúdo.
+
+O Usuário pode escolher outra ação; prioridade é orientação, não bloqueio.
+
+## 18. Contrato funcional das telas
+
+| Tela ou área | Fonte de verdade | Leitura principal | Comandos permitidos |
+|---|---|---|---|
+| Onboarding | Usuário | acesso, consentimentos e etapa | criar acesso, entrar, recuperar e continuar depois |
+| Configuração | Usuário, Projeto, Canal e Conta Conectada | objetivo, público, progresso e saúde da conta | atualizar contexto, iniciar conexão e confirmar conta |
+| Início | Coordenador da Jornada | próxima ação, Conteúdos e Publicações recentes | navegar para tarefa escolhida |
+| Criar e editar | Conteúdo e Versão | Rascunho, mídia e pendências | criar, editar, aceitar sugestão, salvar e marcar Pronto |
+| Biblioteca | Conteúdo | lista, filtros e estado editorial | abrir, filtrar, renomear, duplicar, arquivar e restaurar |
+| Publicar | Conteúdo, Conta Conectada e Publicação | versão, destino e andamento | corrigir, confirmar, cancelar antes do envio e tentar novamente com segurança |
+| Resultados | Relatório e Métrica de Publicação | fonte, período, atualização e leitura | selecionar Conteúdo, atualizar e responder à recomendação |
+| Tutor | Contexto autorizado da jornada | objetivo atual, pendências e recomendações | explicar, perguntar, encaminhar e registrar resposta |
+
+Nenhuma tela pode inferir sucesso apenas porque um comando foi enviado. Ela deve aguardar o estado confirmado pela entidade responsável.
+
+## 19. Fluxos funcionais de UX
+
+### 19.1 Onboarding
+
+| Etapa de interface | Entrada | Operação funcional | Saída ou exceção |
+|---|---|---|---|
+| Boas-vindas | Primeira abertura | Criar sessão de onboarding sem exigir cadastro | Continuar, entrar ou sair |
+| Como funciona | Usuário escolhe conhecer | Registrar apresentação vista | Avançar para acesso |
+| Criar acesso | Nome e dado de acesso | Validar e criar Usuário | Acesso criado ou mensagem junto ao campo |
+| Consentimento | Escolhas do Usuário | Registrar versão e finalidade aceitas | Avançar ou manter pendência obrigatória explicada |
+| Conclusão | Usuário válido | Marcar entrada concluída | Abrir configuração assistida |
+
+**Retomada:** a primeira etapa incompleta é calculada pelo estado do Usuário. Nenhuma informação sensível previamente digitada deve ser exibida de modo indevido ao retomar.
+
+**Tutor:** inicia com “O que você quer fazer hoje?” e oferece conhecer a plataforma, criar acesso ou entrar.
+
+### 19.2 Configuração assistida
+
+| Passo | Entidades | Comando | Condição de conclusão |
+|---|---|---|---|
+| Sobre o Usuário | Usuário | Atualizar nome e familiaridade | Nome válido salvo |
+| Objetivo | Usuário e Projeto | Definir objetivo editorial | Escolha ou texto próprio salvo |
+| Público | Projeto | Definir público principal | Público salvo ou incerteza registrada sem bloqueio |
+| Escolher Canal | Canal | Selecionar Canal inicial | Canal suportado identificado |
+| Conectar conta | Integração e Conta Conectada | Iniciar autorização e reconciliar retorno | Conta ativa e identidade externa confirmada |
+| Revisar | Projeto e Conta Conectada | Confirmar resumo | Configuração mínima concluída |
+
+A conexão externa é uma interrupção controlada: antes de sair, a etapa é salva; ao retornar, o estado é reconciliado; cancelar não equivale a falha nem a sucesso.
+
+### 19.3 Tela principal
+
+1. Identificar Usuário e Projeto ativos.
+2. Consultar configuração, conexão, Conteúdos recentes, Publicações pendentes e Relatórios disponíveis.
+3. Calcular o próximo passo pela prioridade definida.
+4. Abrir o Tutor com “O que você quer fazer hoje?”.
+5. Exibir até quatro ações pertinentes ao estado atual.
+6. Ao escolher, registrar intenção de navegação e abrir a etapa sem executar comando de domínio.
+7. Ao retornar, recalcular a tela para evitar mensagens antigas.
+
+**Estados mínimos:** novo, configuração incompleta, Rascunho para continuar, Conteúdo Pronto, Publicação em andamento, falha recuperável e resultado disponível.
+
+### 19.4 Criação de Conteúdo
+
+```text
+Iniciar
+→ Informar ideia
+→ Definir objetivo e público
+→ Receber ou dispensar sugestão
+→ Editar
+→ Adicionar mídia quando necessário
+→ Revisar pendências
+→ Marcar Pronto
+→ Publicar ou guardar na Biblioteca
+```
+
+Regras de coordenação:
+
+- Criar Conteúdo assim que a primeira informação útil for confirmada, evitando perda.
+- Criar nova Versão quando uma edição aceita alterar a fonte.
+- Manter sugestões fora do Conteúdo até que o Usuário escolha usá-las.
+- Salvar a cada avanço e informar somente depois da confirmação.
+- Consultar regras do Canal para separar correção obrigatória de melhoria opcional.
+- Ao marcar Pronto, validar requisitos sem iniciar Publicação.
+- Retomar pela última etapa consistente, nunca por uma tela intermediária sem dados.
+
+### 19.5 Organização da Biblioteca
+
+1. Consultar Conteúdos não arquivados do Projeto, ordenados pela atualização mais recente.
+2. Traduzir estados internos para: “Para continuar”, “Pronto”, “Publicado” e “Precisa de atenção”.
+3. Aplicar busca e um filtro por vez no MVP.
+4. Apresentar ação principal conforme o estado real.
+5. Arquivar por comando explícito e retirar da lista principal após confirmação.
+6. Restaurar sem criar novo Conteúdo.
+7. Manter Publicações e Relatórios ligados ao Conteúdo arquivado.
+
+Estado vazio e filtro sem resultado são distintos: o primeiro convida a Criar; o segundo oferece limpar o filtro.
+
+### 19.6 Publicação
+
+```text
+Conteúdo Pronto
+→ Validar versão e Conta Conectada
+→ Corrigir pendências, se houver
+→ Confirmar destino
+→ Mostrar prévia final
+→ Pedir confirmação explícita
+→ Congelar versão
+→ Criar Publicação
+→ Enviar pela Integração
+→ Reconciliar estado
+→ Informar sucesso, espera ou falha recuperável
+```
+
+Regras de coordenação:
+
+- A confirmação vincula Usuário, Conteúdo, Versão, Conta Conectada e instante.
+- Toques repetidos usam a mesma chave de idempotência enquanto a intenção for a mesma.
+- Fechar a tela antes da confirmação não cria Publicação.
+- Fechar durante o envio não cancela nem repete a operação; o andamento continua acessível.
+- Estado incerto bloqueia uma nova tentativa até consulta do destino.
+- Falha preserva a Versão e informa se a correção está no Conteúdo ou na Conta.
+- Edição posterior cria nova Versão e não altera a Publicação concluída.
+
+### 19.7 Acompanhamento dos resultados
+
+1. Listar somente Publicações pertencentes ao Projeto e elegíveis a resultados.
+2. Buscar Métricas pela Integração conforme política do Canal.
+3. Guardar observação com fonte, período e data de coleta.
+4. Construir Relatório sem substituir ausência de dados por zero.
+5. Apresentar uma pequena quantidade de métricas com explicações.
+6. Entregar fatos e limitações ao Tutor.
+7. Registrar a resposta do Usuário à recomendação.
+
+Se a atualização falhar, o último dado permanece com sua data. Se nunca houve dado, o estado é “Ainda não há informações suficientes”.
+
+### 19.8 Ajuda do Tutor
+
+```text
+Abrir Tutor
+→ “O que você quer fazer hoje?”
+→ Mostrar opções do contexto e aceitar texto livre
+→ Identificar intenção
+→ Fazer uma pergunta simples, se necessário
+→ Explicar e oferecer uma ação
+→ Usuário confirma a navegação ou decisão
+→ Registrar desfecho
+```
+
+O Tutor recebe somente o contexto necessário: tela atual, etapa, estados relevantes e identificadores autorizados. Ele não recebe segredos de Integração.
+
+Comandos sugeridos pelo Tutor são convertidos em navegação ou formulário preenchível. A ação sensível continua dependendo do componente responsável e da confirmação do Usuário.
+
+## 20. Vocabulário da interface
+
+| Termo interno | Texto preferido para o Usuário |
+|---|---|
+| Autenticar | Entrar |
+| Credencial expirada | Sua conta precisa ser conectada novamente |
+| Sincronizar | Atualizar informações |
+| Entidade Conteúdo | Conteúdo |
+| Estado `rascunho` | Para continuar |
+| Estado `pronto` | Pronto para revisar e publicar |
+| Estado `falhou` | Precisa de atenção |
+| Processando | Estamos publicando |
+| Métricas | Resultados |
+| Idempotência | Proteção interna; não mostrar o termo |
+| Integração indisponível | Não conseguimos falar com o Canal agora |
+
+Nomes oficiais dos Canais podem ser mantidos. Quando um termo oficial for inevitável, a interface deve explicar seu efeito em uma frase.
+
+## 21. Estados comuns da interface
+
+### 21.1 Salvamento
+
+- `salvando`: “Salvando…” sem bloquear edição desnecessariamente;
+- `salvo`: “Salvo” somente após confirmação;
+- `falhou`: “Não foi possível salvar agora. Mantenha esta tela aberta para tentar novamente”.
+
+### 21.2 Carregamento
+
+Mostrar a estrutura esperada e uma mensagem sobre a tarefa. Não mostrar dados antigos como se fossem atuais durante troca de Projeto ou Conta.
+
+### 21.3 Sem conexão
+
+Informar quais ações continuam possíveis. Criar ou editar pode continuar apenas se houver estratégia segura de persistência; conectar conta, Publicar e atualizar Resultados exigem conexão.
+
+### 21.4 Confirmação e ação destrutiva
+
+Confirmações nomeiam objeto e consequência. A ação principal repete o verbo real, e cancelar é sempre uma opção segura.
+
+### 21.5 Falha inesperada
+
+Preservar dados, gerar referência de diagnóstico não sensível e oferecer tentar novamente, voltar ou pedir ajuda. A mensagem não deve culpar o Usuário.
+
+## 22. Retomada entre sessões
+
+O sistema mantém separadamente:
+
+- etapa do onboarding;
+- etapa da configuração assistida;
+- última intenção escolhida na tela principal;
+- última etapa consistente de cada Rascunho;
+- Publicações em andamento ou com resultado incerto;
+- última visualização de Resultados;
+- recomendações do Tutor aguardando resposta.
+
+Ao retornar, o Usuário vê o estado atual confirmado, não uma reprodução cega da última tela. Se uma operação externa mudou enquanto o App estava fechado, a entidade é reconciliada antes de oferecer nova ação.
+
+## 23. Requisitos funcionais de acessibilidade
+
+- Ordem de leitura segue a ordem visual e a tarefa.
+- Títulos identificam a etapa e o progresso.
+- Campos possuem rótulos persistentes, instruções e erros associados.
+- Botões possuem nomes que fazem sentido fora do contexto visual.
+- Estados não dependem apenas de cor, animação ou ícone.
+- Foco retorna para a mensagem ou campo relevante após erro.
+- Componentes funcionam por teclado e com tecnologia assistiva.
+- Textos podem ser ampliados sem esconder ações essenciais.
+- Movimento não é necessário para compreender progresso ou sucesso.
+
+## 24. Eventos de experiência
+
+Além dos eventos de domínio, a experiência mede:
+
+- etapa de onboarding vista, concluída, abandonada e retomada;
+- etapa de configuração concluída e ponto de interrupção;
+- ação sugerida na tela principal e ação escolhida;
+- etapa de criação concluída, ajuda solicitada e sugestão aceita ou rejeitada;
+- busca, filtro e estado vazio da Biblioteca;
+- prévia aberta, pendência encontrada e confirmação de Publicação;
+- explicação de resultado vista e compreendida em teste;
+- Tutor aberto, intenção escolhida, pergunta não compreendida e encaminhamento concluído.
+
+Eventos não registram corpo do Conteúdo, texto livre do Tutor ou credenciais por padrão. Cada coleta exige finalidade, retenção e revisão de privacidade.
+
+## 25. Critérios funcionais de validação da UX
+
+- Usuário iniciante sabe como começar sem instrução externa.
+- Consegue distinguir criar, guardar e publicar.
+- Entende qual conta receberá a Publicação.
+- Localiza um Rascunho e retoma no ponto correto.
+- Interpreta estados sem depender de termos internos.
+- Recupera uma falha simulada sem perder Conteúdo.
+- Entende pelo menos um resultado e sua data.
+- Responde à pergunta do Tutor e chega à ação pretendida.
+- Sabe que o Tutor sugere, mas não publica sozinho.

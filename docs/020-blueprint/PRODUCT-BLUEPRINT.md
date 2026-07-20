@@ -1,8 +1,8 @@
 # Blueprint do Produto
 
-**Versão:** 0.1
+**Versão:** 0.2
 
-**Fase:** Product Discovery
+**Fase:** Sprint 3 — UX e Fluxo do Produto
 
 **Atualizado em:** 19 de julho de 2026
 
@@ -274,3 +274,516 @@ As definições exatas e metas dependem da linha de base do piloto. Métricas de
 ## 16. Critérios para revisar este blueprint
 
 Este documento deve ser atualizado quando uma hipótese central for validada ou rejeitada, quando segmento ou canal prioritário mudar, quando o MVP for aprovado ou quando uma limitação técnica alterar a jornada. Toda mudança que afete capacidades deve provocar revisão da arquitetura funcional, do backlog e do roadmap.
+
+## 17. Diretriz geral da experiência
+
+A experiência deve funcionar como uma conversa guiada, não como um painel que exige conhecimento prévio. Em cada momento, o usuário precisa conseguir responder a três perguntas:
+
+1. Onde estou?
+2. O que preciso fazer agora?
+3. O que acontecerá depois?
+
+O Tutor sempre inicia uma interação de ajuda com a pergunta exata:
+
+> O que você quer fazer hoje?
+
+Essa pergunta aparece na primeira entrada, na tela principal e sempre que o usuário abre o Tutor. Depois dela, o sistema oferece poucas opções relacionadas ao contexto, sem exigir que a pessoa saiba o nome de uma função.
+
+### 17.1 Regras de simplicidade
+
+- Apresentar uma decisão principal por tela ou etapa.
+- Oferecer no máximo três ou quatro caminhos principais por vez.
+- Recomendar uma opção quando houver escolha complexa e explicar por que ela é adequada.
+- Manter configurações avançadas escondidas até que sejam necessárias.
+- Usar verbos cotidianos: “Criar”, “Continuar”, “Revisar”, “Publicar” e “Ver resultados”.
+- Evitar siglas e termos como API, token, credencial, payload, sincronização e autenticação na interface.
+- Trocar “erro de autenticação” por “Sua conta precisa ser conectada novamente”.
+- Trocar “falha no processamento” por “Não conseguimos concluir agora. Seu conteúdo está salvo”.
+- Nunca depender apenas de cor para comunicar estado.
+- Mostrar progresso em passos nomeados e indicar quando algo foi salvo.
+- Permitir voltar sem perder dados e sair com uma indicação clara de como retomar.
+
+### 17.2 Estrutura de navegação
+
+A navegação principal do MVP possui cinco destinos com nomes simples:
+
+| Destino | Finalidade | Ação principal |
+|---|---|---|
+| Início | Mostrar situação atual e próximo passo | Continuar a jornada |
+| Criar | Iniciar um novo Conteúdo | Contar uma ideia |
+| Biblioteca | Encontrar e organizar Conteúdos | Continuar ou revisar |
+| Resultados | Entender o que aconteceu após publicar | Ver um resultado |
+| Ajuda | Conversar com o Tutor | Dizer o que deseja fazer |
+
+“Contas conectadas” e dados do perfil ficam em Configurações, acessíveis pelo cabeçalho. Durante o onboarding, a navegação principal pode permanecer reduzida para evitar desvio antes da configuração mínima.
+
+### 17.3 Estrutura padrão de uma etapa
+
+Cada etapa guiada contém:
+
+- título que descreve a tarefa;
+- frase curta explicando por que ela é necessária;
+- indicador de progresso, como “Passo 2 de 4”;
+- campos ou escolhas essenciais;
+- uma ação principal destacada;
+- uma ação secundária segura, como “Voltar” ou “Continuar depois”;
+- acesso ao Tutor;
+- confirmação de salvamento, sucesso ou ação necessária.
+
+## 18. Fluxo de onboarding
+
+### 18.1 Objetivo
+
+Receber uma pessoa que ainda não conhece o produto, explicar o benefício sem sobrecarregá-la e levá-la até um acesso criado ou recuperado.
+
+### 18.2 Sequência completa
+
+#### Tela 1 — Boas-vindas
+
+- Mostrar a promessa: “Crie, organize e publique seus conteúdos com ajuda em cada passo”.
+- Exibir uma ilustração ou exemplo simples do ciclo.
+- Ação principal: **Começar**.
+- Ação secundária: **Já tenho uma conta**.
+- Tutor inicia com: “O que você quer fazer hoje?”
+- Opções sugeridas: “Conhecer a plataforma”, “Criar meu acesso” e “Entrar na minha conta”.
+
+#### Tela 2 — Como funciona
+
+- Apresentar três blocos curtos: “Você conta sua ideia”, “Nós ajudamos a preparar” e “Você revisa e publica”.
+- Informar que nada será publicado sem confirmação.
+- Ação principal: **Continuar**.
+- Permitir ouvir ou reler a explicação quando recursos de acessibilidade estiverem disponíveis.
+
+#### Tela 3 — Criar acesso
+
+- Pedir apenas nome e forma de acesso necessária ao piloto.
+- Explicar senhas ou códigos com exemplos e requisitos visíveis antes do envio.
+- Marcar campos obrigatórios em texto.
+- Validar um campo por vez, junto ao local que precisa de correção.
+- Ação principal: **Criar meu acesso**.
+
+#### Tela 4 — Confirmação e consentimento
+
+- Explicar em frases curtas quais dados são usados e para quê.
+- Permitir abrir detalhes sem bloquear a compreensão básica.
+- Consentimentos opcionais começam desmarcados.
+- Ação principal: **Confirmar e continuar**.
+
+#### Tela 5 — Entrada na configuração assistida
+
+- Celebrar sem exagero: “Tudo certo com seu acesso”.
+- Explicar: “Agora vamos preparar a plataforma para você”.
+- Mostrar duração aproximada apenas se validada em testes.
+- Ação principal: **Configurar agora**.
+- Ação secundária: **Continuar depois**.
+
+### 18.3 Retomada e exceções
+
+- Se a pessoa fechar o App, voltar ao primeiro passo incompleto.
+- Se já existir acesso, oferecer “Entrar” ou “Recuperar acesso” sem revelar se outra pessoa possui aquele dado.
+- Se estiver sem conexão, explicar que o acesso não pôde ser concluído e preservar o que puder ser guardado com segurança.
+- Após tentativas repetidas, oferecer ajuda do Tutor ou suporte apropriado.
+
+### 18.4 Conclusão
+
+O onboarding termina quando o Usuário possui acesso válido, compreende a promessa, sabe que controla a Publicação e entra na configuração assistida.
+
+## 19. Fluxo de configuração assistida
+
+### 19.1 Objetivo
+
+Preparar o contexto mínimo para que as sugestões façam sentido e uma conta possa ser conectada sem exigir conhecimento sobre configurações técnicas.
+
+### 19.2 Visão de progresso
+
+Mostrar uma lista curta e persistente:
+
+1. Sobre você.
+2. O que você quer alcançar.
+3. Para quem você fala.
+4. Onde você quer publicar.
+
+O usuário pode voltar a um passo concluído. Cada resposta é salva ao avançar.
+
+### 19.3 Sequência completa
+
+#### Passo 1 — Sobre você
+
+- Confirmar como o Usuário quer ser chamado.
+- Perguntar que tipo de trabalho realiza com opções exemplificadas e “Ainda não sei”.
+- Criar o Projeto principal nos bastidores a partir desse contexto.
+- Na interface, usar “Seu espaço” se “Projeto” não for compreendido nos testes.
+
+#### Passo 2 — Objetivo
+
+- Perguntar: “O que você mais quer conseguir com seus conteúdos?”
+- Oferecer opções como “Compartilhar mensagens”, “Divulgar meu trabalho”, “Ensinar algo” e “Criar uma presença constante”.
+- Permitir escrever uma resposta própria.
+- Escolher uma opção preenche uma recomendação inicial, mas pode ser alterada.
+
+#### Passo 3 — Público
+
+- Perguntar: “Com quem você quer falar?”
+- Oferecer exemplos coerentes com o segmento escolhido.
+- Permitir “Ainda não tenho certeza”. Nesse caso, o Tutor ajuda com uma pergunta adicional, não bloqueia a jornada.
+
+#### Passo 4 — Canal
+
+- Perguntar: “Onde você quer publicar primeiro?”
+- No MVP, mostrar somente o Canal suportado ou explicar de forma honesta se a opção desejada ainda não estiver disponível.
+- Apresentar o benefício da conexão e o que a plataforma poderá fazer.
+- Ação principal: **Conectar minha conta**.
+
+#### Passo 5 — Permissão externa
+
+- Antes de sair para o serviço externo, explicar: “Você será levado até [nome do Canal] para confirmar. A plataforma não verá sua senha”.
+- Após retornar, mostrar o nome e a imagem pública da conta, quando disponíveis.
+- Perguntar: “É esta a conta que você quer usar?”
+- Ações: **Sim, continuar** e **Usar outra conta**.
+
+#### Passo 6 — Pronto para começar
+
+- Mostrar um resumo editável: objetivo, público e conta conectada.
+- Informar claramente qualquer item pendente.
+- Ação principal: **Criar meu primeiro conteúdo**.
+- Ação secundária: **Ir para o início**.
+
+### 19.4 Falhas e retomada
+
+- Cancelamento no serviço externo retorna à explicação, sem marcar a conta como conectada.
+- Permissão insuficiente é explicada como ação concreta: “Para publicar, precisamos que você permita…”.
+- Conta expirada aparece como “Conecte novamente”, preservando Conteúdos.
+- O usuário pode pular a conexão para experimentar a criação, mas não poderá Publicar até concluir esse passo.
+
+## 20. Fluxo da tela principal
+
+### 20.1 Objetivo
+
+Responder rapidamente o que está acontecendo e conduzir para a melhor ação seguinte.
+
+### 20.2 Primeira abertura do dia ou da sessão
+
+O Tutor abre a experiência com:
+
+> O que você quer fazer hoje?
+
+Logo abaixo, mostrar ações adaptadas ao contexto:
+
+- **Criar um conteúdo**;
+- **Continuar de onde parei**, quando houver Rascunho;
+- **Publicar um conteúdo**, quando houver item Pronto;
+- **Ver resultados**, quando houver Publicação com dados;
+- **Conectar minha conta**, quando houver pendência.
+
+Se não houver histórico, priorizar “Criar meu primeiro conteúdo”. Se houver uma falha que impeça Publicação, mostrá-la antes de sugerir publicar.
+
+### 20.3 Componentes da tela
+
+1. **Saudação e pergunta do Tutor:** linguagem pessoal sem fingir intimidade.
+2. **Próximo passo recomendado:** um cartão principal com motivo curto e uma ação.
+3. **Seus conteúdos:** até três itens recentes com estado e ação correspondente.
+4. **Publicações recentes:** sucesso, em andamento ou atenção necessária.
+5. **Resultados disponíveis:** convite simples, sem excesso de números.
+6. **Navegação principal:** Início, Criar, Biblioteca, Resultados e Ajuda.
+
+### 20.4 Estados da tela principal
+
+| Situação | Mensagem principal | Ação |
+|---|---|---|
+| Novo Usuário | “Vamos criar seu primeiro conteúdo?” | Começar |
+| Configuração incompleta | “Falta uma etapa para deixar tudo pronto” | Continuar configuração |
+| Rascunho existente | “Você pode continuar o conteúdo que começou” | Continuar |
+| Conteúdo pronto | “Seu conteúdo está pronto para revisão” | Revisar e publicar |
+| Publicação em andamento | “Estamos enviando seu conteúdo” | Ver andamento |
+| Publicação com falha | “Não foi possível publicar. Seu conteúdo está salvo” | Resolver |
+| Resultado disponível | “Já há resultados para você ver” | Ver resultados |
+
+## 21. Fluxo para criação de Conteúdo
+
+### 21.1 Entrada
+
+O fluxo pode começar pela tela principal, pelo botão Criar ou por uma recomendação do Tutor. Antes do primeiro campo, explicar: “Vamos fazer uma etapa de cada vez. Você poderá revisar tudo antes de publicar”.
+
+### 21.2 Sequência completa
+
+#### Passo 1 — Ideia
+
+- Perguntar: “Sobre o que você quer falar?”
+- Aceitar uma frase curta, texto colado ou, futuramente, outra forma prevista.
+- Oferecer exemplos adequados ao público sem inserir conteúdo automaticamente.
+- Ação principal: **Continuar**.
+
+#### Passo 2 — Objetivo deste Conteúdo
+
+- Perguntar: “O que você quer que as pessoas entendam ou façam?”
+- Sugerir poucas opções baseadas no objetivo do Projeto.
+- Pré-preencher o público configurado e permitir alteração para este Conteúdo.
+
+#### Passo 3 — Estrutura sugerida
+
+- Tutor apresenta uma proposta curta com início, mensagem principal e encerramento.
+- Explicar: “Esta é uma sugestão. Você pode mudar tudo”.
+- Ações: **Usar esta sugestão**, **Fazer mudanças** e **Tentar outra**.
+- Nada é incorporado ao Rascunho sem escolha do Usuário.
+
+#### Passo 4 — Editar
+
+- Mostrar um editor simples com texto legível e ações essenciais.
+- Evitar barras com muitas ferramentas.
+- Salvar continuamente e mostrar “Salvo” após confirmação.
+- Destacar uma pendência por vez.
+- Tutor responde a pedidos como “Deixar mais curto”, “Explicar melhor” ou “Voltar para minha versão”.
+
+#### Passo 5 — Adicionar imagem ou mídia
+
+- Explicar se a mídia é obrigatória ou opcional para o Canal escolhido.
+- Oferecer **Escolher do aparelho** e **Continuar sem imagem**, quando permitido.
+- Mostrar uma prévia e ação **Trocar** ou **Remover**.
+- Em incompatibilidade, dizer exatamente o que fazer sem apresentar códigos ou medidas desnecessárias.
+
+#### Passo 6 — Revisão do Conteúdo
+
+- Exibir como o público verá a mensagem, sem simular detalhes que o Canal não garante.
+- Organizar pendências em: “Precisa corrigir” e “Você pode melhorar”.
+- Correções obrigatórias bloqueiam o avanço e levam ao ponto correto.
+- Melhorias opcionais nunca impedem salvar ou publicar.
+- Ações: **Está pronto** e **Continuar editando**.
+
+#### Passo 7 — Próximo destino
+
+- Ao marcar como Pronto, oferecer **Publicar agora** ou **Guardar na Biblioteca**.
+- Se não houver Conta Conectada, oferecer **Conectar para publicar** ou **Guardar por enquanto**.
+
+### 21.3 Retomada
+
+Ao voltar a um Rascunho, mostrar a última etapa concluída, a hora do último salvamento e uma ação **Continuar**. Se houver mudanças em conflito, preservar ambas as versões e pedir uma escolha explicada.
+
+## 22. Fluxo para organização da Biblioteca
+
+### 22.1 Objetivo
+
+Permitir encontrar e entender Conteúdos sem exigir conhecimento sobre pastas, arquivos ou estados internos.
+
+### 22.2 Tela da Biblioteca
+
+- Título: “Seus conteúdos”.
+- Ação principal: **Criar novo**.
+- Busca com texto de apoio: “Buscar pelo nome ou assunto”.
+- Filtros iniciais: **Todos**, **Para continuar**, **Prontos**, **Publicados** e **Precisam de atenção**.
+- Ordenação padrão: atualização mais recente.
+- Cada cartão mostra título, pequena prévia, última atualização, estado em linguagem simples e uma única ação sugerida.
+
+### 22.3 Ações sobre um Conteúdo
+
+| Situação | Ação principal | Ações secundárias |
+|---|---|---|
+| Ideia ou Rascunho | Continuar | Renomear, duplicar ou arquivar |
+| Precisa de revisão | Corrigir | Ver pendências ou arquivar |
+| Pronto | Revisar e publicar | Editar ou arquivar |
+| Em publicação | Ver andamento | Voltar à Biblioteca |
+| Publicado | Ver resultados | Criar parecido ou arquivar |
+| Com falha | Resolver | Ver o que aconteceu ou arquivar |
+| Arquivado | Restaurar | Excluir quando a política permitir |
+
+### 22.4 Organização segura
+
+- Arquivar exige confirmação simples e explica: “O conteúdo sairá da lista principal, mas não será apagado”.
+- Excluir, quando disponível, explica o impacto sobre histórico antes de confirmar.
+- Filtros vazios oferecem **Limpar filtro**.
+- Biblioteca vazia explica o valor e oferece **Criar meu primeiro conteúdo**.
+- A seleção de vários itens e ações em massa ficam fora do MVP para reduzir risco.
+
+## 23. Fluxo para Publicação
+
+### 23.1 Entrada
+
+O fluxo começa em um Conteúdo Pronto, na Biblioteca ou pela ação recomendada na tela principal.
+
+### 23.2 Sequência completa
+
+#### Passo 1 — Verificar se está tudo pronto
+
+- Conferir Conta Conectada, campos e mídia.
+- Mostrar uma pendência por vez com ação **Corrigir agora**.
+- Se a conta precisar de nova conexão, preservar a versão e guiar a correção.
+
+#### Passo 2 — Escolher o destino
+
+- Mostrar nome do Canal, nome e imagem pública da conta.
+- Perguntar: “Onde você quer publicar?”
+- No MVP, selecionar previamente o único destino ativo, permitindo confirmá-lo.
+
+#### Passo 3 — Prévia final
+
+- Mostrar texto e mídia da versão que será enviada.
+- Exibir avisos sobre ajustes feitos para o Canal.
+- Informar: “Depois de publicar, mudanças feitas aqui não alteram o que já foi enviado”.
+- Ações: **Continuar para publicar** e **Voltar para editar**.
+
+#### Passo 4 — Confirmação
+
+- Resumir “O que”, “Onde” e “Quando”.
+- Usar a pergunta: “Você quer publicar este conteúdo agora?”
+- Ação principal inequívoca: **Sim, publicar agora**.
+- Ação secundária: **Ainda não**.
+- Fechar ou voltar nunca confirma a Publicação.
+
+#### Passo 5 — Envio
+
+- Mostrar “Publicando seu conteúdo…” e permitir sair sem cancelar silenciosamente.
+- Explicar que o andamento ficará disponível na tela principal e na Biblioteca.
+- Evitar exibir porcentagem quando não houver progresso real mensurável.
+
+#### Passo 6 — Resultado
+
+- Sucesso: “Seu conteúdo foi publicado”, com **Ver publicação** e **Voltar ao início**.
+- Aguardando confirmação: “O envio foi feito. Estamos confirmando a publicação”.
+- Falha conhecida: “Não conseguimos publicar. Seu conteúdo está salvo”, motivo simples e **Tentar novamente** ou **Corrigir**.
+- Resultado incerto: “Ainda não sabemos se o Canal concluiu. Vamos verificar antes de tentar de novo”.
+
+### 23.3 Regras de confiança
+
+- Nunca enviar duas vezes por repetição de toque.
+- Não prometer que cancelar localmente remove algo já publicado.
+- Não esconder adaptações feitas no Conteúdo.
+- Manter acesso à versão enviada e ao destino confirmado.
+
+## 24. Fluxo para acompanhamento dos resultados
+
+### 24.1 Entrada
+
+Resultados pode ser aberto pela navegação, pelo Conteúdo Publicado, pela tela de sucesso ou por aviso de novos dados.
+
+### 24.2 Tela geral
+
+- Título: “Resultados dos seus conteúdos”.
+- Começar com uma explicação curta, não com uma grade de números.
+- Mostrar Conteúdos recentes com data, Canal e estado dos dados.
+- Oferecer um período simples e predefinido, evitando filtros avançados no MVP.
+
+### 24.3 Detalhe de um Conteúdo
+
+1. Mostrar a Publicação escolhida e onde ela ocorreu.
+2. Explicar quando os dados foram atualizados.
+3. Apresentar poucas métricas disponíveis, cada uma com nome cotidiano e explicação.
+4. Mostrar ausência de dados como “Ainda não há informações suficientes”, não como zero quando isso não for verdade.
+5. Separar fatos de recomendações.
+
+Exemplos de tradução:
+
+| Nome apresentado | Explicação |
+|---|---|
+| Pessoas alcançadas | Quantas pessoas receberam ou viram o conteúdo, conforme o Canal informa |
+| Visualizações | Quantas vezes o conteúdo foi visto; a mesma pessoa pode contar mais de uma vez |
+| Interações | Ações como curtidas, comentários ou compartilhamentos disponíveis |
+
+### 24.4 Aprendizado
+
+Depois dos fatos, o Tutor apresenta uma leitura curta:
+
+- “O que aconteceu”: resumo sustentado pelos dados.
+- “O que ainda não sabemos”: atraso, ausência ou limite da informação.
+- “Próximo passo sugerido”: uma ação simples, como repetir um tema, testar uma abertura ou aguardar mais dados.
+
+O Usuário pode escolher **Usar esta ideia**, **Adaptar** ou **Agora não**.
+
+### 24.5 Estados especiais
+
+- Sem Publicações: explicar que resultados aparecem depois de Publicar e oferecer **Criar conteúdo**.
+- Dados ainda não disponíveis: informar que alguns Canais demoram e permitir voltar depois.
+- Atualização falhou: manter o último valor com data e dizer que não foi possível atualizar agora.
+- Publicações múltiplas futuras: manter cada destino separado antes de qualquer total consolidado.
+
+## 25. Fluxo de ajuda do Tutor
+
+### 25.1 Regra de abertura
+
+Em toda nova abertura do Tutor, independentemente da tela, a primeira mensagem é exatamente:
+
+> O que você quer fazer hoje?
+
+O Tutor pode então mostrar sugestões relacionadas à tela atual, sempre mantendo a possibilidade de o Usuário escrever com suas próprias palavras.
+
+### 25.2 Sugestões por contexto
+
+| Contexto | Opções iniciais |
+|---|---|
+| Primeiro acesso | Conhecer a plataforma; criar meu acesso; entrar |
+| Configuração | Entender esta etapa; conectar minha conta; continuar depois |
+| Início | Criar conteúdo; continuar um conteúdo; publicar; ver resultados |
+| Criação | Organizar minha ideia; melhorar o texto; entender uma pendência |
+| Biblioteca | Encontrar um conteúdo; entender os estados; recuperar um arquivado |
+| Publicação | Conferir o destino; corrigir uma pendência; entender o que aconteceu |
+| Resultados | Entender um número; saber o que fazer depois; escolher outro conteúdo |
+
+### 25.3 Forma de condução
+
+1. Reconhecer o objetivo com uma frase curta.
+2. Fazer somente uma pergunta por vez quando faltar informação.
+3. Reutilizar o contexto já informado e não pedir o mesmo dado novamente sem motivo.
+4. Explicar a ação antes de encaminhar o Usuário.
+5. Oferecer uma ação principal e, quando necessário, uma alternativa segura.
+6. Confirmar conclusão e informar o próximo passo.
+
+### 25.4 Limites
+
+O Tutor pode:
+
+- explicar telas, estados, permissões e resultados;
+- levar o Usuário até a etapa correta;
+- sugerir estruturas, melhorias e próximos passos;
+- recuperar o contexto de uma tarefa interrompida;
+- registrar aceitação, adaptação ou rejeição de uma recomendação.
+
+O Tutor não pode:
+
+- conectar uma conta sem o Usuário concluir a autorização;
+- aceitar consentimentos;
+- substituir silenciosamente o Conteúdo;
+- publicar, reagendar, remover ou desconectar por conta própria;
+- inventar resultados ou esconder limitações;
+- prometer alcance, vendas ou crescimento.
+
+### 25.5 Quando o Tutor não entende
+
+- Dizer: “Não entendi o que você precisa ainda”.
+- Reformular com opções simples, sem culpar o Usuário.
+- Após nova dificuldade, oferecer voltar à tela anterior ou acessar suporte.
+- Preservar tudo o que já foi salvo.
+
+## 26. Padrões de mensagens e estados
+
+### 26.1 Mensagem de erro
+
+Toda mensagem deve responder:
+
+- o que aconteceu em linguagem simples;
+- se o trabalho está salvo;
+- o que a pessoa pode fazer agora.
+
+Exemplo: “Sua conta precisa ser conectada novamente. Seu conteúdo está salvo. Conecte a conta para continuar a publicação.”
+
+### 26.2 Confirmação
+
+A confirmação deve nomear a ação e o objeto. Evitar botões genéricos como “OK” em ações importantes. Preferir “Arquivar conteúdo”, “Desconectar conta” ou “Sim, publicar agora”.
+
+### 26.3 Espera
+
+Durante espera, informar a tarefa real. Se o Usuário puder sair, dizer isso. Se não houver estimativa confiável, não inventar tempo ou percentual.
+
+### 26.4 Estado vazio
+
+Explicar por que a área está vazia e oferecer uma ação útil. Nunca apresentar apenas uma tela em branco ou “Nenhum registro encontrado”.
+
+### 26.5 Acessibilidade e confiança
+
+- Usar texto legível, alvos de toque confortáveis e contraste suficiente.
+- Manter botões no mesmo lugar ao longo de etapas semelhantes.
+- Associar instruções e erros aos campos correspondentes.
+- Permitir navegação por teclado e leitura por tecnologia assistiva.
+- Evitar contagens regressivas e pressão artificial.
+- Não usar culpa, urgência ou recompensa enganosa para incentivar Publicação.
+
+## 27. Critério de experiência completa
+
+A experiência está completa quando um Usuário iniciante consegue entrar, configurar seu contexto, conectar uma conta, criar e encontrar um Conteúdo, revisar e confirmar uma Publicação, entender o resultado e escolher um próximo passo sugerido pelo Tutor, sempre sabendo o que foi salvo, o que aconteceu e como voltar ou pedir ajuda.
